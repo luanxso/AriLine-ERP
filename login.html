@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login | Portal do Cliente</title>
+  <link rel="icon" href="IMG/icon.png" type="image/x-icon">
+
+  <style>
+    :root {
+      --primary: #143D59;
+      --accent: #4AB8FF;
+      --bg: #f5f8fb;
+      --error: #c0392b;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+
+    body {
+      background: #645454;
+      height: 100vh;
+    }
+
+    .container {
+      display: flex;
+      height: 100vh;
+    }
+
+    /* lado esquerdo */
+    .left {
+      flex: 1;
+      background-image: url('https://cliente.senior.com.br/auth.875d3cb074c5ab2f8353.jpg');
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.35);
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .logo {
+      width: 150px;
+    }
+
+    .left-text h1 {
+      font-size: 48px;
+      color: #fff;
+      font-weight: bold;
+      line-height: 1.1;
+      margin-bottom: 15px;
+    }
+
+    .left-text p {
+      color: #eaeaea;
+      font-size: 18px;
+    }
+
+    /* lado direito */
+    .right {
+      width: 480px;
+      background: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .form-box {
+      width: 80%;
+      max-width: 350px;
+    }
+
+    h2 {
+      font-size: 35px;
+      color: var(--primary);
+      margin-bottom: 5px;
+      line-height: 1.2;
+    }
+
+    h2 span {
+      color: var(--accent);
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: #777;
+      margin-bottom: 35px;
+    }
+
+    .input-group {
+      margin-bottom: 25px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .input-group label {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #1a1a1a;
+    }
+
+    .input-group input {
+      background: none;
+      border: none;
+      border-bottom: 1px solid #ccc;
+      padding: 8px 0;
+      outline: none;
+      font-size: 16px;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      background: var(--primary);
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 14px;
+      letter-spacing: 1px;
+      color: white;
+      transition: 0.2s;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+    }
+
+    .footer-links {
+      margin-top: 40px;
+      font-size: 17px;
+      color: #666;
+    }
+
+    .footer-links a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .status-message {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #1a1a1a;
+      min-height: 20px;
+    }
+
+    .status-message.error {
+      color: var(--error);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="left">
+      <div class="overlay">
+        <a href="index.html">
+          <img src="IMG/logo1g.png" class="logo" alt="Logo">
+        </a>
+        <div class="left-text">
+          <h1>Portal<br>do cliente</h1>
+          <p>Seu canal de relacionamento digital com a empresa.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="right">
+      <div class="form-box">
+        <h2>Olá,<br><span>seja bem vindo!</span></h2>
+        <p class="subtitle">Faça o login para acessar o portal do cliente</p>
+
+        <form id="login-form">
+          <div class="input-group">
+            <label>E-mail</label>
+            <input type="email" id="login-email" placeholder="Seu e-mail" required>
+          </div>
+          <div class="input-group">
+            <label>Senha</label>
+            <input type="password" id="login-senha" placeholder="Sua senha" required>
+          </div>
+
+          <button type="submit" class="btn">Acessar</button>
+          <p id="login-status" class="status-message"></p>
+        </form>
+
+        <div class="footer-links">
+          <p>Ainda não tem conta? <a href="cadastro.html">Cadastre-se aqui</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyB4y1rt9_Jynm1M0wO21r-PZPMq5QdxtYY",
+      authDomain: "projeto-integrado-ariline.firebaseapp.com",
+      projectId: "projeto-integrado-ariline",
+      storageBucket: "projeto-integrado-ariline.firebasestorage.app",
+      messagingSenderId: "990947686480",
+      appId: "1:990947686480:web:e5707c91aa62a985e9f955"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getDatabase(app); // Pega referência do banco
+
+    const statusElement = document.getElementById('login-status');
+    const form = document.getElementById('login-form');
+    const emailInput = document.getElementById('login-email');
+    const senhaInput = document.getElementById('login-senha');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = emailInput.value.trim();
+      const senha = senhaInput.value.trim();
+
+      statusElement.textContent = 'Verificando credenciais...';
+      statusElement.classList.remove('error');
+
+      try {
+        // 1. Faz o Login (Verifica senha)
+        const userCredential = await signInWithEmailAndPassword(auth, email, senha);
+        const user = userCredential.user;
+
+        // 2. Agora vai no Banco de Dados descobrir quem é esse usuário
+        const dbRef = ref(db);
+
+        // Lê o caminho: cargos/ID_DO_USUARIO
+        get(child(dbRef, `cargos/${user.uid}`)).then((snapshot) => {
+          if (snapshot.exists()) {
+            const cargoReal = snapshot.val(); // Aqui vem: "gestores", "operadores" ou "supervisores"
+
+            // Salva na memória do navegador
+            sessionStorage.setItem('usuarioLogado', 'true');
+            sessionStorage.setItem('userCargo', cargoReal);
+
+            statusElement.textContent = `Login autorizado! Entrando como ${cargoReal}...`;
+
+            setTimeout(() => {
+              window.location.href = `cargos.html#${cargoReal}`;
+            }, 1000);
+
+          } else {
+            // Se o usuário existe no Auth mas não tem cargo no Banco
+            statusElement.textContent = "Erro: Usuário sem permissão definida.";
+            statusElement.classList.add('error');
+          }
+        }).catch((error) => {
+          console.error(error);
+          statusElement.textContent = "Erro ao buscar dados do usuário.";
+        });
+
+      } catch (error) {
+        console.error("Erro:", error);
+        let msg = 'Erro ao fazer login.';
+        if (error.code === 'auth/invalid-credential' || error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
+          msg = 'E-mail ou senha incorretos.';
+        } else if (error.code === 'auth/too-many-requests') {
+          msg = 'Muitas tentativas. Aguarde um pouco.';
+        }
+        statusElement.textContent = msg;
+        statusElement.classList.add('error');
+      }
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sobre a AriLine</title>
+  <link rel="icon" href="IMG/icon.png" type="image/x-icon">
+
+  <style>
+    :root {
+      --bg: #f5f8fb;
+      --nav: #ffffff;
+      --primary: #143D59;
+      --accent: #4AB8FF;
+      --muted: #5B6A72;
+      --dark: #0a1216;
+      --maxw: 1200px;
+      --radius: 8px;
+      --cta: #e57e3c;
+      font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: #0b1113;
+    }
+
+    .container {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* header */
+    .topbar {
+      background: var(--nav);
+      border-bottom: 1px solid rgba(3, 19, 33, 0.04);
+    }
+
+    .topbar .row {
+      display: flex;
+      align-items: center;
+      height: 68px;
+      position: relative;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      gap: 18px;
+    }
+
+    /* menu central */
+    .primary-nav {
+      position: relative;
+      left: auto;
+      transform: none;
+      margin: 0 auto;
+      display: flex;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .primary-nav a {
+      font-weight: 600;
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 15px;
+    }
+
+    /* direita */
+    .actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 18px;
+      flex: 1;
+    }
+
+    .ctahover {
+      display: inline-block;
+      background: var(--cta);
+      color: #fff;
+      padding: 14px 28px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+    }
+
+    .login-btn {
+      display: inline-block;
+      text-decoration: none;
+      color: var(--primary);
+      font-weight: 600;
+      padding: 12px 24px;
+      border: 2px solid rgba(20, 61, 89, 0.2);
+      border-radius: 10px;
+      transition: all 0.2s ease;
+    }
+
+    .login-btn:hover {
+      border-color: var(--primary);
+      background: var(--primary);
+      color: #fff;
+    }
+
+    /* suvnav preto */
+    .subnav {
+      background: #000;
+      color: #fff;
+    }
+
+    .subnav .row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 56px;
+      gap: 28px;
+    }
+
+    .segments {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .segments .label {
+      color: var(--accent);
+      border-right: 1px solid rgba(255, 255, 255, 0.3);
+      padding-right: 12px;
+      margin-right: 8px;
+      font-weight: 700;
+    }
+
+    .segments ul {
+      list-style: none;
+      display: flex;
+      gap: 22px;
+      padding: 0;
+      margin: 0;
+    }
+
+    .segments a {
+      text-decoration: none;
+      color: #ddd;
+      font-size: 14px;
+      position: relative;
+      padding-bottom: 4px;
+    }
+
+    .segments a:hover {
+      color: #fff;
+    }
+
+    .subnav a.active {
+      color: var(--accent);
+      position: relative;
+    }
+
+    /* hero com video */
+    .hero {
+      position: relative;
+      height: 50vh;
+      min-height: 520px;
+      overflow: hidden;
+      border-bottom-left-radius: 28px;
+      border-bottom-right-radius: 28px;
+    }
+
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.03);
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.45) 10%,
+        rgba(0, 0, 0, 0.42) 40%,
+        rgba(0, 0, 0, 0.35) 70%,
+        rgba(0, 0, 0, 0.08) 100%
+      );
+    }
+
+    .hero-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: left;
+      color: #fff;
+      width: 100%;
+      padding: 0 20px;
+    }
+
+    .hero .breadcrumbs {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 8px;
+    }
+
+    .hero h1 {
+      margin: 0 0 12px;
+      font-size: 48px;
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.5px;
+    }
+
+    .hero .subtitle {
+      font-size: 22px;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .hero .desc {
+      font-size: 20px;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 24px;
+    }
+
+    .hero .cta {
+      display: inline-block;
+      background: var(--cta);
+      color: #fff;
+      padding: 14px 28px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+    }
+
+    /* indicadores */
+    .indicadores {
+      padding: 70px 0;
+      background: #fff;
+    }
+
+    .indicadores-grid {
+      display: flex;
+      gap: 40px;
+      justify-content: space-between;
+      flex-wrap: wrap; /* Adicionado para responsividade */
+    }
+
+    .indicador {
+      flex: 1;
+      text-align: center;
+      padding: 28px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      min-width: 200px;
+    }
+
+    .indicador h3 {
+      font-size: 32px;
+      color: var(--primary);
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    .indicador p {
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    /* sobre - quem somos */
+    .sobre-bloco {
+      padding: 80px 0;
+      background: #fff;
+    }
+
+    .sobre-grid {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .sobre-info {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .sobre-info h2 {
+      font-size: 36px;
+      color: var(--primary);
+    }
+
+    .sobre-info p {
+      font-size: 17px;
+      margin: 20px 0;
+      max-width: 520px;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+
+    .sobre-img {
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .sobre-img img {
+      width: 500px;
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px; 
+    }
+
+    footer {
+      background: var(--nav);
+      padding: 30px 0;
+      text-align: center;
+      color: var(--muted);
+      margin-top: 60px;
+      border-top: 1px solid rgba(0, 0, 0, 0.06);
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="topbar">
+      <div class="container row">
+        <div class="brand">
+          <a href="index.html">
+            <img src="IMG/logo1g.png" alt="Logo" class="logo" height="225">
+          </a>
+        </div>
+
+        <nav class="primary-nav" aria-label="menu principal">
+          <a href="index.html">Produção</a>
+          <a href="plano.html">Planos</a>
+          <a href="sobre.html">Sobre</a>
+        </nav>
+
+        <div class="actions">
+          <a class="login-btn" id="btn-auth" href="login.html">
+            Área do Cliente
+          </a>
+
+          <a class="ctahover" href="proposta.html" data-fancybox="">
+            Solicite uma proposta
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="subnav">
+      <div class="container row">
+        <div class="segments">
+          <div class="label">Sobre a AriLine</div>
+          <ul>
+            <li><a class="active" href="#">Início</a></li>
+            <li><a href="#">Quem Somos</a></li>
+            <li><a href="#">Empresas do Grupo</a></li>
+            <li><a href="#">Carreiras</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <video class="hero-video" autoplay muted loop playsinline poster="IMG/sobrefoto.jpg">
+      <source src="IMG/indexvideo.mp4" type="video/mp4">
+    </video>
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content container">
+      <div class="breadcrumbs">Início > Sobre a Senior</div>
+      <h1>Potencializar pessoas e <br> impulsionar negócios</h1>
+      <div class="subtitle">É mais que tecnologia. É AriLine.</div>
+      <a class="cta" href="proposta.html">Solicite uma proposta</a>
+    </div>
+  </section>
+
+  <section class="indicadores">
+    <div class="container indicadores-grid">
+      <div class="indicador">
+        <h3>+120</h3>
+        <p>Empresas monitoram produção com a AriLine</p>
+      </div>
+
+      <div class="indicador">
+        <h3>98%</h3>
+        <p>Satisfação dos usuários</p>
+      </div>
+
+      <div class="indicador">
+        <h3>35%</h3>
+        <p>Redução média de erros operacionais</p>
+      </div>
+
+      <div class="indicador">
+        <h3>24/7</h3>
+        <p>Monitoramento em tempo real</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sobre-bloco">
+    <div class="container sobre-grid">
+      <div class="sobre-info">
+        <h2>Quem Somos</h2>
+        <p>
+          A AriLine é uma empresa especializada em simplificar e otimizar a gestão industrial.
+          Nosso sistema permite que operadores, supervisores e gestores acompanhem a produção em tempo real,
+          controlem máquinas e organizem lotes de forma prática e eficiente.
+          Nosso propósito é transformar dados em decisões rápidas, seguras e capazes de impulsionar
+          o desempenho de toda a linha de produção.
+        </p>
+      </div>
+
+      <div class="sobre-img">
+        <img src="IMG/model.png" alt="Profissional AriLine">
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    © 2025 AriLine — Todos os direitos reservados.
+  </footer>
+
+  <script>
+    const btnAuth = document.getElementById('btn-auth');
+
+    const isLogado = sessionStorage.getItem('usuarioLogado');
+
+    if (isLogado) {
+      btnAuth.textContent = "Sair do Sistema";
+      btnAuth.href = "#";
+
+      btnAuth.style.borderColor = "#c0392b";
+      btnAuth.style.color = "#c0392b";
+
+      btnAuth.onmouseover = function() {
+        this.style.backgroundColor = "#c0392b";
+        this.style.color = "white";
+      };
+      btnAuth.onmouseout = function() {
+        this.style.backgroundColor = "transparent";
+        this.style.color = "#c0392b";
+      };
+
+      btnAuth.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        if (confirm("Tem certeza que deseja sair?")) {
+          sessionStorage.clear(); // Limpa a memória
+          window.location.href = "index.html"; // Recarrega a página (o botão voltará a ser Login)
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>

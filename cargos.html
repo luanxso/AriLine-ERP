@@ -1,0 +1,633 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AriLine ERP - Painel</title>
+
+  <style>
+    :root{
+      --bg: #f5f8fb; 
+      --nav: #ffffff; 
+      --primary: #143D59; 
+      --accent: #4AB8FF;
+      --muted: #5B6A72; 
+      --dark: #0a1216; 
+      --maxw: 1200px; 
+      --radius: 8px; 
+      --cta: #e57e3c;
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+    * { 
+    box-sizing: border-box; 
+    }
+    
+    html, body { 
+      height: 100%; 
+      margin: 0; 
+    }
+
+    body {
+      background: var(--bg);
+      color: #0b1113;
+      font-size: 14px;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    main { 
+      flex: 1; 
+      width: 100%; 
+    }
+
+    .container { 
+      max-width:var(--maxw); 
+      margin:0 auto; 
+      padding:0 20px; 
+    }
+
+    /* header */
+    header .topbar { 
+      background: var(--nav); 
+      border-bottom: 1px solid rgba(3,19,33,0.04); 
+    }
+
+    .topbar .row { 
+      display:flex; 
+      align-items:center; 
+      height:68px; position:relative; 
+    }
+
+    .brand { 
+      display:flex; 
+      align-items:center; 
+      flex:1; 
+      gap:18px; 
+    }
+
+    .primary-nav { 
+      position:absolute; 
+      left:50%; 
+      transform:translateX(-50%); 
+      display:flex; 
+      gap:28px; 
+      align-items:center; 
+    }
+
+    .primary-nav a { 
+      font-weight:600; 
+      color:var(--primary); 
+      text-decoration:none; 
+      font-size:15px; 
+    }
+
+    /* direita */
+    .actions { 
+      display: flex; 
+      align-items: center; 
+      justify-content: flex-end; 
+      gap: 18px; 
+      flex: 1; 
+    }
+    
+    /* infos */
+    .user-info {
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      line-height: 1.2;
+    }
+    .u-name { 
+      font-weight: 700; 
+      color: var(--primary); 
+      font-size: 14px; 
+    }
+
+    .u-email { 
+      font-size: 11px; 
+      color: var(--muted); 
+    }
+
+    /* botão Sair */
+    .login-btn { 
+      display: inline-block; 
+      text-decoration: none; 
+      font-weight: 600; 
+      padding: 8px 18px; 
+      border: 2px solid; 
+      border-radius: 8px; 
+      transition: all 0.2s ease; 
+      font-size: 13px; 
+      cursor: pointer; 
+    }
+
+    .logout-style { 
+      border-color: #c0392b; 
+      color: #c0392b; 
+    }
+
+    .logout-style:hover { 
+      background-color: #c0392b; 
+      color: white; 
+    }
+
+    /* subnav */
+    .subnav { 
+      background:#000; 
+      color:#fff; 
+    }
+
+    .subnav .row { 
+      display:flex; 
+      justify-content:center; 
+      align-items:center; 
+      height:56px; 
+      gap:28px; 
+    }
+
+    .segments { 
+      display:flex; 
+      align-items:center; 
+      gap:18px; 
+    }
+
+    .segments .label { 
+      color:var(--accent); 
+      border-right:1px solid rgba(255,255,255,0.3); 
+      padding-right:12px; 
+      margin-right:8px; 
+      font-weight:700; 
+    }
+
+    .segments ul { 
+      list-style:none; 
+      display:flex; 
+      gap:22px; 
+      padding:0; 
+      margin:0; 
+      align-items:center; 
+    }
+
+    .segments a { 
+      text-decoration:none; 
+      color:#ddd; 
+      font-size:14px; 
+      position:relative; 
+      padding-bottom:4px; 
+    }
+
+    .segments a:hover { 
+      color:#fff; 
+    }
+
+    .segments a.active { 
+      color:var(--accent); 
+    }
+
+    /* Cards */
+    .card { 
+      background:#fff; 
+      padding:20px; 
+      border-radius:10px; 
+      box-shadow:0 2px 6px rgba(16,24,40,0.05); 
+      margin-bottom:18px; 
+    }
+
+    .grid { 
+      display:grid; 
+      grid-template-columns:1fr 1fr; 
+      gap:18px; 
+    }
+
+    button { 
+      background:var(--primary); 
+      color:#fff; 
+      border:none; 
+      padding:10px 14px; 
+      border-radius:8px; 
+      cursor:pointer; 
+      font-weight:600; 
+    }
+
+    input, select { 
+      padding:8px; 
+      border-radius:8px; 
+      border:1px solid #e6eef6; 
+      width:100%; font-size:14px; 
+    }
+
+    label { 
+      display:block; 
+      margin-bottom:6px; 
+      color:var(--muted); 
+      font-size:13px; 
+    }
+    .muted { 
+      color:var(--muted); 
+      font-size:13px; 
+    }
+    
+    .chart-card { 
+      min-height:360px; 
+      position:relative; 
+    }
+
+    .chart-wrap { 
+      width:100%; 
+      height:320px; 
+    }
+    footer { 
+      background:var(--nav); 
+      padding:30px 0; 
+      text-align:center; 
+      color:var(--muted); 
+      margin-top: auto; 
+    }
+    
+  </style>
+</head>
+<body>
+  <header>
+    <div class="topbar">
+      <div class="container row">
+        <div class="brand">
+          <a href="index.html">
+            <img src="IMG/logo1g.png" alt="Logo" height="225">
+          </a>
+        </div>
+
+        <nav class="primary-nav" aria-label="menu principal">
+          <a href="index.html">Produção</a>
+          <a href="plano.html">Planos</a>
+          <a href="sobre.html">Sobre</a>
+        </nav>
+
+        <div class="actions">
+           <div class="user-info">
+             <span class="u-name" id="display-nome">Carregando...</span>
+             <span class="u-email" id="display-email">...</span>
+           </div>
+
+           <a href="#" id="btn-sair" class="login-btn logout-style">
+             Sair
+           </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="subnav">
+      <div class="container row">
+        <div class="segments">
+          <div class="label">Cargos</div>
+          <ul>
+            <li><a class="active" href="#operadores" id="link-operadores">Operadores</a></li>
+            <li><a href="#supervisores" id="link-supervisores">Supervisores</a></li>
+            <li><a href="#gestores" id="link-gestores">Gestores</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:18px; padding-bottom:40px;">
+    <section id="operadores" class="card">
+      <h2>Operadores — Registro de Produção</h2>
+      <p class="muted">Registre sua produção abaixo.</p>
+
+      <div class="grid" style="margin-top:14px;">
+        <div class="card">
+          <h3>Download Programa</h3>
+          <p class="muted">Baixe o Cliente Python para Registrar a Operação.</p>
+          <div style="margin-top:12px"><button id="download-program" type="button">Baixar .py</button></div>
+        </div>
+
+        <div class="card">
+          <h3>Registro Rápido</h3>
+          <label>Operador</label>
+          <input id="op-nome" placeholder="Nome" />
+          <label style="margin-top:8px">Quantidade</label>
+          <input id="op-quantidade" type="number" min="0" placeholder="120" />
+          <label style="margin-top:8px">Notas</label>
+          <input id="op-notas" placeholder="Obs..." />
+          <div style="margin-top:10px;text-align:right"><button id="op-submit" type="button">Registrar</button></div>
+          <p id="op-status" class="muted" style="margin-top:8px"></p>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px">
+        <h3>Últimos registros</h3>
+        <ul id="op-list" class="muted" style="margin:0; padding-left:16px;"></ul>
+      </div>
+    </section>
+
+    <section id="supervisores" class="card" style="display:none">
+      <h2>Supervisores — Tempo Real</h2>
+      <div class="grid" style="margin-top:12px">
+        <div class="card chart-card">
+          <div class="chart-wrap">
+            <h3>Produção por Turno</h3>
+            <canvas id="chart-turnos"></canvas>
+          </div>
+        </div>
+        <div class="card chart-card">
+          <div class="chart-wrap">
+            <h3>Tendência Diária</h3>
+            <canvas id="chart-tendencia"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="gestores" class="card" style="display:none">
+      <h2>Gestores — Metas e KPIs</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Definir Meta</h3>
+          <input id="meta-valor" type="number" placeholder="Ex: 1500" />
+          <div style="margin-top:8px;display:flex;gap:8px">
+            <button id="meta-salvar">Salvar</button>
+            <button id="meta-reset" style="background:#777">Reset</button>
+          </div>
+          <p id="meta-status" class="muted" style="margin-top:10px"></p>
+        </div>
+        <div class="card">
+          <h3>Progresso Hoje</h3>
+          <div style="margin-top:10px">
+            <div style="font-size:28px;font-weight:700" id="progresso-valor">0 / 0</div>
+            <div class="muted" id="progresso-percent">--</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:18px">
+        <h3>Visão Geral da Produção</h3>
+        <div class="grid" style="margin-top:12px">
+          <div class="card chart-card">
+            <div class="chart-wrap">
+              <h3>Produção por Turno</h3>
+              <canvas id="chart-gestores-turnos"></canvas>
+            </div>
+          </div>
+          <div class="card chart-card">
+            <div class="chart-wrap">
+              <h3>Tendência Diária</h3>
+              <canvas id="chart-gestores-tendencia"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>© 2025 AriLine — Todos os direitos reservados.</footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script type="module">
+    // IMPORTS
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"; 
+    import { getDatabase, ref, push, onValue, get, child } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyB4y1rt9_Jynm1M0wO21r-PZPMq5QdxtYY",
+      authDomain: "projeto-integrado-ariline.firebaseapp.com",
+      databaseURL: "https://projeto-integrado-ariline-default-rtdb.firebaseio.com",
+      projectId: "projeto-integrado-ariline",
+      storageBucket: "projeto-integrado-ariline.firebasestorage.app",
+      messagingSenderId: "990947686480",
+      appId: "1:990947686480:web:e5707c91aa62a985e9f955"
+    };
+
+    // INICIALIZA FIREBASE
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app); 
+    const db = getDatabase(app);
+    const dbRef = ref(db, 'registros');
+
+    // SEGURANÇA BÁSICA 
+    const isLogado = sessionStorage.getItem('usuarioLogado');
+    const cargoUsuario = sessionStorage.getItem('userCargo');
+
+    if (!isLogado) {
+      window.location.href = 'login.html';
+    }
+
+    // CARREGAR DADOS DO USUÁRIO
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        document.getElementById('display-email').textContent = user.email;
+        get(child(ref(db), `usuarios/${user.uid}`)).then((snapshot) => {
+          if (snapshot.exists()) {
+             const dados = snapshot.val();
+             document.getElementById('display-nome').textContent = dados.nome || "Usuário";
+          } else {
+             document.getElementById('display-nome').textContent = "Bem-vindo";
+          }
+        }).catch((error) => {
+          console.error(error);
+          document.getElementById('display-nome').textContent = "Usuário";
+        });
+      }
+    });
+
+    // CONTROLE DE ABAS POR CARGO
+    window.addEventListener("DOMContentLoaded", () => {
+      const links = {
+        'operadores': document.getElementById('link-operadores'),
+        'supervisores': document.getElementById('link-supervisores'),
+        'gestores': document.getElementById('link-gestores')
+      };
+      
+      // REGRA 1: OPERADORES
+      if(cargoUsuario === 'operadores') {
+        if(links['supervisores']) links['supervisores'].parentElement.style.display = 'none';
+        if(links['gestores']) links['gestores'].parentElement.style.display = 'none';
+        location.hash = '#operadores';
+      } 
+      // REGRA 2: SUPERVISORES
+      else if (cargoUsuario === 'supervisores') {
+        if(links['operadores']) links['operadores'].parentElement.style.display = 'none';
+        if(links['gestores']) links['gestores'].parentElement.style.display = 'none';
+        location.hash = '#supervisores';
+      }
+      // REGRA 3: GESTORES
+      else if (cargoUsuario === 'gestores') {
+          if(!location.hash) location.hash = '#gestores';
+      }
+
+      showSection(location.hash);
+    });
+
+    // BOTÃO SAIR
+    const btnSair = document.getElementById('btn-sair');
+    if(btnSair){
+      btnSair.addEventListener('click', (e) => {
+        e.preventDefault();
+        if(confirm("Deseja realmente sair?")) {
+            sessionStorage.clear();
+            auth.signOut(); 
+            window.location.href = 'login.html';
+        }
+      });
+    }
+
+    let dadosDoBanco = [];
+
+    // Navegação Abas
+    function showSection(hash) {
+      const sections = ['operadores','supervisores','gestores'];
+      sections.forEach(s => {
+        const el = document.getElementById(s);
+        const link = document.getElementById('link-'+s);
+        if('#'+s === hash){
+          el.style.display = 'block';
+          if(link) link.classList.add('active');
+        } else {
+          el.style.display = 'none';
+          if(link) link.classList.remove('active');
+        }
+      });
+      setTimeout(atualizarGraficos, 200);
+    }
+    window.addEventListener('hashchange', () => showSection(location.hash));
+
+    // Enviar Registro
+    document.getElementById('op-submit').addEventListener('click', () => {
+      const nome = document.getElementById('op-nome').value;
+      const qtd = parseInt(document.getElementById('op-quantidade').value) || 0;
+      const notas = document.getElementById('op-notas').value;
+      
+      if(!nome || qtd <= 0) { alert('Preencha os dados!'); return; }
+      
+      push(dbRef, {
+        operador: nome,
+        quantidade: qtd,
+        notas: notas,
+        timestamp: Date.now()
+      }).then(() => {
+        document.getElementById('op-status').textContent = "Enviado!";
+        setTimeout(()=> document.getElementById('op-status').textContent="", 2000);
+      });
+    });
+
+    // Ler Dados
+    onValue(dbRef, (snapshot) => {
+      const data = snapshot.val();
+      dadosDoBanco = [];
+      const lista = document.getElementById('op-list');
+      lista.innerHTML = '';
+
+      if(data) {
+        Object.values(data).forEach(item => dadosDoBanco.push(item));
+        dadosDoBanco.sort((a,b) => a.timestamp - b.timestamp);
+        
+        dadosDoBanco.slice(-5).reverse().forEach(r => {
+          const li = document.createElement('li');
+          li.textContent = `${new Date(r.timestamp).toLocaleTimeString()} - ${r.operador}: ${r.quantidade}`;
+          lista.appendChild(li);
+        });
+      }
+      atualizarGraficos();
+      atualizarProgresso();
+    });
+
+    // --- GRÁFICOS (ATUALIZADO COM TURNO DA NOITE) ---
+    function atualizarGraficos() {
+      if(dadosDoBanco.length === 0 || typeof Chart === 'undefined') return;
+
+      // 1. Manhã: 06:00 as 11:59
+      const turnoManha = dadosDoBanco.filter(d => {
+        const h = new Date(d.timestamp).getHours();
+        return h >= 6 && h < 12;
+      }).reduce((sum, d) => sum + Number(d.quantidade), 0);
+
+      // 2. Tarde: 12:00 as 17:59
+      const turnoTarde = dadosDoBanco.filter(d => {
+        const h = new Date(d.timestamp).getHours();
+        return h >= 12 && h < 18;
+      }).reduce((sum, d) => sum + Number(d.quantidade), 0);
+
+      // 3. Noite: 18:00 as 05:59 (Resto)
+      const turnoNoite = dadosDoBanco.filter(d => {
+        const h = new Date(d.timestamp).getHours();
+        return h >= 18 || h < 6;
+      }).reduce((sum, d) => sum + Number(d.quantidade), 0);
+      
+      const labels = dadosDoBanco.map(d => new Date(d.timestamp).toLocaleTimeString());
+      const values = dadosDoBanco.map(d => d.quantidade);
+
+      // Atualiza Supervisores (Com Manhã, Tarde e Noite)
+      renderChart('chart-turnos', 'bar', ['Manhã', 'Tarde', 'Noite'], [turnoManha, turnoTarde, turnoNoite]);
+      renderChart('chart-tendencia', 'line', labels, values);
+
+      // Atualiza Gestores (Com Manhã, Tarde e Noite)
+      renderChart('chart-gestores-turnos', 'bar', ['Manhã', 'Tarde', 'Noite'], [turnoManha, turnoTarde, turnoNoite]);
+      renderChart('chart-gestores-tendencia', 'line', labels, values);
+    }
+
+    function renderChart(id, type, labels, data) {
+      const ctx = document.getElementById(id);
+      if(!ctx) return;
+      
+      const existingChart = Chart.getChart(ctx);
+      if(existingChart) existingChart.destroy();
+
+      new Chart(ctx, {
+        type: type,
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Produção',
+            data: data,
+            backgroundColor: '#4AB8FF',
+            borderColor: '#143D59',
+            borderWidth: 1
+          }]
+        },
+        options: { responsive: true, maintainAspectRatio: false }
+      });
+    }
+
+    // Metas
+    const metaSalva = localStorage.getItem('ariline_meta') || 0;
+    if(metaSalva) document.getElementById('meta-valor').value = metaSalva;
+
+    document.getElementById('meta-salvar').addEventListener('click', () => {
+      const v = document.getElementById('meta-valor').value;
+      localStorage.setItem('ariline_meta', v);
+      atualizarProgresso();
+    });
+
+    document.getElementById('meta-reset').addEventListener('click', () => {
+      localStorage.removeItem('ariline_meta');
+      document.getElementById('meta-valor').value = '';
+      atualizarProgresso();
+    });
+
+    function atualizarProgresso() {
+      const meta = localStorage.getItem('ariline_meta') || 0;
+      const total = dadosDoBanco.reduce((sum, d) => sum + Number(d.quantidade), 0);
+      document.getElementById('progresso-valor').textContent = `${total} / ${meta}`;
+      if(meta > 0) {
+        document.getElementById('progresso-percent').textContent = Math.round((total/meta)*100) + "%";
+      } else {
+        document.getElementById('progresso-percent').textContent = "Sem meta";
+      }
+    }
+
+    // Download Demo
+    document.getElementById('download-program').addEventListener('click', ()=>{
+      const content = `print("AriLine Demo - Python Client")`;
+      const blob = new Blob([content], {type:'text/x-python'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'ariline.py';
+      a.click();
+    });
+
+  </script>
+</body>
+</html>

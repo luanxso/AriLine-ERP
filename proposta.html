@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contato | AriLine</title>
+  <link rel="icon" href="IMG/icon.png" type="image/x-icon">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+
+    body {
+      background: #fff;
+      height: 100vh;
+    }
+
+    .container {
+      display: flex;
+      height: 100vh;
+    }
+
+    .left {
+      flex: 1;
+      background-image: url('https://cliente.senior.com.br/auth.875d3cb074c5ab2f8353.jpg');
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.35);
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .logo {
+      width: 150px;
+    }
+
+    .left-text h1 {
+      font-size: 48px;
+      color: #fff;
+      font-weight: bold;
+      line-height: 1.1;
+      margin-bottom: 15px;
+    }
+
+    .left-text p {
+      color: #eaeaea;
+      font-size: 18px;
+    }
+
+    .right {
+      width: 600px;
+      background: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 30px 0;
+    }
+
+    .form-box {
+      width: 85%;
+      max-width: 500px;
+    }
+
+    h2 {
+      text-align: left;
+      font-size: 28px;
+      color: #143D59;
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+
+    h2 span {
+      color: #4AB8FF;
+    }
+
+    .contact-form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      width: calc(50% - 10px);
+    }
+
+    .form-group.full {
+      width: 100%;
+    }
+
+    .form-group label {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #1a1a1a;
+    }
+
+    input, select, textarea {
+      padding: 12px;
+      border: 1px solid #dce4ec;
+      border-radius: 6px;
+      background: #f3f7fb;
+      font-size: 14px;
+      outline: none;
+      transition: 0.2s;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: #4ab8ff;
+      background: #fff;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      background: #143D59;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 14px;
+      letter-spacing: 1px;
+      color: white;
+    }
+
+    .submit-btn:hover {
+      background: #0f2e45;
+    }
+
+    #mensagemContato {
+      margin-top: 15px;
+      font-size: 15px;
+      font-weight: bold;
+      color: #143D59;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <div class="left">
+      <div class="overlay">
+        <a href="index.html">
+          <img src="IMG/logo1g.png" class="logo" alt="Logo">
+        </a>
+
+        <div class="left-text">
+          <h1>Contato<br>AriLine</h1>
+          <p>Entre em contato com nosso time.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="right">
+      <div class="form-box">
+
+        <h2>Fale conosco<br><span>Preencha as informações abaixo</span></h2>
+
+        <form id="formContato" class="contact-form">
+
+          <div class="form-group">
+            <label>Nome Completo *</label>
+            <input type="text" id="contatoNome" required>
+          </div>
+
+          <div class="form-group">
+            <label>E-mail *</label>
+            <input type="email" id="contatoEmail" required>
+          </div>
+
+          <div class="form-group">
+            <label>Telefone *</label>
+            <input type="text" id="contatoTelefone" placeholder="(DDD) + Telefone" required>
+          </div>
+
+          <div class="form-group">
+            <label>Cargo *</label>
+            <select id="contatoCargo" required>
+              <option disabled selected>Selecione</option>
+              <option>Operador</option>
+              <option>Supervisor</option>
+              <option>Gerente</option>
+            </select>
+          </div>
+
+          <div class="form-group full">
+            <label>Empresa *</label>
+            <input type="text" id="contatoEmpresa" required>
+          </div>
+
+          <div class="form-group full">
+            <label>Como podemos ajudar? *</label>
+            <select id="contatoTipo" required>
+              <option disabled selected>Selecione</option>
+              <option>Suporte técnico</option>
+              <option>Demonstração do sistema</option>
+              <option>Integrações</option>
+              <option>Outros</option>
+            </select>
+          </div>
+
+          <div class="form-group full">
+            <label>Mensagem *</label>
+            <textarea rows="4" id="contatoMensagem" required></textarea>
+          </div>
+
+          <button type="submit" class="submit-btn">Enviar</button>
+
+        </form>
+
+        <p id="mensagemContato"></p>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyB4y1rt9_Jynm1M0wO21r-PZPMq5QdxtYY",
+      authDomain: "projeto-integrado-ariline.firebaseapp.com",
+      projectId: "projeto-integrado-ariline",
+      storageBucket: "projeto-integrado-ariline.firebasestorage.app",
+      messagingSenderId: "990947686480",
+      appId: "1:990947686480:web:e5707c91aa62a985e9f955",
+      measurementId: "G-LBEC603E17"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+
+    document.getElementById("formContato").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const dados = {
+        nome: document.getElementById("contatoNome").value,
+        email: document.getElementById("contatoEmail").value,
+        telefone: document.getElementById("contatoTelefone").value,
+        cargo: document.getElementById("contatoCargo").value,
+        empresa: document.getElementById("contatoEmpresa").value,
+        tipo: document.getElementById("contatoTipo").value,
+        mensagem: document.getElementById("contatoMensagem").value,
+        data: new Date().toLocaleString()
+      };
+
+      database.ref("contatos").push(dados)
+        .then(() => {
+          document.getElementById("mensagemContato").innerText = "Mensagem enviada com sucesso!";
+          document.getElementById("formContato").reset();
+
+          // REDIRECIONA SE FOR DEMONSTRAÇÃO
+          if (dados.tipo === "Demonstração do sistema") {
+            setTimeout(() => {
+              window.location.href = "demo.html";
+            }, 800);
+          }
+        })
+        .catch(error => {
+          document.getElementById("mensagemContato").innerText = "Erro: " + error.message;
+        });
+    });
+  </script>
+
+</body>
+</html>

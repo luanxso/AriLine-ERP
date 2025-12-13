@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Demonstração Grátis | AriLine</title>
+  <link rel="icon" href="IMG/icon.png" type="image/x-icon">
+
+  <style>
+    :root {
+      --bg: #f5f8fb;
+      --nav: #ffffff;
+      --primary: #143D59;
+      --accent: #4AB8FF;
+      --muted: #5B6A72;
+      --dark: #0a1216;
+      --maxw: 1200px;
+      --radius: 12px;
+      --cta: #e57e3c;
+      font-family: 'Inter', system-ui, -apple-system;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+    }
+
+    .container {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .topbar {
+      background: var(--nav);
+      border-bottom: 1px solid rgba(3, 19, 33, 0.05);
+    }
+
+    .topbar .row {
+      display: flex;
+      align-items: center;
+      height: 68px;
+      position: relative;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      flex: 1;
+    }
+
+    .primary-nav {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 28px;
+    }
+
+    .primary-nav a {
+      text-decoration: none;
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 15px;
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      flex: 1;
+      gap: 18px;
+    }
+
+    .ctahover {
+      background: var(--cta);
+      color: #fff;
+      padding: 12px 22px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+    }
+
+    .login-btn {
+      display: inline-block;
+      text-decoration: none;
+      color: var(--primary);
+      font-weight: 600;
+      padding: 12px 24px;
+      border: 2px solid rgba(20, 61, 89, 0.2);
+      border-radius: 10px;
+      transition: all 0.2s ease;
+    }
+
+    .login-btn:hover {
+      border-color: var(--primary);
+      background: var(--primary);
+      color: #fff;
+    }
+
+    /* subnav */
+    .subnav {
+      background: #000;
+      color: #fff;
+    }
+
+    .subnav .row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 56px;
+      gap: 28px;
+    }
+
+    .segments {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .segments .label {
+      color: var(--accent);
+      border-right: 1px solid rgba(255, 255, 255, 0.3);
+      padding-right: 12px;
+      margin-right: 8px;
+      font-weight: 700;
+    }
+
+    .segments ul {
+      list-style: none;
+      display: flex;
+      gap: 22px;
+      padding: 0;
+      margin: 0;
+    }
+
+    .segments a {
+      text-decoration: none;
+      color: #ddd;
+      font-size: 14px;
+      position: relative;
+      padding-bottom: 4px;
+    }
+
+    .segments a:hover {
+      color: #fff;
+    }
+
+
+    /* hero */
+    .hero {
+      padding: 90px 0 60px;
+      background: linear-gradient(180deg, #143D59, #0f2e45);
+      color: white;
+      text-align: center;
+      border-bottom-left-radius: 26px;
+      border-bottom-right-radius: 26px;
+    }
+
+    .hero h1 {
+      font-size: 46px;
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+
+    .hero p {
+      font-size: 20px;
+      max-width: 700px;
+      margin: 0 auto;
+      opacity: 0.9;
+    }
+
+    /* content */
+    .demo-section {
+      padding: 70px 0;
+    }
+
+    .demo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .demo-text h2 {
+      font-size: 32px;
+      color: var(--primary);
+      margin-bottom: 16px;
+    }
+
+    .demo-text p {
+      font-size: 17px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .demo-card {
+      background: #fff;
+      padding: 28px;
+      border-radius: var(--radius);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.07);
+      text-align: center;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .demo-card img {
+      width: 100%;
+      border-radius: 14px;
+      margin-bottom: 20px;
+    }
+
+    .demo-card a {
+      display: inline-block;
+      background: #143D59;
+      color: #fff;
+      padding: 14px 24px;
+      text-decoration: none;
+      border-radius: 10px;
+      font-weight: 600;
+    }
+
+    footer {
+      background: var(--nav);
+      padding: 30px 0;
+      text-align: center;
+      color: var(--muted);
+      margin-top: 60px;
+      border-top: 1px solid rgba(0, 0, 0, 0.06);
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="topbar">
+      <div class="container row">
+        <div class="brand">
+          <a href="index.html">
+            <img src="IMG/logo1g.png" alt="Logo" height="225">
+          </a>
+        </div>
+
+        <nav class="primary-nav" aria-label="menu principal">
+          <a href="#">Produção</a>
+          <a href="plano.html">Planos</a>
+          <a href="sobre.html">Sobre</a>
+        </nav>
+
+        <div class="actions">
+          <a class="login-btn" id="btn-auth" href="login.html">
+            Área do Cliente
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="subnav">
+      <div class="container row">
+        <div class="segments">
+          <div class="label">Soluções</div>
+          <ul>
+            <li><a href="#">Módulo Principal</a></li>
+            <li><a href="#">Dashboard</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <h1>Demonstração Grátis</h1>
+      <p>Conheça o funcionamento do sistema AriLine e visualize o ambiente real antes de instalar.</p>
+    </div>
+  </section>
+
+  <section class="demo-section">
+    <div class="container demo-grid">
+
+      <div class="demo-text">
+        <h2>Acesse uma demonstração visual do sistema</h2>
+        <p>
+          Esta versão permite visualizar como o painel de controle do AriLine funciona,
+          incluindo relatórios, dashboard, apontamentos e indicadores de produção.
+          <br><br>
+          ⚠️ *Esta demonstração é apenas visual — não salva dados e não está conectada ao Python real.*
+        </p>
+      </div>
+
+      <div class="demo-card">
+        <a href="#">Abrir Demo do Sistema</a>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    © 2025 AriLine — Todos os direitos reservados.
+  </footer>
+
+  <script>
+    // 1. Pega o botão pelo ID que criamos
+    const btnAuth = document.getElementById('btn-auth');
+
+    // 2. Verifica na memória se o usuário está logado
+    const isLogado = sessionStorage.getItem('usuarioLogado');
+
+    // 3. Se estiver logado, muda a aparência e função do botão
+    if (isLogado) {
+      btnAuth.textContent = "Sair do Sistema"; // Muda o texto
+      btnAuth.href = "#"; // Remove o link para login.html
+
+      // Estilo visual para indicar "Logout" (Vermelho)
+      btnAuth.style.borderColor = "#c0392b";
+      btnAuth.style.color = "#c0392b";
+
+      // Efeito Hover para o botão de sair
+      btnAuth.onmouseover = function() {
+        this.style.backgroundColor = "#c0392b";
+        this.style.color = "white";
+      };
+      btnAuth.onmouseout = function() {
+        this.style.backgroundColor = "transparent";
+        this.style.color = "#c0392b";
+      };
+
+      // 4. Ação de clicar para SAIR
+      btnAuth.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        // Confirmação (opcional)
+        if (confirm("Tem certeza que deseja sair?")) {
+          sessionStorage.clear(); // Limpa a memória
+          window.location.href = "index.html"; // Recarrega a página (o botão voltará a ser Login)
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>
