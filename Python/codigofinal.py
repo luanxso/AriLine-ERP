@@ -1,27 +1,16 @@
-# Importações necessárias
-import tkinter as tk # Biblioteca principal para interface gráfica (GUI)
-from tkinter import ttk, messagebox # Componentes modernos (themed widgets) e caixas de diálogo
-import sqlite3 # Biblioteca para interagir com o banco de dados SQLite
-from datetime import datetime, timedelta # Para manipulação de datas e cálculo de duração
-# from PIL import Image, ImageTk # REMOVIDO: A importação da PIL foi comentada.
+import tkinter as tk
+from tkinter import ttk, messagebox
+import sqlite3
+from datetime import datetime, timedelta
 
-# Define o nome do arquivo do banco de dados SQLite
 DB_NAME = "producao.db"
 
-# --- 💾 Funções Simples de Conexão e Inicialização do Banco de Dados ---
-
 def conectar_db():
-    """
-    Estabelece a conexão com o banco de dados e configura o Row_Factory.
-    Mantém detect_types para garantir que datas do SQLite sejam lidas como objetos datetime do Python.
-    """
     try:
-        # 1. Conexão ao DB: O arquivo 'producao.db' é criado se não existir.
         conexao = sqlite3.connect(
             DB_NAME, 
-            detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES # Garante a leitura correta de TIMESTAMP
+            detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES
         )
-        # 2. Configuração: Permite acesso às colunas do resultado por nome (ex: resultado['coluna'])
         conexao.row_factory = sqlite3.Row 
         return conexao
     except sqlite3.Error as e:
@@ -29,14 +18,11 @@ def conectar_db():
         return None
 
 def inicializar_db():
-    """Cria as tabelas e insere dados iniciais se o banco estiver vazio."""
     conexao = conectar_db()
     if not conexao:
         return
 
     cursor = conexao.cursor()
-    
-    # --- Criação de Tabelas ---
     
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS usuarios (
@@ -58,7 +44,7 @@ def inicializar_db():
         maquina TEXT NOT NULL,
         meta_hora INTEGER NOT NULL,
         produzido INTEGER DEFAULT 0,
-        status TEXT NOT NULL, -- PENDENTE, PRODUZINDO, FINALIZADA
+        status TEXT NOT NULL,
         inicio_producao TIMESTAMP
     )""")
     
@@ -76,48 +62,39 @@ def inicializar_db():
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS maquinas_status (
         maquina TEXT PRIMARY KEY,
-        status TEXT NOT NULL -- LIVRE, PRODUZINDO, PARADA
+        status TEXT NOT NULL
     )""")
     
     conexao.commit()
 
-    # --- Inserção de Dados Iniciais (Executada SOMENTE se a tabela de usuários estiver vazia) ---
     cursor.execute("SELECT 1 FROM usuarios LIMIT 1")
     if not cursor.fetchone():
         
-        # Dados de Usuários
         usuarios_iniciais = [
             ("operador", "123", "OPERADOR"),
             ("gestor", "123", "GESTOR"),
             ("admin", "123", "ADMIN"),
         ]
-        # String SQL passada diretamente
         cursor.executemany("INSERT OR IGNORE INTO usuarios (usuario, senha, perfil) VALUES (?, ?, ?)", usuarios_iniciais)
 
-        # Motivos de Parada
         motivos_iniciais = [
             ("Falta de matéria-prima",), ("Manutenção não planejada",), 
             ("Troca de ferramenta",), ("Ajuste de máquina",), ("Outros",)
         ]
-        # String SQL passada diretamente
         cursor.executemany("INSERT OR IGNORE INTO motivos_parada (motivo) VALUES (?)", motivos_iniciais)
         
-        # Dados de OPs Iniciais
         inicio_op1 = datetime.now() - timedelta(hours=3, minutes=30)
         inicio_op2 = datetime.now() - timedelta(hours=1, minutes=15)
         
-        # OP 1: Já em andamento
         cursor.execute(
             "INSERT INTO ordens_producao (op, produto, planejado, maquina, meta_hora, produzido, status, inicio_producao) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
             ("OP-2025-001", "Chapa A", 500, "Linha 1", 100, 350, "PRODUZINDO", inicio_op1)
         )
-        # OP 2: Pendente (inicio_producao deve ser None)
         cursor.execute(
             "INSERT INTO ordens_producao (op, produto, planejado, maquina, meta_hora, produzido, status, inicio_producao) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
             ("OP-2025-002", "Perfil B", 800, "Linha 2", 150, 0, "PENDENTE", None)
         )
         
-        # Status das Máquinas iniciais
         cursor.execute("INSERT OR REPLACE INTO maquinas_status (maquina, status) VALUES (?, ?)", ("Linha 1", "PRODUZINDO"))
         cursor.execute("INSERT OR REPLACE INTO maquinas_status (maquina, status) VALUES (?, ?)", ("Linha 2", "LIVRE"))
         cursor.execute("INSERT OR REPLACE INTO maquinas_status (maquina, status) VALUES (?, ?)", ("Linha 3", "LIVRE"))
@@ -126,18 +103,15 @@ def inicializar_db():
     
     conexao.close()
 
-# --- 🚀 Classe Principal da Aplicação ---
 class AplicacaoProducao(tk.Tk):
-    """Classe principal da aplicação Tkinter. Gerencia as telas (Controlador)."""
     def __init__(self):
         super().__init__()
         self.title("Sistema de Controle de Produção Industrial (AriLine)")
         self.geometry("800x600")
         
-        # Definição de estilos para os frames coloridos (Header e Footer)
         style = ttk.Style()
-        style.configure("Header.TFrame", background="#2C3E50") # Azul Escuro
-        style.configure("Footer.TFrame", background="#BDC3C7") # Cinza Claro
+        style.configure("Header.TFrame", background="#2C3E50")
+        style.configure("Footer.TFrame", background="#BDC3C7")
 
         inicializar_db()
         
@@ -175,7 +149,6 @@ class AplicacaoProducao(tk.Tk):
         TelaCadastro(self.container, self).pack(fill="both", expand=True)
 
     def realizar_login(self, usuario, senha):
-        """Verifica as credenciais e redireciona para a tela correta."""
         conexao = conectar_db()
         if not conexao: return False
         cursor = conexao.cursor()
@@ -202,45 +175,31 @@ class AplicacaoProducao(tk.Tk):
             messagebox.showerror("Erro de Login", "Usuário ou senha incorretos.")
             return False
 
-# --- 🔐 Tela de Login ---
 class TelaLogin(ttk.Frame):
     def __init__(self, master, app_controller):
-        # super().__init__ sem padding, pois o layout será reestruturado
         super().__init__(master) 
         self.app_controller = app_controller
         self.criar_widgets()
 
     def criar_widgets(self):
         
-        # CÓDIGO DE LOGO REMOVIDO
-        
-        # 1. HEADER (Cabeçalho com cor de fundo)
         header_frame = ttk.Frame(self, height=50, style="Header.TFrame") 
         header_frame.pack(side="top", fill="x")
         
-        # O Label tem que ter a mesma cor de fundo
         ttk.Label(header_frame, text="Sistema de Controle de Produção Industrial - AriLine", 
                   font=("Arial", 14, "bold"), foreground="white", 
                   background="#2C3E50").pack(pady=10)
 
-
-        # 2. FOOTER (Rodapé com cor de fundo)
         footer_frame = ttk.Frame(self, height=30, style="Footer.TFrame")
         footer_frame.pack(side="bottom", fill="x")
         
-        # O Label tem que ter a mesma cor de fundo
         ttk.Label(footer_frame, 
                   font=("Arial", 8), background="#BDC3C7").pack(pady=5)
 
-
-        # 3. CONTENT (Conteúdo Principal) - Ocupa todo o espaço restante
         content_frame = ttk.Frame(self)
         content_frame.pack(fill="both", expand=True) 
         
-        # --- Conteúdo do Login Centralizado ---
-
         login_block_frame = ttk.Frame(content_frame)
-        # Uso de place() para centralizar dinamicamente o bloco de login
         login_block_frame.place(relx=0.5, rely=0.5, anchor="center") 
         
         ttk.Label(login_block_frame, text="Acesso ao Sistema", font=("Arial", 24, "bold")).pack(pady=(10, 20))
@@ -265,12 +224,11 @@ class TelaLogin(ttk.Frame):
         senha = self.pass_entry.get()
         self.app_controller.realizar_login(usuario, senha)
 
-# --- 🏭 Tela de Apontamento do Operador ---
 class TelaOperador(ttk.Frame):
     def __init__(self, master, app_controller, operador):
         super().__init__(master, padding="20")
         self.app_controller = app_controller
-        self.operador = operador # <-- CORREÇÃO 1: Atribuição de self.operador para evitar AttributeError
+        self.operador = operador
         
         self.op_atual = self._encontrar_op_ativa()
         self.status_maquina = self._get_maquina_status_db(self.op_atual)
@@ -279,7 +237,6 @@ class TelaOperador(ttk.Frame):
         self.atualizar_interface()
 
     def _get_op_data_db(self, op):
-        """Busca dados de uma OP específica."""
         conexao = conectar_db()
         if not conexao:
             return None
@@ -290,11 +247,9 @@ class TelaOperador(ttk.Frame):
         resultado = cursor.fetchone()
         
         conexao.close()
-        # CORREÇÃO 2: Garante que o resultado seja um dicionário (mais seguro)
         return dict(resultado) if resultado else None 
 
     def _get_status_by_maquina_name(self, maquina_nome):
-        """Obtém o status atual de uma máquina específica pelo nome."""
         conexao = conectar_db()
         if not conexao:
             return "LIVRE"
@@ -305,11 +260,9 @@ class TelaOperador(ttk.Frame):
         resultado = cursor.fetchone()
         
         conexao.close()
-        # Se não encontrar a máquina, assume que está LIVRE
         return resultado['status'] if resultado else "LIVRE"
 
     def _get_maquina_status_db(self, op_atual):
-        """Obtém o status atual da máquina associada à OP (ou LIVRE se não houver OP)."""
         conexao = conectar_db()
         if not conexao: return "LIVRE"
         cursor = conexao.cursor()
@@ -328,7 +281,6 @@ class TelaOperador(ttk.Frame):
         return status
 
     def _encontrar_op_ativa(self):
-        """Busca a primeira OP com status 'PRODUZINDO'."""
         conexao = conectar_db()
         if not conexao:
             return None
@@ -342,7 +294,6 @@ class TelaOperador(ttk.Frame):
         return resultado['op'] if resultado else None
 
     def _get_op_pendentes(self):
-        """Lista todas as OPs com status 'PENDENTE'."""
         conexao = conectar_db()
         if not conexao:
             return []
@@ -356,16 +307,13 @@ class TelaOperador(ttk.Frame):
         return [r['op'] for r in resultados]
 
     def criar_widgets(self):
-        # Usa self.operador (agora corrigido)
         ttk.Label(self, text=f"Terminal de Apontamento", font=("Arial", 18, "bold")).pack(pady=10)
 
         status_frame = ttk.LabelFrame(self, text="Status Atual", padding="10")
         status_frame.pack(fill="x", pady=10)
 
-        # Variáveis de controle
         self.op_var = tk.StringVar()
         
-        # Display de Status
         self.lbl_op = ttk.Label(status_frame, text="OP: N/A", font=("Arial", 12))
         self.lbl_op.grid(row=0, column=0, padx=5, pady=5, sticky="w")
         
@@ -382,7 +330,6 @@ class TelaOperador(ttk.Frame):
         self.lbl_progresso.grid(row=2, column=0, padx=5, pady=5, sticky="w", columnspan=2)
     
 
-        # Iniciar OP
         op_frame = ttk.LabelFrame(self, text="Iniciar Nova OP", padding="10")
         op_frame.pack(fill="x", pady=10)
         
@@ -394,11 +341,9 @@ class TelaOperador(ttk.Frame):
         self.btn_iniciar = ttk.Button(op_frame, text="Iniciar Produção", command=self.iniciar_op)
         self.btn_iniciar.pack(side="left", padx=10)
 
-        # Botões de Ação
         acoes_frame = ttk.Frame(self)
         acoes_frame.pack(pady=20)
         
-        # Configuração de botões com cores (usando tk.Button para cores de fundo)
         self.btn_produzir = tk.Button(acoes_frame, text="+1 Unidade Produzida", command=self.registrar_producao, 
                                       font=("Arial", 14, "bold"), bg="#4CAF50", fg="white", height=3, width=25)
         self.btn_produzir.grid(row=0, column=0, padx=10, pady=10)
@@ -415,7 +360,6 @@ class TelaOperador(ttk.Frame):
 
 
     def _calcular_oee_simulado(self, op_data):
-        """Calcula o OEE (Overall Equipment Effectiveness) de forma simplificada."""
         if op_data["status"] != "PRODUZINDO" or op_data.get("inicio_producao") is None:
             return "N/A"
 
@@ -428,13 +372,11 @@ class TelaOperador(ttk.Frame):
         if not conexao: return "0.0%"
         cursor = conexao.cursor()
 
-        # 1. Tempo parado já registrado
         sql_paradas = "SELECT SUM(duracao_seg) AS total_parado FROM paradas_log WHERE op = ? AND fim IS NOT NULL"
         cursor.execute(sql_paradas, (op_data['op'],))
         resultado_parada = cursor.fetchone()
         tempo_parado_seg = resultado_parada['total_parado'] or 0
 
-        # 2. Parada aberta
         sql_parada_aberta = "SELECT inicio FROM paradas_log WHERE op = ? AND fim IS NULL ORDER BY id DESC LIMIT 1"
         cursor.execute(sql_parada_aberta, (op_data['op'],))
         parada_aberta = cursor.fetchone()
@@ -448,26 +390,20 @@ class TelaOperador(ttk.Frame):
         if tempo_operacional_hr <= 0:
             return "0.0%"
 
-        # Cálculo Simplificado
         quantidade_esperada = tempo_operacional_hr * meta_hora
         
-        # OEE = (Produzido / Quantidade Esperada) * 100
         performance = (produzido / quantidade_esperada) if quantidade_esperada > 0 else 0
         
         oee = performance * 100
         
-        # Limita o OEE a 100% para evitar valores irreais em caso de produção rápida
         return f"{min(oee, 100):.1f}%"
 
     def atualizar_interface(self):
-        # Garante que temos a OP mais recente e o status da máquina
         self.op_atual = self._encontrar_op_ativa()
         self.status_maquina = self._get_maquina_status_db(self.op_atual)
         op_data = self._get_op_data_db(self.op_atual)
         
-        # 1. Atualiza Status Display
         if self.op_atual and op_data:
-            # OP EM ANDAMENTO
             self.lbl_op.config(text=f"OP: {op_data['op']}")
             self.lbl_produto.config(text=f"Produto: {op_data['produto']}")
             self.lbl_maquina.config(text=f"Máquina: {op_data['maquina']}")
@@ -479,59 +415,42 @@ class TelaOperador(ttk.Frame):
             progresso_percent = (op_data['produzido'] / op_data['planejado']) * 100
             self.lbl_progresso.config(text=f"Progresso: {op_data['produzido']} / {op_data['planejado']} ({progresso_percent:.1f}%)")
         
-
-            em_andamento = True
-            
-            # --- Controle da Seleção de OP (Dropdown) - CORREÇÃO ---
-            self.op_var.set(self.op_atual) # Exibe a OP atual no campo de seleção
-            # Desabilita o dropdown e garante que ele mostre apenas a OP ativa
+            self.op_var.set(self.op_atual)
             self.op_dropdown.config(state='disabled', values=[self.op_atual])
-            self.btn_iniciar.config(state='disabled') # Desabilita o botão Iniciar
+            self.btn_iniciar.config(state='disabled')
             
         else:
-            # MÁQUINA LIVRE / SEM OP ATIVA
             self.lbl_op.config(text="OP: N/A")
             self.lbl_produto.config(text="Produto: N/A")
             
-            maquina_livre = "Linha 2" # Defina uma máquina padrão para seleção inicial
+            maquina_livre = "Linha 2"
             self.lbl_maquina.config(text=f"Máquina: {maquina_livre}")
             self.lbl_status.config(text="Status: LIVRE", foreground="blue")
             self.lbl_progresso.config(text="Progresso: 0 / 0 (0%)")
             
-            em_andamento = False
-            
-            # --- Controle da Seleção de OP (Dropdown) - CORREÇÃO ---
-            op_pendentes = self._get_op_pendentes() # Busca a lista de pendentes
-            # Habilita o dropdown e atualiza a lista de pendentes
+            op_pendentes = self._get_op_pendentes()
             self.op_dropdown.config(values=op_pendentes, state='readonly') 
             
-            # Garante que o valor selecionado é um dos valores válidos ou limpa
             current_selection = self.op_var.get()
             if current_selection not in op_pendentes:
-                 self.op_var.set("") # Limpa a seleção
+                 self.op_var.set("")
             
-            # Habilita/Desabilita Iniciar conforme lista de OPs Pendentes
             self.btn_iniciar.config(state='normal' if op_pendentes else 'disabled') 
             
-        # 2. Configurações dos Botões (Produzir, Parada, Finalizar)
-        # ... (O restante da sua lógica para habilitar/desabilitar botões deve vir aqui)
-        
-        # Exemplo de controle de botões (parte final da sua função original)
         if self.status_maquina == "PRODUZINDO":
             self.btn_produzir.config(state="normal", text="Apontar Unidade Produzida", bg="#4CAF50")
             self.btn_parada.config(state="normal", text="Apontar Parada", bg="#FF9800")
             self.btn_finalizar.config(state="normal", bg="#F44336")
         elif self.status_maquina == "PARADA":
             self.btn_produzir.config(state="disabled", text="Máquina Parada", bg="gray")
-            self.btn_parada.config(state="normal", text="Retornar Produção", bg="#2196F3") # Azul para retorno
+            self.btn_parada.config(state="normal", text="Retornar Produção", bg="#2196F3")
             self.btn_finalizar.config(state="disabled", bg="gray")
-        else: # LIVRE
+        else:
             self.btn_produzir.config(state="disabled", text="Selecione uma OP", bg="gray")
             self.btn_parada.config(state="disabled", text="Apontar Parada", bg="gray")
             self.btn_finalizar.config(state="disabled", bg="gray")
             
-        # Agendamento para atualização periódica dos dados de tempo real
-        self.after(1000, self.atualizar_interface) # Atualiza a cada 1 segundo
+        self.after(1000, self.atualizar_interface)
 
     def iniciar_op(self):
         
@@ -555,11 +474,9 @@ class TelaOperador(ttk.Frame):
 
         agora = datetime.now()
 
-        # 1. Atualiza status da OP
         sql_op = "UPDATE ordens_producao SET status = 'PRODUZINDO', inicio_producao = ? WHERE op = ?"
         cursor.execute(sql_op, (agora, op))
 
-        # 2. Atualiza status da máquina
         sql_maquina = "INSERT OR REPLACE INTO maquinas_status (maquina, status) VALUES (?, ?)"
         cursor.execute(sql_maquina, (maquina, "PRODUZINDO"))
 
@@ -582,7 +499,6 @@ class TelaOperador(ttk.Frame):
         sql = "UPDATE ordens_producao SET produzido = produzido + 1 WHERE op = ?"
         cursor.execute(sql, (self.op_atual,))
         
-        # Check para ver se atingiu o planejado
         op_data = self._get_op_data_db(self.op_atual)
         if op_data and op_data['produzido'] >= op_data['planejado']:
              messagebox.showwarning("Atenção", f"OP {self.op_atual} atingiu ou excedeu a quantidade planejada! Considere finalizar.")
@@ -603,15 +519,14 @@ class TelaOperador(ttk.Frame):
         parada_window = tk.Toplevel(self)
         parada_window.title("Apontar Parada")
         parada_window.geometry("350x200")
-        parada_window.transient(self) # Mantém a janela no topo
-        parada_window.grab_set() # Bloqueia outras janelas
+        parada_window.transient(self)
+        parada_window.grab_set()
 
         ttk.Label(parada_window, text="Selecione o Motivo:", font=("Arial", 12, "bold")).pack(pady=10)
         
         motivo_var = tk.StringVar()
         motivo_dropdown = ttk.Combobox(parada_window, textvariable=motivo_var, state="readonly", width=35)
         
-        # Busca motivos no DB
         conexao = conectar_db()
         cursor = conexao.cursor()
         motivos_db = cursor.execute("SELECT motivo FROM motivos_parada").fetchall()
@@ -619,7 +534,7 @@ class TelaOperador(ttk.Frame):
         
         motivo_dropdown['values'] = [r['motivo'] for r in motivos_db]
         motivo_dropdown.pack(pady=5, padx=10)
-        motivo_dropdown.current(0) # Seleciona o primeiro por padrão
+        motivo_dropdown.current(0)
 
         def confirmar_parada():
             motivo = motivo_var.get()
@@ -640,11 +555,9 @@ class TelaOperador(ttk.Frame):
         if not conexao: return
         cursor = conexao.cursor()
 
-        # 1. Altera status da máquina para PARADA
         sql_maquina = "INSERT OR REPLACE INTO maquinas_status (maquina, status) VALUES (?, ?)"
         cursor.execute(sql_maquina, (maquina, "PARADA"))
 
-        # 2. Registra log de parada (com fim nulo)
         sql_log = "INSERT INTO paradas_log (op, motivo, inicio, operador) VALUES (?, ?, ?, ?)"
         cursor.execute(sql_log, (self.op_atual, motivo, agora, self.operador))
 
@@ -665,11 +578,9 @@ class TelaOperador(ttk.Frame):
         if not conexao: return
         cursor = conexao.cursor()
 
-        # 1. Altera status da máquina para PRODUZINDO
         sql_maquina = "INSERT OR REPLACE INTO maquinas_status (maquina, status) VALUES (?, ?)"
         cursor.execute(sql_maquina, (maquina, "PRODUZINDO"))
 
-        # 2. Finaliza o registro de parada mais recente (onde FIM é NULL)
         sql_select_log = "SELECT id, inicio FROM paradas_log WHERE op = ? AND fim IS NULL ORDER BY id DESC LIMIT 1"
         cursor.execute(sql_select_log, (self.op_atual,))
         log_recente = cursor.fetchone()
@@ -709,11 +620,9 @@ class TelaOperador(ttk.Frame):
         if not conexao: return
         cursor = conexao.cursor()
 
-        # 1. Atualiza status da OP
         sql_op = "UPDATE ordens_producao SET status = 'FINALIZADA' WHERE op = ?"
         cursor.execute(sql_op, (self.op_atual,))
 
-        # 2. Atualiza status da máquina para LIVRE
         sql_maquina = "INSERT OR REPLACE INTO maquinas_status (maquina, status) VALUES (?, ?)"
         cursor.execute(sql_maquina, (maquina, "LIVRE"))
 
@@ -724,7 +633,6 @@ class TelaOperador(ttk.Frame):
         self.op_atual = None
         self.atualizar_interface()
 
-# --- 📊 Painel do Gestor (Dashboard Simples) ---
 class PainelGestor(ttk.Frame):
     def __init__(self, master, app_controller):
         super().__init__(master, padding="20")
@@ -734,7 +642,6 @@ class PainelGestor(ttk.Frame):
         self.after(3000, self.atualizar_dados_periodicamente)
 
     def _calcular_oee_simulado(self, op_data):
-        """Calcula o OEE (Overall Equipment Effectiveness) de forma simplificada."""
         if op_data["status"] != "PRODUZINDO" or op_data.get("inicio_producao") is None:
             return "N/A"
 
@@ -747,13 +654,11 @@ class PainelGestor(ttk.Frame):
         if not conexao: return "0.0%"
         cursor = conexao.cursor()
 
-        # 1. Tempo parado já registrado
         sql_paradas = "SELECT SUM(duracao_seg) AS total_parado FROM paradas_log WHERE op = ? AND fim IS NOT NULL"
         cursor.execute(sql_paradas, (op_data['op'],))
         resultado_parada = cursor.fetchone()
         tempo_parado_seg = resultado_parada['total_parado'] or 0
 
-        # 2. Parada aberta (se houver)
         sql_parada_aberta = "SELECT inicio FROM paradas_log WHERE op = ? AND fim IS NULL ORDER BY id DESC LIMIT 1"
         cursor.execute(sql_parada_aberta, (op_data['op'],))
         parada_aberta = cursor.fetchone()
@@ -792,7 +697,6 @@ class PainelGestor(ttk.Frame):
         self.op_frame = ttk.LabelFrame(self, text="Progresso das Ordens de Produção", padding="10")
         self.op_frame.pack(fill="both", expand=True, pady=10)
         
-        # Tabela Treeview para OPs
         columns = ("op", "maquina", "produto", "planejado", "produzido", "status", "meta", "oee")
         self.tree = ttk.Treeview(self.op_frame, columns=columns, show="headings")
 
@@ -805,7 +709,6 @@ class PainelGestor(ttk.Frame):
         self.tree.heading("meta", text="Meta/H")
         self.tree.heading("oee", text="OEE")
         
-        # Configurar larguras
         self.tree.column("op", width=80, anchor=tk.CENTER)
         self.tree.column("maquina", width=80, anchor=tk.CENTER)
         self.tree.column("produto", width=100)
@@ -822,7 +725,6 @@ class PainelGestor(ttk.Frame):
         if not conexao: return
         cursor = conexao.cursor()
 
-        # 1. Atualizar Status das Máquinas
         for widget in self.maquinas_frame.winfo_children():
             widget.destroy()
 
@@ -837,7 +739,6 @@ class PainelGestor(ttk.Frame):
             ttk.Label(frame, text=f"{row['maquina']}:", font=("Arial", 10, "bold")).pack(side="left")
             ttk.Label(frame, text=status, font=("Arial", 10, "bold"), foreground=cor).pack(side="left", padx=5)
 
-        # 2. Atualizar Tabela de OPs
         for i in self.tree.get_children():
             self.tree.delete(i)
 
@@ -845,7 +746,7 @@ class PainelGestor(ttk.Frame):
         conexao.close()
         
         for row in ops_db:
-            op_data = dict(row) # Converte para dict
+            op_data = dict(row)
             
             oee = self._calcular_oee_simulado(op_data)
             meta_display = f"{op_data['meta_hora']}/h"
@@ -855,7 +756,6 @@ class PainelGestor(ttk.Frame):
                                      op_data['planejado'], op_data['produzido'], op_data['status'], 
                                      meta_display, oee))
 
-# --- 📋 Tela de Cadastro (Admin) ---
 class TelaCadastro(ttk.Frame):
     def __init__(self, master, app_controller):
         super().__init__(master, padding="20")
@@ -868,24 +768,19 @@ class TelaCadastro(ttk.Frame):
         notebook = ttk.Notebook(self)
         notebook.pack(pady=10, padx=10, fill="both", expand=True)
 
-        # Aba de Cadastro de OPs
         op_tab = ttk.Frame(notebook, padding="10")
         self._criar_cadastro_op(op_tab)
         notebook.add(op_tab, text="Cadastrar OP")
 
-        # Aba de Cadastro de Motivos de Parada
         motivo_tab = ttk.Frame(notebook, padding="10")
         self._criar_cadastro_motivo(motivo_tab)
         notebook.add(motivo_tab, text="Motivos de Parada")
         
-        # O botão fica dentro de um frame para alinhamento
         btn_frame = ttk.Frame(self)
         btn_frame.pack(pady=10)
         
-        # ESTA É A LINHA DO BOTÃO PARA O PAINEL DO GESTOR
         ttk.Button(btn_frame, text="Visualizar Painel do Gestor", command=self.app_controller.mostrar_painel_gestor).pack(side="left", padx=10)
         
-        # Botão de Sair/Login
         ttk.Button(btn_frame, text="Sair / Voltar para Login", command=self.app_controller.mostrar_tela_login).pack(side="left", padx=10)
 
     def _criar_cadastro_op(self, master):
@@ -936,21 +831,18 @@ class TelaCadastro(ttk.Frame):
         if not conexao: return
         cursor = conexao.cursor()
 
-        # Verifica se a OP já existe
         cursor.execute("SELECT 1 FROM ordens_producao WHERE op = ?", (op,))
         if cursor.fetchone():
             conexao.close()
             messagebox.showwarning("Atenção", f"A OP '{op}' já está cadastrada.")
             return
 
-        # Adiciona a nova OP ao DB
         sql_op = """
         INSERT INTO ordens_producao (op, produto, planejado, maquina, meta_hora, produzido, status, inicio_producao) 
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         """
         cursor.execute(sql_op, (op, produto, planejado, maquina, meta, 0, "PENDENTE", None))
 
-        # Garante que a máquina existe na tabela de status (começa como LIVRE)
         sql_maquina_status = "INSERT OR IGNORE INTO maquinas_status (maquina, status) VALUES (?, ?)"
         cursor.execute(sql_maquina_status, (maquina, "LIVRE"))
 
@@ -959,7 +851,7 @@ class TelaCadastro(ttk.Frame):
 
         messagebox.showinfo("Sucesso", f"Ordem de Produção '{op}' cadastrada com sucesso!")
         for var in self.vars.values():
-            var.set("") # Limpa os campos
+            var.set("")
 
 
     def _criar_cadastro_motivo(self, master):
@@ -973,7 +865,6 @@ class TelaCadastro(ttk.Frame):
         
         ttk.Label(master, text="Motivos Atuais:").pack(pady=(15, 5))
         
-        # Lista de Motivos Atuais
         self.lista_motivos = tk.Listbox(master, height=8, width=50)
         self.lista_motivos.pack(pady=5, fill="x")
         self.atualizar_lista_motivos()
@@ -1002,7 +893,6 @@ class TelaCadastro(ttk.Frame):
         if not conexao: return
         cursor = conexao.cursor()
 
-        # Insere no DB (INSERT OR IGNORE evita duplicatas)
         cursor.execute("INSERT OR IGNORE INTO motivos_parada (motivo) VALUES (?)", (motivo,))
         
         if cursor.rowcount > 0:
@@ -1016,7 +906,6 @@ class TelaCadastro(ttk.Frame):
         conexao.close()
 
 
-# --- 🏃 Execução Principal ---
 if __name__ == "__main__":
     app = AplicacaoProducao()
     app.mainloop()
