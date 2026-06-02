@@ -1,334 +1,485 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="light">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Sobre a AriLine</title>
-  <link rel="icon" href="IMG/icon.png" type="image/x-icon">
+  <title>Quem Somos — AriLine ERP Industrial</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
   <style>
     :root {
-      --bg: #f5f8fb;
-      --nav: #ffffff;
-      --primary: #143D59;
-      --accent: #4AB8FF;
-      --muted: #5B6A72;
-      --dark: #0a1216;
+      --bg: #F0F2F5;
+      --bg2: #E4E8EE;
+      --surface: #FFFFFF;
+      --surface2: #E8ECF1;
+      --border: rgba(30,40,55,0.11);
+      --nav-bg: #0F1923;
+      --text: #0F1923;
+      --text2: #5A6578;
+      --primary: #0F1923;
+      --accent: #1A6FD4;
+      --accent2: #3B8FEA;
+      --cta: #1A6FD4;
+      --cta-hover: #1258B0;
+      --subnav-bg: #08111A;
+      --card-bg: #FFFFFF;
+      --card-border: rgba(30,40,55,0.09);
+      --tag-bg: rgba(26,111,212,0.09);
+      --tag-text: #1A6FD4;
       --maxw: 1200px;
-      --radius: 8px;
-      --cta: #e57e3c;
-      font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      --radius: 4px;
+      font-family: 'Barlow', system-ui, sans-serif;
     }
 
-    * {
-      box-sizing: border-box;
+    [data-theme="dark"] {
+      --bg: #0C1117;
+      --bg2: #111820;
+      --surface: #151D27;
+      --surface2: #0E1520;
+      --border: rgba(180,200,230,0.08);
+      --nav-bg: #070E15;
+      --text: #D8E4F0;
+      --text2: #6A84A0;
+      --primary: #D8E4F0;
+      --accent: #3B8FEA;
+      --accent2: #5AAAF5;
+      --cta: #3B8FEA;
+      --cta-hover: #1A6FD4;
+      --subnav-bg: #070E15;
+      --card-bg: #151D27;
+      --card-border: rgba(180,200,230,0.08);
+      --tag-bg: rgba(59,143,234,0.12);
+      --tag-text: #5AAAF5;
     }
 
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
     body {
-      margin: 0;
       background: var(--bg);
-      color: #0b1113;
+      color: var(--text);
+      transition: background 0.4s, color 0.4s;
+      line-height: 1.55;
+      font-size: 16px;
     }
 
-    .container {
-      max-width: var(--maxw);
-      margin: 0 auto;
-      padding: 0 20px;
-    }
+    .container { max-width: var(--maxw); margin: 0 auto; padding: 0 28px; }
 
-    /* header */
-    .topbar {
-      background: var(--nav);
-      border-bottom: 1px solid rgba(3, 19, 33, 0.04);
-    }
-
+    /* ── TOPBAR ── */
+    .topbar { background: var(--nav-bg); position: sticky; top: 0; z-index: 100; }
     .topbar .row {
-      display: flex;
-      align-items: center;
-      height: 68px;
-      position: relative;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
     }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      flex: 1;
-      gap: 18px;
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .brand-mark {
+      width: 34px; height: 34px; background: var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 20px; font-weight: 900; color: #fff; letter-spacing: -1px;
     }
-
-    /* menu central */
-    .primary-nav {
-      position: relative;
-      left: auto;
-      transform: none;
-      margin: 0 auto;
-      display: flex;
-      gap: 28px;
-      align-items: center;
+    .brand-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 22px; font-weight: 900;
+      color: #DCE8F8; letter-spacing: 0.5px; text-transform: uppercase;
     }
+    .brand-name span { color: var(--accent); }
 
+    .primary-nav { display: flex; gap: 28px; align-items: center; }
     .primary-nav a {
-      font-weight: 600;
-      color: var(--primary);
-      text-decoration: none;
-      font-size: 15px;
+      font-weight: 600; color: rgba(210,230,248,0.60);
+      text-decoration: none; font-size: 13.5px;
+      text-transform: uppercase; letter-spacing: 0.8px; transition: color 0.2s;
     }
+    .primary-nav a:hover, .primary-nav a.active { color: #DCE8F8; }
 
-    /* direita */
-    .actions {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 18px;
-      flex: 1;
+    .nav-actions { display: flex; align-items: center; gap: 10px; }
+    .theme-toggle {
+      width: 36px; height: 36px;
+      border: 1px solid rgba(210,230,248,0.18); background: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(210,230,248,0.55); transition: all 0.2s;
     }
-
-    .ctahover {
-      display: inline-block;
-      background: var(--cta);
-      color: #fff;
-      padding: 14px 28px;
-      border-radius: 10px;
-      text-decoration: none;
-      font-weight: 600;
-      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+    .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-ghost {
+      text-decoration: none; color: rgba(210,230,248,0.65);
+      font-weight: 600; font-size: 12.5px;
+      padding: 8px 18px; border: 1px solid rgba(210,230,248,0.16);
+      text-transform: uppercase; letter-spacing: 0.8px; transition: all 0.2s;
     }
+    .btn-ghost:hover { border-color: var(--accent); color: #DCE8F8; }
 
-    .login-btn {
-      display: inline-block;
-      text-decoration: none;
-      color: var(--primary);
-      font-weight: 600;
-      padding: 12px 24px;
-      border: 2px solid rgba(20, 61, 89, 0.2);
-      border-radius: 10px;
-      transition: all 0.2s ease;
-    }
-
-    .login-btn:hover {
-      border-color: var(--primary);
-      background: var(--primary);
-      color: #fff;
-    }
-
-    /* suvnav preto */
+    /* ── SUBNAV ── */
     .subnav {
-      background: #000;
-      color: #fff;
+      background: #070E15;
+      border-bottom: 1px solid rgba(180,210,240,0.07);
     }
-
     .subnav .row {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 56px;
-      gap: 28px;
+      display: flex; justify-content: flex-start; align-items: center;
+      height: 44px; gap: 0;
     }
-
-    .segments {
-      display: flex;
-      align-items: center;
-      gap: 18px;
+    .subnav-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      color: var(--accent); font-size: 11px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 2px;
+      padding-right: 24px; margin-right: 24px;
+      border-right: 1px solid rgba(255,255,255,0.08);
     }
-
-    .segments .label {
-      color: var(--accent);
-      border-right: 1px solid rgba(255, 255, 255, 0.3);
-      padding-right: 12px;
-      margin-right: 8px;
-      font-weight: 700;
+    .subnav-links { display: flex; gap: 20px; list-style: none; }
+    .subnav-links a {
+      text-decoration: none; color: rgba(255,255,255,0.45);
+      font-size: 12.5px; font-weight: 600; letter-spacing: 0.5px;
+      text-transform: uppercase; transition: color 0.2s;
     }
+    .subnav-links a:hover, .subnav-links a.active { color: rgba(255,255,255,0.9); }
 
-    .segments ul {
-      list-style: none;
-      display: flex;
-      gap: 22px;
-      padding: 0;
-      margin: 0;
-    }
-
-    .segments a {
-      text-decoration: none;
-      color: #ddd;
-      font-size: 14px;
-      position: relative;
-      padding-bottom: 4px;
-    }
-
-    .segments a:hover {
-      color: #fff;
-    }
-
-    .subnav a.active {
-      color: var(--accent);
-      position: relative;
-    }
-
-    /* hero com video */
+    /* ── HERO ── */
     .hero {
-      position: relative;
-      height: 50vh;
-      min-height: 520px;
-      overflow: hidden;
-      border-bottom-left-radius: 28px;
-      border-bottom-right-radius: 28px;
+      position: relative; min-height: 540px;
+      display: flex; align-items: flex-end; overflow: hidden;
     }
-
-    .hero-video {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transform: scale(1.03);
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: url('https://images.unsplash.com/photo-1581092335397-9583eb92d232?q=80&w=2000&auto=format&fit=crop');
+      background-size: cover; background-position: center 35%;
+      filter: grayscale(25%) contrast(1.05);
     }
-
     .hero-overlay {
-      position: absolute;
-      inset: 0;
+      position: absolute; inset: 0;
       background: linear-gradient(
-        180deg,
-        rgba(0, 0, 0, 0.45) 10%,
-        rgba(0, 0, 0, 0.42) 40%,
-        rgba(0, 0, 0, 0.35) 70%,
-        rgba(0, 0, 0, 0.08) 100%
+        to right,
+        rgba(5,10,18,0.96) 0%,
+        rgba(5,10,18,0.82) 50%,
+        rgba(5,10,18,0.28) 100%
       );
     }
-
     .hero-content {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: left;
-      color: #fff;
-      width: 100%;
-      padding: 0 20px;
+      position: relative; z-index: 2;
+      padding: 80px 0 88px; max-width: 640px;
     }
-
-    .hero .breadcrumbs {
-      font-size: 13px;
-      color: rgba(255, 255, 255, 0.8);
-      margin-bottom: 8px;
+    .hero-eyebrow {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 28px;
     }
-
+    .hero-eyebrow-line { width: 40px; height: 2px; background: var(--accent); }
+    .hero-eyebrow span {
+      font-size: 11px; font-weight: 700; color: var(--accent);
+      text-transform: uppercase; letter-spacing: 2.5px;
+    }
     .hero h1 {
-      margin: 0 0 12px;
-      font-size: 48px;
-      font-weight: 700;
-      line-height: 1.05;
-      letter-spacing: -0.5px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 78px; font-weight: 900; color: #DCE8F8;
+      line-height: 0.92; letter-spacing: -1px; margin-bottom: 28px;
+      text-transform: uppercase;
+    }
+    .hero h1 .accent { color: var(--accent); }
+    .hero h1 .outline {
+      display: block;
+      -webkit-text-stroke: 1px rgba(220,232,248,0.30);
+      color: transparent; font-size: 92px;
+    }
+    .hero-sub {
+      font-size: 17px; color: rgba(210,230,248,0.65);
+      margin-bottom: 40px; line-height: 1.7; max-width: 460px;
+    }
+    .btn-primary {
+      background: var(--accent); color: #fff;
+      text-decoration: none; font-weight: 700; font-size: 13px;
+      padding: 15px 32px; letter-spacing: 1px; text-transform: uppercase;
+      transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px;
+    }
+    .btn-primary:hover { background: var(--cta-hover); transform: translateY(-1px); }
+
+    /* ── STATS ── */
+    .stats-strip { background: var(--accent); }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); }
+    .stat-item {
+      padding: 32px 28px;
+      border-right: 1px solid rgba(255,255,255,0.18);
+      transition: background 0.2s;
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-item:hover { background: rgba(0,0,0,0.08); }
+    .stat-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 48px; font-weight: 900; color: #fff;
+      line-height: 1; display: block; margin-bottom: 6px;
+    }
+    .stat-label {
+      font-size: 13px; color: rgba(255,255,255,0.75); font-weight: 500;
+      line-height: 1.4; text-transform: uppercase; letter-spacing: 0.5px;
     }
 
-    .hero .subtitle {
-      font-size: 22px;
-      margin-bottom: 12px;
-      font-weight: 600;
+    /* ── SEÇÕES ── */
+    section.s { padding: 100px 0; }
+
+    .eyebrow { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+    .eyebrow-line { width: 32px; height: 2px; background: var(--accent); }
+    .eyebrow span {
+      font-size: 11px; font-weight: 700; color: var(--accent);
+      text-transform: uppercase; letter-spacing: 2.5px;
+    }
+    .section-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 52px; font-weight: 900; color: var(--text);
+      line-height: 1; margin-bottom: 18px;
+      text-transform: uppercase; letter-spacing: -0.5px;
+    }
+    .section-sub {
+      font-size: 16.5px; color: var(--text2);
+      max-width: 560px; line-height: 1.7;
     }
 
-    .hero .desc {
-      font-size: 20px;
-      color: rgba(255, 255, 255, 0.9);
-      margin-bottom: 24px;
+    /* ── QUEM SOMOS — layout dois painéis ── */
+    .about-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-top: 64px;
     }
 
-    .hero .cta {
-      display: inline-block;
-      background: var(--cta);
-      color: #fff;
-      padding: 14px 28px;
-      border-radius: 10px;
-      text-decoration: none;
-      font-weight: 600;
-      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+    .about-text {
+      background: var(--card-bg);
+      padding: 64px 56px;
+    }
+    .about-text p {
+      font-size: 16px; color: var(--text2); line-height: 1.8; margin-bottom: 20px;
+    }
+    .about-text p:last-child { margin-bottom: 0; }
+    .about-text p strong { color: var(--text); font-weight: 600; }
+
+    .about-img {
+      position: relative; overflow: hidden; min-height: 480px;
+    }
+    .about-img img {
+      width: 100%; height: 100%; object-fit: cover;
+      filter: grayscale(15%) contrast(1.05);
+      transition: transform 0.6s ease;
+    }
+    .about-split:hover .about-img img { transform: scale(1.03); }
+    .about-img-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(8,17,26,0.55) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .about-img-caption {
+      position: absolute; bottom: 28px; left: 28px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.7);
+      text-transform: uppercase; letter-spacing: 1.5px;
     }
 
-    /* indicadores */
-    .indicadores {
-      padding: 70px 0;
-      background: #fff;
+    /* ── VALORES — grid de células ── */
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-top: 64px;
+    }
+    .value-cell {
+      background: var(--card-bg);
+      padding: 48px 40px;
+      position: relative; transition: background 0.2s;
+    }
+    .value-cell:hover { background: var(--surface2); }
+    .value-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px; font-weight: 800; color: var(--accent);
+      letter-spacing: 2px; text-transform: uppercase;
+      margin-bottom: 20px; display: block;
+    }
+    .value-cell h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 24px; font-weight: 800; color: var(--text);
+      margin-bottom: 12px; text-transform: uppercase; letter-spacing: -0.2px;
+    }
+    .value-cell p { font-size: 14.5px; color: var(--text2); line-height: 1.65; }
+    .value-icon {
+      position: absolute; bottom: 32px; right: 32px;
+      font-size: 26px; color: var(--accent); opacity: 0.30;
     }
 
-    .indicadores-grid {
-      display: flex;
+    /* ── HISTÓRIA — linha do tempo (CORRIGIDO PARA O TEMA ESCURO) ── */
+    .timeline-bg { background: var(--subnav-bg); } /* Alterado para manter fundo escuro constante */
+    .timeline-bg .section-title { color: #DCE8F8; }
+    .timeline-bg .eyebrow span { color: var(--accent); }
+    .timeline-bg .eyebrow-line { background: var(--accent); }
+    .timeline-bg .section-sub { color: rgba(220,232,248,0.55); }
+
+    .timeline { margin-top: 64px; position: relative; }
+    .timeline::before {
+      content: '';
+      position: absolute; left: 0; top: 0; bottom: 0;
+      width: 2px; background: rgba(180,210,240,0.12);
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 160px 1fr;
       gap: 40px;
-      justify-content: space-between;
-      flex-wrap: wrap; /* Adicionado para responsividade */
+      padding: 40px 0 40px 32px;
+      border-bottom: 1px solid rgba(180,210,240,0.08);
+      position: relative;
+    }
+    .timeline-item:last-child { border-bottom: none; }
+    .timeline-item::before {
+      content: '';
+      position: absolute; left: -5px; top: 46px;
+      width: 12px; height: 12px;
+      background: var(--accent); border-radius: 50%;
     }
 
-    .indicador {
-      flex: 1;
-      text-align: center;
-      padding: 28px;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-      min-width: 200px;
+    .timeline-year {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 42px; font-weight: 900; color: var(--accent);
+      opacity: 0.7; line-height: 1; align-self: start;
+      padding-top: 4px;
+    }
+    .timeline-content h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 26px; font-weight: 800; color: #DCE8F8;
+      text-transform: uppercase; margin-bottom: 10px;
+    }
+    .timeline-content p {
+      font-size: 15px; color: rgba(220,232,248,0.65); line-height: 1.7;
     }
 
-    .indicador h3 {
-      font-size: 32px;
-      color: var(--primary);
-      margin-bottom: 8px;
-      font-weight: 700;
+    /* ── EQUIPE ── */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-top: 64px;
     }
-
-    .indicador p {
-      color: var(--muted);
-      font-size: 15px;
+    .team-card {
+      background: var(--card-bg);
+      padding: 40px 36px;
+      transition: background 0.2s;
     }
-
-    /* sobre - quem somos */
-    .sobre-bloco {
-      padding: 80px 0;
-      background: #fff;
+    .team-card:hover { background: var(--surface2); }
+    .team-avatar {
+      width: 56px; height: 56px;
+      background: var(--tag-bg);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px;
     }
-
-    .sobre-grid {
-      display: flex;
-      align-items: center;
-      gap: 40px;
-      flex-wrap: wrap;
+    .team-avatar i { font-size: 28px; color: var(--accent); }
+    .team-role {
+      font-size: 11px; font-weight: 700; color: var(--accent);
+      text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; display: block;
     }
-
-    .sobre-info {
-      flex: 1;
-      min-width: 300px;
+    .team-card h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 22px; font-weight: 800; color: var(--text);
+      text-transform: uppercase; margin-bottom: 10px;
     }
+    .team-card p { font-size: 14px; color: var(--text2); line-height: 1.6; }
 
-    .sobre-info h2 {
-      font-size: 36px;
-      color: var(--primary);
+    /* ── CTA FINAL ── */
+    .cta-final { background: var(--accent); padding: 80px 0; }
+    .cta-inner {
+      display: grid; grid-template-columns: 1fr auto;
+      gap: 60px; align-items: center;
     }
-
-    .sobre-info p {
+    .cta-inner h2 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 60px; font-weight: 900; color: #fff;
+      text-transform: uppercase; line-height: 0.95;
+      letter-spacing: -0.5px; margin-bottom: 14px;
+    }
+    .cta-inner p { font-size: 16px; color: rgba(255,255,255,0.72); line-height: 1.6; }
+    .btn-cta-white {
+      background: #fff; color: var(--accent);
+      text-decoration: none; font-weight: 800;
+      padding: 18px 40px; text-transform: uppercase; letter-spacing: 1.5px;
+      display: inline-block; white-space: nowrap;
+      transition: all 0.2s; font-family: 'Barlow Condensed', sans-serif;
       font-size: 17px;
-      margin: 20px 0;
-      max-width: 520px;
-      line-height: 1.5;
-      color: var(--muted);
+    }
+    .btn-cta-white:hover { background: #E8F0FA; transform: translateY(-2px); }
+
+    /* ── FOOTER ── */
+    .site-footer {
+      background: #070E15;
+      color: rgba(210,225,245,0.5);
+      padding: 72px 0 28px;
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px; margin-bottom: 64px;
+    }
+    .footer-brand { display: flex; flex-direction: column; gap: 18px; }
+    .footer-brand p { font-size: 14px; line-height: 1.65; max-width: 260px; }
+    .footer-divider { width: 32px; height: 2px; background: var(--accent); }
+    .site-footer h4 {
+      font-family: 'Barlow Condensed', sans-serif;
+      color: #DCE8F8; font-size: 14px; font-weight: 800;
+      margin-bottom: 22px; text-transform: uppercase; letter-spacing: 1.5px;
+    }
+    .footer-links { list-style: none; }
+    .footer-links li { margin-bottom: 11px; }
+    .footer-links a {
+      color: rgba(210,225,245,0.45); text-decoration: none;
+      font-size: 14px; transition: color 0.2s;
+    }
+    .footer-links a:hover { color: rgba(210,225,245,0.90); }
+    .footer-contact-item {
+      display: flex; align-items: flex-start; gap: 10px;
+      margin-bottom: 14px; font-size: 14px;
+    }
+    .footer-contact-item i { font-size: 18px; color: var(--accent); margin-top: 1px; flex-shrink: 0; }
+    .footer-bottom {
+      border-top: 1px solid rgba(180,210,240,0.07);
+      padding-top: 28px;
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: 12.5px;
     }
 
-    .sobre-img {
-      flex: 1;
-      display: flex;
-      justify-content: flex-end;
+    /* ── ANIMAÇÕES ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
-
-    .sobre-img img {
-      width: 500px;
-      max-width: 100%;
-      height: auto;
-      border-radius: 8px; 
+    .hero-content > * {
+      animation: fadeUp 0.6s ease backwards;
     }
+    .hero-content > *:nth-child(1) { animation-delay: 0.05s; }
+    .hero-content > *:nth-child(2) { animation-delay: 0.15s; }
+    .hero-content > *:nth-child(3) { animation-delay: 0.28s; }
+    .hero-content > *:nth-child(4) { animation-delay: 0.40s; }
 
-    footer {
-      background: var(--nav);
-      padding: 30px 0;
-      text-align: center;
-      color: var(--muted);
-      margin-top: 60px;
-      border-top: 1px solid rgba(0, 0, 0, 0.06);
+    /* ── RESPONSIVO ── */
+    @media (max-width: 1000px) {
+      .primary-nav { display: none; }
+      .hero h1 { font-size: 52px; }
+      .hero h1 .outline { font-size: 64px; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .about-split { grid-template-columns: 1fr; }
+      .about-img { min-height: 300px; }
+      .values-grid { grid-template-columns: 1fr 1fr; }
+      .team-grid { grid-template-columns: 1fr 1fr; }
+      .cta-inner { grid-template-columns: 1fr; gap: 32px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+      .timeline-item { grid-template-columns: 100px 1fr; gap: 24px; }
+    }
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 38px; }
+      .hero h1 .outline { font-size: 48px; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .values-grid { grid-template-columns: 1fr; }
+      .team-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .section-title { font-size: 38px; }
+      .cta-inner h2 { font-size: 42px; }
+      .timeline-item { grid-template-columns: 1fr; gap: 8px; padding-left: 28px; }
+      .timeline-year { font-size: 32px; }
     }
   </style>
 </head>
@@ -338,36 +489,35 @@
   <header>
     <div class="topbar">
       <div class="container row">
-        <div class="brand">
-          <a href="index.html">
-            <img src="IMG/logo1g.png" alt="Logo" class="logo" height="225">
-          </a>
-        </div>
+        <a href="index.html" class="brand">
+          <div class="brand-mark">A</div>
+          <span class="brand-name">Ari<span>Line</span></span>
+        </a>
 
-        <nav class="primary-nav" aria-label="menu principal">
+        <nav class="primary-nav">
           <a href="index.html">Produção</a>
-          <a href="plano.html">Planos</a>
-          <a href="sobre.html">Sobre</a>
+          <a href="planos.html">Planos</a>
+          <a href="sobre.html" class="active">Sobre</a>
+          <a href="contato.html">Contatos</a>
         </nav>
 
-        <div class="actions">
-          <a class="login-btn" id="btn-auth" href="login.html">
-            Área do Cliente
-          </a>
-
-          <a class="ctahover" href="proposta.html" data-fancybox="">
-            Solicite uma proposta
-          </a>
+        <div class="nav-actions">
+          <button class="theme-toggle" id="themeBtn" title="Alternar tema">
+            <svg id="themeIcon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </button>
+          <a class="btn-ghost" id="btn-auth" href="login.html">Área do Cliente</a>
         </div>
       </div>
     </div>
 
     <div class="subnav">
-      <div class="container row">
-        <div class="segments">
-          <div class="label">Sobre a AriLine</div>
-          <ul>
-            <li><a class="active" href="#">Quem Somos</a></li>
+      <div class="container">
+        <div class="row">
+          <span class="subnav-label">Sobre a AriLine</span>
+          <ul class="subnav-links">
+            <li><a href="#" class="active">Quem Somos</a></li>
             <li><a href="#">Empresas do Grupo</a></li>
             <li><a href="#">Carreiras</a></li>
           </ul>
@@ -377,98 +527,305 @@
   </header>
 
   <section class="hero">
-    <video class="hero-video" autoplay muted loop playsinline poster="IMG/sobrefoto.jpg">
-      <source src="IMG/indexvideo.mp4" type="video/mp4">
-    </video>
-
+    <div class="hero-bg"></div>
     <div class="hero-overlay"></div>
-
-    <div class="hero-content container">
-      <div class="breadcrumbs">Início > Sobre a Senior</div>
-      <h1>Potencializar pessoas e <br> impulsionar negócios</h1>
-      <div class="subtitle">É mais que tecnologia. É AriLine.</div>
-      <a class="cta" href="proposta.html">Solicite uma proposta</a>
-    </div>
-  </section>
-
-  <section class="indicadores">
-    <div class="container indicadores-grid">
-      <div class="indicador">
-        <h3>+120</h3>
-        <p>Empresas monitoram produção com a AriLine</p>
-      </div>
-
-      <div class="indicador">
-        <h3>98%</h3>
-        <p>Satisfação dos usuários</p>
-      </div>
-
-      <div class="indicador">
-        <h3>35%</h3>
-        <p>Redução média de erros operacionais</p>
-      </div>
-
-      <div class="indicador">
-        <h3>24/7</h3>
-        <p>Monitoramento em tempo real</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="sobre-bloco">
-    <div class="container sobre-grid">
-      <div class="sobre-info">
-        <h2>Quem Somos</h2>
-        <p>
-          A AriLine é uma empresa especializada em simplificar e otimizar a gestão industrial.
-          Nosso sistema permite que operadores, supervisores e gestores acompanhem a produção em tempo real,
-          controlem máquinas e organizem lotes de forma prática e eficiente.
-          Nosso propósito é transformar dados em decisões rápidas, seguras e capazes de impulsionar
-          o desempenho de toda a linha de produção.
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-eyebrow">
+          <div class="hero-eyebrow-line"></div>
+          <span>Diadema, SP · Desde 2018</span>
+        </div>
+        <h1>
+          Nascemos no<br>
+          chão de <span class="accent">fábrica.</span>
+          <span class="outline">Ficamos.</span>
+        </h1>
+        <p class="hero-sub">
+          A AriLine foi criada por quem trabalhou em linha de produção e cansou de ver gestores tomando decisões com dados de ontem.
+          Construímos o ERP que a gente queria ter tido.
         </p>
-      </div>
-
-      <div class="sobre-img">
-        <img src="IMG/model.png" alt="Profissional AriLine">
+        <a href="proposta.html" class="btn-primary">
+          Ver o sistema em ação
+          <i class="ph ph-arrow-right"></i>
+        </a>
       </div>
     </div>
   </section>
 
-  <footer>
-    © 2025 AriLine — Todos os direitos reservados.
+  <div class="stats-strip">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <span class="stat-num">+120</span>
+          <span class="stat-label">fábricas monitorando produção agora</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">98%</span>
+          <span class="stat-label">dos clientes renovam o contrato</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">35%</span>
+          <span class="stat-label">de redução média em erros operacionais</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">18h</span>
+          <span class="stat-label">para implantar o primeiro módulo</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="s">
+    <div class="container">
+      <div class="eyebrow">
+        <div class="eyebrow-line"></div>
+        <span>Quem somos</span>
+      </div>
+      <h2 class="section-title">Uma empresa que<br>entende o problema</h2>
+
+      <div class="about-split">
+        <div class="about-text">
+          <p>
+            A AriLine nasceu de uma frustração simples: <strong>os softwares de gestão industrial eram feitos para consultores, não para quem trabalha na linha de produção.</strong>
+            Formulários complicados, implantações de meses, relatórios que ninguém abria.
+          </p>
+          <p>
+            Em 2018, um grupo de engenheiros e gestores de chão de fábrica decidiu construir outra coisa — um sistema que um operador de máquina consegue usar no terceiro dia e que um supervisor lê em 30 segundos.
+          </p>
+          <p>
+            Hoje atendemos mais de 120 indústrias nos segmentos de plástico, química, alimentos e metal-mecânica.
+            <strong>Nenhuma precisou mudar como trabalha para caber no software.</strong> O software é que se adapta a elas.
+          </p>
+          <p>
+            Estamos em Diadema — SP, no coração do polo industrial do ABC. Não por acidente: queremos estar perto de quem fabrica.
+          </p>
+        </div>
+        <div class="about-img">
+          <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=900&auto=format&fit=crop" alt="Equipe AriLine no chão de fábrica">
+          <div class="about-img-overlay"></div>
+          <span class="about-img-caption">Polo Industrial · Diadema, SP</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="s" style="background: var(--surface2); padding: 100px 0;">
+    <div class="container">
+      <div class="eyebrow">
+        <div class="eyebrow-line"></div>
+        <span>O que nos guia</span>
+      </div>
+      <h2 class="section-title">Três princípios que<br>não negociamos</h2>
+      <p class="section-sub">Não são valores de parede. São as perguntas que fazemos antes de lançar qualquer funcionalidade.</p>
+
+      <div class="values-grid">
+        <div class="value-cell">
+          <span class="value-num">— 01</span>
+          <h3>O operador tem que conseguir usar</h3>
+          <p>Se precisa de treinamento de uma semana, a interface está errada. Toda tela do Ariline passa pelo teste da linha de produção antes de chegar ao cliente.</p>
+          <i class="ph ph-person-simple-run value-icon"></i>
+        </div>
+        <div class="value-cell">
+          <span class="value-num">— 02</span>
+          <h3>Dados de hoje, não de ontem</h3>
+          <p>Decisão baseada em relatório do dia anterior não é gestão — é arqueologia. Construímos para tempo real porque é isso que muda resultado.</p>
+          <i class="ph ph-clock-countdown value-icon"></i>
+        </div>
+        <div class="value-cell">
+          <span class="value-num">— 03</span>
+          <h3>Implantação que não paralisa</h3>
+          <p>Seis meses de implantação é custo invisível. Primeiro módulo funcionando em dias ou a gente não entrega. Essa é a régua que usamos internamente.</p>
+          <i class="ph ph-rocket-launch value-icon"></i>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="s timeline-bg">
+    <div class="container">
+      <div class="eyebrow">
+        <div class="eyebrow-line"></div>
+        <span>Nossa história</span>
+      </div>
+      <h2 class="section-title">Seis anos construindo<br>o que o mercado ignorou</h2>
+      <p class="section-sub">Cada versão nasceu de um problema real de um cliente real.</p>
+
+      <div class="timeline">
+
+        <div class="timeline-item">
+          <span class="timeline-year">2018</span>
+          <div class="timeline-content">
+            <h3>A primeira linha de código</h3>
+            <p>Dois engenheiros e uma planilha de problemas coletados em 14 fábricas do ABC Paulista. O objetivo era claro: substituir o papel e o WhatsApp no apontamento de produção.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <span class="timeline-year">2019</span>
+          <div class="timeline-content">
+            <h3>Primeiro cliente em produção real</h3>
+            <p>Uma injetora de plásticos em Diadema foi a primeira fábrica a usar o Ariline em operação real. Em 90 dias, reduziu retrabalho em 22%. O contrato ainda está ativo.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <span class="timeline-year">2021</span>
+          <div class="timeline-content">
+            <h3>Módulo de manutenção e OEE</h3>
+            <p>Os próprios clientes pediram: precisavam de manutenção preventiva integrada e indicadores de eficiência em tempo real. Levamos 8 meses para entregar do jeito certo.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <span class="timeline-year">2023</span>
+          <div class="timeline-content">
+            <h3>100 fábricas conectadas</h3>
+            <p>Atingimos a marca de 100 indústrias ativas em cinco segmentos diferentes. Nenhuma implementação durou mais de 30 dias. Média: 18 horas para o primeiro módulo.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <span class="timeline-year">2024</span>
+          <div class="timeline-content">
+            <h3>Integração IoT e expansão nacional</h3>
+            <p>Coleta automática de dados de máquina via sensores e CLPs. Hoje atendemos clientes do Paraná ao Nordeste — sempre com implantação feita pela nossa equipe, sem terceiros.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="s">
+    <div class="container">
+      <div class="eyebrow">
+        <div class="eyebrow-line"></div>
+        <span>Quem faz acontecer</span>
+      </div>
+      <h2 class="section-title">Engenheiros que já<br>trabalharam em fábrica</h2>
+      <p class="section-sub">Não temos consultores que visitam clientes. Temos especialistas que já estiveram do outro lado do problema.</p>
+
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="team-avatar"><i class="ph ph-hard-hat"></i></div>
+          <span class="team-role">Fundador & CEO</span>
+          <h3>Luan Miguel</h3>
+          <p>12 anos como supervisor de produção antes de fundar a AriLine. Conhece o problema por dentro — literalmente.</p>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar"><i class="ph ph-code"></i></div>
+          <span class="team-role">CTO</span>
+          <h3>Marcos Vinicius</h3>
+          <p>Engenheira de software com passagem por automação industrial. Arquitetou o sistema de coleta em tempo real do Ariline.</p>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar"><i class="ph ph-users-three"></i></div>
+          <span class="team-role">Head de Implantação</span>
+          <h3>Matheus Melo</h3>
+          <p>Já implantou o Ariline em mais de 80 fábricas. Recorde pessoal: módulo de apontamento funcionando em 6 horas.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-final">
+    <div class="container">
+      <div class="cta-inner">
+        <div>
+          <h2>Conheça o time<br>pessoalmente.</h2>
+          <p>Visita à sua fábrica, sem custo e sem compromisso.<br>A gente vai até você antes de qualquer proposta.</p>
+        </div>
+        <div>
+          <a href="proposta.html" class="btn-cta-white">Agendar visita</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="brand" style="text-decoration:none;">
+            <div class="brand-mark">A</div>
+            <span class="brand-name" style="color:#DCE8F8;">Ari<span style="color:var(--accent);">Line</span></span>
+          </a>
+          <div class="footer-divider"></div>
+          <p>ERP industrial feito no Brasil, para quem fabrica no Brasil. Sem rodeios, sem consultoria por meses.</p>
+        </div>
+
+        <div>
+          <h4>Produto</h4>
+          <ul class="footer-links">
+            <li><a href="#">Módulos do ERP</a></li>
+            <li><a href="#">Segmentos Atendidos</a></li>
+            <li><a href="plano.html">Planos e Preços</a></li>
+            <li><a href="#">Casos de Sucesso</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4>Empresa</h4>
+          <ul class="footer-links">
+            <li><a href="sobre.html">Quem Somos</a></li>
+            <li><a href="#">Blog Industrial</a></li>
+            <li><a href="#">Carreiras</a></li>
+            <li><a href="login.html">Área do Cliente</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4>Contato</h4>
+          <div class="footer-contact-item">
+            <i class="ph ph-whatsapp-logo"></i>
+            <span>(11) 90000-0000</span>
+          </div>
+          <div class="footer-contact-item">
+            <i class="ph ph-envelope-simple"></i>
+            <span>comercial@ariline.com.br</span>
+          </div>
+          <div class="footer-contact-item">
+            <i class="ph ph-map-pin"></i>
+            <span>Polo Industrial<br>Diadema — SP</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 AriLine ERP Industrial — Todos os direitos reservados</span>
+        <span>CNPJ 00.000.000/0001-00</span>
+      </div>
+    </div>
   </footer>
 
   <script>
+    // ── TEMA ──
+    const themeBtn = document.getElementById('themeBtn');
+    const htmlTag = document.documentElement;
+    const moonIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`;
+    const sunIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`;
+    
+    themeBtn.addEventListener('click', () => {
+      const isDark = htmlTag.getAttribute('data-theme') === 'dark';
+      htmlTag.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      themeBtn.innerHTML = isDark ? moonIcon : sunIcon;
+    });
+
+    // ── AUTH ──
     const btnAuth = document.getElementById('btn-auth');
-
     const isLogado = sessionStorage.getItem('usuarioLogado');
-
     if (isLogado) {
-      btnAuth.textContent = "Sair do Sistema";
-      btnAuth.href = "#";
-
-      btnAuth.style.borderColor = "#c0392b";
-      btnAuth.style.color = "#c0392b";
-
-      btnAuth.onmouseover = function() {
-        this.style.backgroundColor = "#c0392b";
-        this.style.color = "white";
-      };
-      btnAuth.onmouseout = function() {
-        this.style.backgroundColor = "transparent";
-        this.style.color = "#c0392b";
-      };
-
+      btnAuth.textContent = 'Sair do Sistema';
+      btnAuth.href = '#';
+      btnAuth.style.borderColor = 'rgba(90,170,245,0.4)';
+      btnAuth.style.color = 'rgba(210,230,248,0.65)';
+      
       btnAuth.addEventListener('click', (e) => {
         e.preventDefault();
-
-        if (confirm("Tem certeza que deseja sair?")) {
-          sessionStorage.clear(); // Limpa a memória
-          window.location.href = "index.html"; // Recarrega a página (o botão voltará a ser Login)
-        }
+        sessionStorage.removeItem('usuarioLogado');
+        window.location.reload();
       });
     }
   </script>
-
 </body>
 </html>

@@ -1,158 +1,262 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="light">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Login | Portal do Cliente</title>
-  <link rel="icon" href="IMG/icon.png" type="image/x-icon">
+  <title>Login | Portal do Cliente — AriLine</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
   <style>
     :root {
-      --primary: #143D59;
-      --accent: #4AB8FF;
-      --bg: #f5f8fb;
-      --error: #c0392b;
+      --bg: #F0F2F5;
+      --bg2: #E4E8EE;
+      --surface: #FFFFFF;
+      --surface2: #E8ECF1;
+      --border: rgba(30,40,55,0.11);
+      --nav-bg: #0F1923;
+      --text: #0F1923;
+      --text2: #5A6578;
+      --primary: #0F1923;
+      --accent: #1A6FD4;
+      --accent2: #3B8FEA;
+      --cta: #1A6FD4;
+      --cta-hover: #1258B0;
+      --card-bg: #FFFFFF;
+      --radius: 4px;
+      --error: #E03131;
+      font-family: 'Barlow', system-ui, sans-serif;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Inter', system-ui, sans-serif;
+    [data-theme="dark"] {
+      --bg: #0C1117;
+      --bg2: #111820;
+      --surface: #151D27;
+      --surface2: #0E1520;
+      --border: rgba(180,200,230,0.08);
+      --nav-bg: #070E15;
+      --text: #D8E4F0;
+      --text2: #6A84A0;
+      --primary: #D8E4F0;
+      --accent: #3B8FEA;
+      --accent2: #5AAAF5;
+      --cta: #3B8FEA;
+      --cta-hover: #1A6FD4;
+      --card-bg: #151D27;
+      --error: #FA5252;
     }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      background: #645454;
+      background: var(--bg);
+      color: var(--text);
+      transition: background 0.4s, color 0.4s;
       height: 100vh;
+      overflow: hidden;
     }
 
-    .container {
+    .login-container {
       display: flex;
       height: 100vh;
     }
 
-    /* lado esquerdo */
-    .left {
+    /* ── LADO ESQUERDO: VISUAL INDUSTRIAL ── */
+    .left-panel {
       flex: 1;
-      background-image: url('https://cliente.senior.com.br/auth.875d3cb074c5ab2f8353.jpg');
+      background-image: url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2000&auto=format&fit=crop');
       background-size: cover;
       background-position: center;
       position: relative;
     }
 
-    .overlay {
+    @media (max-width: 900px) {
+      .left-panel { display: none; }
+    }
+
+    .panel-overlay {
       position: absolute;
       inset: 0;
-      background: rgba(0, 0, 0, 0.35);
-      padding: 40px;
+      background: linear-gradient(
+        to bottom,
+        rgba(15, 25, 35, 0.85) 0%,
+        rgba(7, 14, 21, 0.92) 100%
+      );
+      padding: 48px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
     }
 
-    .logo {
-      width: 150px;
+    /* Componentização do Logo idêntico ao index.html */
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .brand-mark {
+      width: 34px; height: 34px;
+      background: var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 20px; font-weight: 900; color: #fff;
+      letter-spacing: -1px;
     }
+    .brand-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 22px; font-weight: 900;
+      color: #DCE8F8; letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .brand-name span { color: var(--accent); }
 
     .left-text h1 {
-      font-size: 48px;
-      color: #fff;
-      font-weight: bold;
-      line-height: 1.1;
-      margin-bottom: 15px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 56px;
+      color: #DCE8F8;
+      font-weight: 900;
+      line-height: 0.95;
+      margin-bottom: 20px;
+      text-transform: uppercase;
     }
-
     .left-text p {
-      color: #eaeaea;
+      color: rgba(220, 232, 248, 0.6);
       font-size: 18px;
+      max-width: 420px;
     }
 
-    /* lado direito */
-    .right {
+    /* ── LADO DIREITO: FORMULÁRIO ── */
+    .right-panel {
       width: 480px;
-      background: #ffffff;
+      background: var(--surface);
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
+      position: relative;
+      padding: 40px;
+      transition: background 0.4s;
     }
+
+    @media (max-width: 900px) {
+      .right-panel { width: 100%; }
+    }
+
+    /* Botão de Alternância de Tema no topo do formulário */
+    .theme-toggle-wrapper {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+    }
+    .theme-toggle {
+      width: 36px; height: 36px;
+      border: 1px solid var(--border); 
+      background: var(--surface2); 
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text2); transition: all 0.2s;
+      border-radius: var(--radius);
+    }
+    .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
 
     .form-box {
-      width: 80%;
-      max-width: 350px;
+      width: 100%;
+      max-width: 360px;
     }
 
-    h2 {
-      font-size: 35px;
-      color: var(--primary);
-      margin-bottom: 5px;
-      line-height: 1.2;
+    .form-box h2 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 44px;
+      color: var(--text);
+      font-weight: 900;
+      line-height: 1;
+      margin-bottom: 8px;
+      text-transform: uppercase;
     }
 
-    h2 span {
+    .form-box h2 span {
       color: var(--accent);
     }
 
     .subtitle {
       font-size: 14px;
-      color: #777;
-      margin-bottom: 35px;
+      color: var(--text2);
+      margin-bottom: 40px;
     }
 
     .input-group {
-      margin-bottom: 25px;
+      margin-bottom: 24px;
       display: flex;
       flex-direction: column;
     }
 
     .input-group label {
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 6px;
-      color: #1a1a1a;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--text);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
     .input-group input {
-      background: none;
-      border: none;
-      border-bottom: 1px solid #ccc;
-      padding: 8px 0;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 12px 14px;
       outline: none;
-      font-size: 16px;
+      font-size: 15px;
+      color: var(--text);
+      font-family: 'Barlow', sans-serif;
+      transition: border-color 0.2s;
+      border-radius: var(--radius);
     }
 
-    .btn {
+    .input-group input:focus {
+      border-color: var(--accent);
+    }
+
+    /* Estilização baseada no .btn-primary do index.html */
+    .btn-submit {
       width: 100%;
-      padding: 12px;
+      padding: 15px;
       border: none;
-      background: var(--primary);
-      border-radius: 30px;
+      background: var(--accent);
       cursor: pointer;
-      font-size: 14px;
+      font-family: 'Barlow', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
       letter-spacing: 1px;
       color: white;
-      transition: 0.2s;
+      text-transform: uppercase;
+      transition: all 0.2s;
+      margin-top: 10px;
+      border-radius: var(--radius);
     }
 
-    .btn:hover {
-      opacity: 0.9;
+    .btn-submit:hover {
+      background: var(--cta-hover);
+      transform: translateY(-1px);
     }
 
     .footer-links {
       margin-top: 40px;
-      font-size: 17px;
-      color: #666;
+      font-size: 14px;
+      color: var(--text2);
+      text-align: center;
     }
 
     .footer-links a {
       color: var(--accent);
       text-decoration: none;
+      font-weight: 600;
+    }
+    .footer-links a:hover {
+      text-decoration: underline;
     }
 
     .status-message {
-      margin-top: 15px;
-      font-size: 14px;
-      color: #1a1a1a;
+      margin-top: 20px;
+      font-size: 13px;
+      color: var(--text);
       min-height: 20px;
+      font-weight: 500;
     }
 
     .status-message.error {
@@ -162,35 +266,46 @@
 </head>
 <body>
 
-  <div class="container">
-    <div class="left">
-      <div class="overlay">
-        <a href="index.html">
-          <img src="IMG/logo1g.png" class="logo" alt="Logo">
+  <div class="login-container">
+    
+    <div class="left-panel">
+      <div class="panel-overlay">
+        <a href="index.html" class="brand">
+          <div class="brand-mark">A</div>
+          <span class="brand-name">Ari<span>Line</span></span>
         </a>
         <div class="left-text">
           <h1>Portal<br>do cliente</h1>
-          <p>Seu canal de relacionamento digital com a empresa.</p>
+          <p>Seu canal direto de relacionamento, monitoramento e inteligência industrial.</p>
         </div>
       </div>
     </div>
 
-    <div class="right">
+    <div class="right-panel">
+      
+      <div class="theme-toggle-wrapper">
+        <button class="theme-toggle" id="themeBtn" title="Alternar tema">
+          <svg id="themeIcon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+      </div>
+
       <div class="form-box">
-        <h2>Olá,<br><span>seja bem vindo!</span></h2>
+        <h2>Olá,<br><span>seja bem-vindo!</span></h2>
         <p class="subtitle">Faça o login para acessar o portal do cliente</p>
 
         <form id="login-form">
           <div class="input-group">
-            <label>E-mail</label>
-            <input type="email" id="login-email" placeholder="Seu e-mail" required>
+            <label>E-mail Corporativo</label>
+            <input type="email" id="login-email" placeholder="nome@empresa.com.br" required>
           </div>
           <div class="input-group">
-            <label>Senha</label>
-            <input type="password" id="login-senha" placeholder="Sua senha" required>
+            <label>Senha de Acesso</label>
+            <input type="password" id="login-senha" placeholder="Sua senha secreta" required>
           </div>
 
-          <button type="submit" class="btn">Acessar</button>
+          <button type="submit" class="btn-submit">Acessar Sistema</button>
           <p id="login-status" class="status-message"></p>
         </form>
 
@@ -200,6 +315,27 @@
       </div>
     </div>
   </div>
+
+  <script>
+    const themeBtn = document.getElementById('themeBtn');
+    const htmlTag = document.documentElement;
+
+    const moonIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`;
+    const sunIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`;
+
+    // Recupera preferência salva
+    if (localStorage.getItem('theme') === 'dark') {
+      htmlTag.setAttribute('data-theme', 'dark');
+      themeBtn.innerHTML = sunIcon;
+    }
+
+    themeBtn.addEventListener('click', () => {
+      const isDark = htmlTag.getAttribute('data-theme') === 'dark';
+      htmlTag.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      localStorage.setItem('theme', isDark ? 'light' : 'dark');
+      themeBtn.innerHTML = isDark ? moonIcon : sunIcon;
+    });
+  </script>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -217,7 +353,7 @@
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
-    const db = getDatabase(app); // Pega referência do banco
+    const db = getDatabase(app);
 
     const statusElement = document.getElementById('login-status');
     const form = document.getElementById('login-form');
@@ -233,19 +369,18 @@
       statusElement.classList.remove('error');
 
       try {
-        // 1. Faz o Login (Verifica senha)
+        // 1. Autenticação no Firebase
         const userCredential = await signInWithEmailAndPassword(auth, email, senha);
         const user = userCredential.user;
 
-        // 2. Agora vai no Banco de Dados descobrir quem é esse usuário
+        // 2. Consulta de regras/cargos do usuário no Realtime Database
         const dbRef = ref(db);
 
-        // Lê o caminho: cargos/ID_DO_USUARIO
         get(child(dbRef, `cargos/${user.uid}`)).then((snapshot) => {
           if (snapshot.exists()) {
-            const cargoReal = snapshot.val(); // Aqui vem: "gestores", "operadores" ou "supervisores"
+            const cargoReal = snapshot.val();
 
-            // Salva na memória do navegador
+            // Gravação segura na sessão local do navegador
             sessionStorage.setItem('usuarioLogado', 'true');
             sessionStorage.setItem('userCargo', cargoReal);
 
@@ -256,13 +391,13 @@
             }, 1000);
 
           } else {
-            // Se o usuário existe no Auth mas não tem cargo no Banco
             statusElement.textContent = "Erro: Usuário sem permissão definida.";
             statusElement.classList.add('error');
           }
         }).catch((error) => {
           console.error(error);
           statusElement.textContent = "Erro ao buscar dados do usuário.";
+          statusElement.classList.add('error');
         });
 
       } catch (error) {

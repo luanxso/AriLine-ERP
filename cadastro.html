@@ -1,230 +1,368 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="light">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Cadastro | Portal do Cliente</title>
-  <link rel="icon" href="IMG/icon.png" type="image/x-icon">
+  <title>Cadastro | Portal do Cliente — AriLine</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Inter', system-ui, sans-serif;
+    :root {
+      --bg: #F0F2F5;
+      --bg2: #E4E8EE;
+      --surface: #FFFFFF;
+      --surface2: #E8ECF1;
+      --border: rgba(30,40,55,0.11);
+      --nav-bg: #0F1923;
+      --text: #0F1923;
+      --text2: #5A6578;
+      --primary: #0F1923;
+      --accent: #1A6FD4;
+      --accent2: #3B8FEA;
+      --cta: #1A6FD4;
+      --cta-hover: #1258B0;
+      --card-bg: #FFFFFF;
+      --radius: 4px;
+      --error: #E03131;
+      --success: #2B8A3E;
+      font-family: 'Barlow', system-ui, sans-serif;
     }
+
+    [data-theme="dark"] {
+      --bg: #0C1117;
+      --bg2: #111820;
+      --surface: #151D27;
+      --surface2: #0E1520;
+      --border: rgba(180,200,230,0.08);
+      --nav-bg: #070E15;
+      --text: #D8E4F0;
+      --text2: #6A84A0;
+      --primary: #D8E4F0;
+      --accent: #3B8FEA;
+      --accent2: #5AAAF5;
+      --cta: #3B8FEA;
+      --cta-hover: #1A6FD4;
+      --card-bg: #151D27;
+      --error: #FA5252;
+      --success: #40C057;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      background: #fff;
+      background: var(--bg);
+      color: var(--text);
+      transition: background 0.4s, color 0.4s;
       height: 100vh;
+      overflow: hidden;
     }
 
-    .container {
+    .register-container {
       display: flex;
       height: 100vh;
     }
 
-    /* esquerda */
-    .left {
+    /* ── LADO ESQUERDO: VISUAL INDUSTRIAL ── */
+    .left-panel {
       flex: 1;
-      background-image: url('https://cliente.senior.com.br/auth.875d3cb074c5ab2f8353.jpg');
+      background-image: url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2000&auto=format&fit=crop');
       background-size: cover;
       background-position: center;
       position: relative;
     }
 
-    .overlay {
+    @media (max-width: 900px) {
+      .left-panel { display: none; }
+    }
+
+    .panel-overlay {
       position: absolute;
       inset: 0;
-      background: rgba(0, 0, 0, 0.35);
-      padding: 40px;
+      background: linear-gradient(
+        to bottom,
+        rgba(15, 25, 35, 0.85) 0%,
+        rgba(7, 14, 21, 0.92) 100%
+      );
+      padding: 48px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
     }
 
-    .logo {
-      width: 150px;
+    /* Identidade visual idêntica ao index e login */
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .brand-mark {
+      width: 34px; height: 34px;
+      background: var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 20px; font-weight: 900; color: #fff;
+      letter-spacing: -1px;
     }
+    .brand-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 22px; font-weight: 900;
+      color: #DCE8F8; letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .brand-name span { color: var(--accent); }
 
     .left-text h1 {
-      font-size: 48px;
-      color: #fff;
-      font-weight: bold;
-      line-height: 1.1;
-      margin-bottom: 15px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 56px;
+      color: #DCE8F8;
+      font-weight: 900;
+      line-height: 0.95;
+      margin-bottom: 20px;
+      text-transform: uppercase;
     }
-
     .left-text p {
-      color: #eaeaea;
+      color: rgba(220, 232, 248, 0.6);
       font-size: 18px;
+      max-width: 420px;
     }
 
-    /* direita */
-    .right {
-      width: 480px;
-      background: #ffffff;
+    /* ── LADO DIREITO: FORMULÁRIO (Rolagem interna se necessário) ── */
+    .right-panel {
+      width: 520px;
+      background: var(--surface);
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
+      position: relative;
+      padding: 40px;
+      transition: background 0.4s;
+      overflow-y: auto;
     }
+
+    @media (max-width: 900px) {
+      .right-panel { width: 100%; padding: 30px 20px; }
+    }
+
+    .theme-toggle-wrapper {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+    }
+    .theme-toggle {
+      width: 36px; height: 36px;
+      border: 1px solid var(--border); 
+      background: var(--surface2); 
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text2); transition: all 0.2s;
+      border-radius: var(--radius);
+    }
+    .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
 
     .form-box {
-      width: 80%;
-      max-width: 350px;
+      width: 100%;
+      max-width: 380px;
+      margin: auto 0; /* Centraliza verticalmente respeitando o overflow */
     }
 
-    h2 {
-      text-align: center;
-      font-size: 32px;
-      color: #143D59;
-      margin-bottom: 5px;
-      line-height: 1.2;
+    .form-box h2 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 44px;
+      color: var(--text);
+      font-weight: 900;
+      line-height: 1;
+      margin-bottom: 8px;
+      text-transform: uppercase;
     }
 
-    h2 span {
-      color: #4AB8FF;
+    .form-box h2 span {
+      color: var(--accent);
     }
 
     .subtitle {
-      text-align: center;
       font-size: 14px;
-      color: #777;
-      margin-bottom: 35px;
+      color: var(--text2);
+      margin-bottom: 30px;
     }
 
     .input-group {
-      margin-bottom: 20px;
+      margin-bottom: 18px;
       display: flex;
       flex-direction: column;
     }
 
     .input-group label {
-      font-size: 14px;
-      font-weight: 600;
+      font-size: 11px;
+      font-weight: 700;
       margin-bottom: 6px;
-      color: #1a1a1a;
+      color: var(--text);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
-    .input-group input,
-    .input-group select {
-      background: none;
-      border: none;
-      border-bottom: 1px solid #ccc;
-      padding: 8px 0;
+    .input-group input, .input-group select {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 11px 14px;
       outline: none;
-      font-size: 16px;
+      font-size: 15px;
+      color: var(--text);
+      font-family: 'Barlow', sans-serif;
+      transition: border-color 0.2s;
+      border-radius: var(--radius);
       width: 100%;
     }
 
     .input-group select {
       cursor: pointer;
-      color: #333;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%235A6578' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 40px;
     }
 
-    .btn {
+    .input-group input:focus, .input-group select:focus {
+      border-color: var(--accent);
+    }
+
+    .btn-submit {
       width: 100%;
-      padding: 12px;
+      padding: 14px;
       border: none;
-      background: #143D59;
-      border-radius: 30px;
+      background: var(--accent);
       cursor: pointer;
-      font-size: 14px;
+      font-family: 'Barlow', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
       letter-spacing: 1px;
       color: white;
+      text-transform: uppercase;
+      transition: all 0.2s;
       margin-top: 10px;
-      transition: 0.2s;
+      border-radius: var(--radius);
     }
 
-    .btn:hover {
-      opacity: 0.9;
+    .btn-submit:hover {
+      background: var(--cta-hover);
+      transform: translateY(-1px);
     }
 
     .footer-links {
-      text-align: center;
       margin-top: 30px;
-      font-size: 15px;
-      color: #666;
+      font-size: 14px;
+      color: var(--text2);
+      text-align: center;
     }
 
     .footer-links a {
-      color: #4AB8FF;
+      color: var(--accent);
       text-decoration: none;
+      font-weight: 600;
+    }
+    .footer-links a:hover {
+      text-decoration: underline;
     }
 
-    #mensagem {
+    .status-message {
       margin-top: 15px;
-      text-align: center;
-      font-size: 14px;
-      font-weight: bold;
+      font-size: 13px;
+      color: var(--text);
       min-height: 20px;
+      font-weight: 500;
+      text-align: center;
     }
 
-    .error {
-      color: #c0392b;
-    }
-
-    .success {
-      color: #27ae60;
-    }
+    .status-message.error { color: var(--error); }
+    .status-message.success { color: var(--success); }
   </style>
 </head>
-
 <body>
 
-  <div class="container">
-    <div class="left">
-      <div class="overlay">
-        <img src="IMG/logo1g.png" class="logo" alt="Logo">
+  <div class="register-container">
+    
+    <div class="left-panel">
+      <div class="panel-overlay">
+        <a href="index.html" class="brand">
+          <div class="brand-mark">A</div>
+          <span class="brand-name">Ari<span>Line</span></span>
+        </a>
         <div class="left-text">
-          <h1>Portal<br>do cliente</h1>
-          <p>Seu canal de relacionamento digital com a empresa.</p>
+          <h1>Soluções<br>Industriais</h1>
+          <p>Crie sua credencial de acesso para ingressar no ecossistema integrado de gestão e ERP.</p>
         </div>
       </div>
     </div>
 
-    <div class="right">
-      <div class="form-box">
-        <h2>Novo<br><span>Cadastro</span></h2>
-        <p class="subtitle">Crie sua conta e defina seu nível de acesso.</p>
+    <div class="right-panel">
+      
+      <div class="theme-toggle-wrapper">
+        <button class="theme-toggle" id="themeBtn" title="Alternar tema">
+          <svg id="themeIcon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+      </div>
 
-        <form id="formCadastro">
+      <div class="form-box">
+        <h2>Criar<br><span>Nova Conta</span></h2>
+        <p class="subtitle">Preencha os campos para cadastrar seu perfil corporativo</p>
+
+        <form id="cadastro-form">
           <div class="input-group">
             <label>Nome Completo</label>
-            <input type="text" id="nome" placeholder="Seu nome" required>
+            <input type="text" id="nome" placeholder="Ex: João Silva" required>
           </div>
 
           <div class="input-group">
-            <label>E-mail</label>
-            <input type="email" id="email" placeholder="email@empresa.com" required>
+            <label>E-mail Corporativo</label>
+            <input type="email" id="email" placeholder="nome@empresa.com.br" required>
           </div>
 
           <div class="input-group">
-            <label>Senha</label>
-            <input type="password" id="senha" placeholder="Crie uma senha forte" required>
+            <label>Senha de Acesso</label>
+            <input type="password" id="senha" placeholder="Mínimo 6 caracteres" required>
           </div>
 
           <div class="input-group">
-            <label>Cargo (Permissão)</label>
+            <label>Cargo / Nível de Acesso</label>
             <select id="cargo" required>
-              <option value="" disabled selected>Selecione uma opção...</option>
-              <option value="operadores">Operador (Chão de fábrica)</option>
-              <option value="supervisores">Supervisor (Painel de dados)</option>
-              <option value="gestores">Gestor (Controle total)</option>
+              <option value="" disabled selected>Selecione sua função...</option>
+              <option value="gestores">Gestor / Diretor</option>
+              <option value="supervisores">Supervisor de Produção</option>
+              <option value="operadores">Operador de Linha</option>
             </select>
           </div>
 
-          <button type="submit" class="btn">CRIAR CONTA</button>
+          <button type="submit" class="btn-submit">Finalizar Cadastro</button>
+          <p id="msg" class="status-message"></p>
         </form>
 
-        <p id="mensagem"></p>
-
         <div class="footer-links">
-          <p>Já tem conta? <a href="login.html">Fazer Login</a></p>
+          <p>Já possui uma conta? <a href="login.html">Faça login aqui</a></p>
         </div>
       </div>
     </div>
   </div>
+
+  <script>
+    const themeBtn = document.getElementById('themeBtn');
+    const htmlTag = document.documentElement;
+
+    const moonIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`;
+    const sunIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`;
+
+    if (localStorage.getItem('theme') === 'dark') {
+      htmlTag.setAttribute('data-theme', 'dark');
+      themeBtn.innerHTML = sunIcon;
+    }
+
+    themeBtn.addEventListener('click', () => {
+      const isDark = htmlTag.getAttribute('data-theme') === 'dark';
+      htmlTag.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      localStorage.setItem('theme', isDark ? 'light' : 'dark');
+      themeBtn.innerHTML = isDark ? moonIcon : sunIcon;
+    });
+  </script>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -240,24 +378,23 @@
       appId: "1:990947686480:web:e5707c91aa62a985e9f955"
     };
 
-    // Inicializa Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getDatabase(app);
 
-    const form = document.getElementById("formCadastro");
-    const msg = document.getElementById("mensagem");
+    const msg = document.getElementById("msg");
+    const form = document.getElementById("cadastro-form");
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      const nome = document.getElementById("nome").value;
-      const email = document.getElementById("email").value;
+      const nome = document.getElementById("nome").value.trim();
+      const email = document.getElementById("email").value.trim();
       const senha = document.getElementById("senha").value;
       const cargo = document.getElementById("cargo").value;
 
-      msg.textContent = "Criando usuário...";
-      msg.className = "";
+      msg.textContent = "Criando usuário industrial...";
+      msg.className = "status-message";
 
       try {
         // 1. Cria o usuário no Firebase Authentication
@@ -265,38 +402,36 @@
         const user = userCredential.user;
 
         // 2. Salva o Cargo vinculado ao ID do usuário (UID)
-        // Isso cria a estrutura: cargos -> UID -> "gestores"
         await set(ref(db, 'cargos/' + user.uid), cargo);
 
-        // 3. (Opcional) Salva os dados do perfil em outro nó
+        // 3. Salva os dados extras do perfil no banco
         await set(ref(db, 'usuarios/' + user.uid), {
           nome: nome,
           email: email,
           cargo: cargo
         });
 
-        msg.textContent = "Conta criada com sucesso! Redirecionando...";
-        msg.className = "success";
+        msg.textContent = "Conta criada com sucesso! Redirecionando para o login...";
+        msg.className = "status-message success";
 
-        // Redireciona para o login após 2 segundos
         setTimeout(() => {
           window.location.href = "login.html";
         }, 2000);
 
       } catch (error) {
         console.error(error);
-        let textoErro = "Erro ao cadastrar.";
+        msg.className = "status-message error";
 
         if (error.code === 'auth/email-already-in-use') {
-          textoErro = "Este e-mail já está cadastrado.";
+          msg.textContent = "Este e-mail corporativo já está cadastrado.";
         } else if (error.code === 'auth/weak-password') {
-          textoErro = "A senha deve ter pelo menos 6 caracteres.";
+          msg.textContent = "A senha fornecida é muito fraca (mínimo 6 dígitos).";
+        } else {
+          msg.textContent = "Erro crítico ao cadastrar. Tente novamente mais tarde.";
         }
-
-        msg.textContent = textoErro;
-        msg.className = "error";
       }
     });
   </script>
+
 </body>
 </html>

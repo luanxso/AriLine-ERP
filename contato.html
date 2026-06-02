@@ -1,0 +1,722 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contato — AriLine ERP Industrial</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+  <style>
+    :root {
+      --bg: #F0F2F5;
+      --surface: #FFFFFF;
+      --surface2: #E8ECF1;
+      --border: rgba(30,40,55,0.11);
+      --nav-bg: #0F1923;
+      --text: #0F1923;
+      --text2: #5A6578;
+      --accent: #1A6FD4;
+      --cta-hover: #1258B0;
+      --section-dark: #0F1923;
+      --card-bg: #FFFFFF;
+      --card-border: rgba(30,40,55,0.09);
+      --tag-bg: rgba(26,111,212,0.09);
+      --input-bg: #F5F7FA;
+      --input-border: rgba(30,40,55,0.14);
+      --input-focus: #1A6FD4;
+      --maxw: 1200px;
+      font-family: 'Barlow', system-ui, sans-serif;
+    }
+
+    [data-theme="dark"] {
+      --bg: #0C1117;
+      --surface: #151D27;
+      --surface2: #0E1520;
+      --border: rgba(180,200,230,0.08);
+      --nav-bg: #070E15;
+      --text: #D8E4F0;
+      --text2: #6A84A0;
+      --accent: #3B8FEA;
+      --cta-hover: #1A6FD4;
+      --section-dark: #0D1520;
+      --card-bg: #151D27;
+      --card-border: rgba(180,200,230,0.08);
+      --tag-bg: rgba(59,143,234,0.12);
+      --input-bg: #0F1923;
+      --input-border: rgba(180,200,230,0.12);
+      --input-focus: #3B8FEA;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      transition: background 0.5s cubic-bezier(.4,0,.2,1), color 0.5s cubic-bezier(.4,0,.2,1);
+      line-height: 1.55;
+      font-size: 16px;
+    }
+
+    /* Transição suave em todos os elementos temáticos */
+    .contact-left, .contact-right, .form-field, .contact-info-icon,
+    .subnav, .site-footer, .topbar, .form-row, .brand-mark {
+      transition:
+        background-color 0.5s cubic-bezier(.4,0,.2,1),
+        border-color     0.4s cubic-bezier(.4,0,.2,1),
+        color            0.4s cubic-bezier(.4,0,.2,1);
+    }
+
+    /* Flash overlay ao trocar tema */
+    .theme-flash {
+      position: fixed; inset: 0; z-index: 9999;
+      pointer-events: none; opacity: 0;
+      transition: opacity 0.18s ease;
+    }
+    .theme-flash.visible { opacity: 1; }
+
+    /* Ícone do botão com efeito de rotação/fade */
+    .theme-toggle { overflow: hidden; }
+    .theme-toggle svg {
+      transition: transform 0.45s cubic-bezier(.34,1.56,.64,1), opacity 0.2s ease;
+      display: block;
+    }
+    .theme-toggle.animating svg {
+      transform: rotate(90deg) scale(0.6);
+      opacity: 0;
+    }
+
+    .container { max-width: var(--maxw); margin: 0 auto; padding: 0 28px; }
+
+    /* ── TOPBAR ── */
+    .topbar { background: var(--nav-bg); position: sticky; top: 0; z-index: 100; }
+    .topbar .row { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .brand-mark {
+      width: 34px; height: 34px; background: var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 20px; font-weight: 900; color: #fff; letter-spacing: -1px;
+    }
+    .brand-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 22px; font-weight: 900;
+      color: #DCE8F8; letter-spacing: 0.5px; text-transform: uppercase;
+    }
+    .brand-name span { color: var(--accent); }
+    .primary-nav { display: flex; gap: 28px; align-items: center; }
+    .primary-nav a {
+      font-weight: 600; color: rgba(210,230,248,0.60);
+      text-decoration: none; font-size: 13.5px;
+      text-transform: uppercase; letter-spacing: 0.8px; transition: color 0.2s;
+    }
+    .primary-nav a:hover, .primary-nav a.active { color: #DCE8F8; }
+    .nav-actions { display: flex; align-items: center; gap: 10px; }
+    .theme-toggle {
+      width: 36px; height: 36px;
+      border: 1px solid rgba(210,230,248,0.18); background: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(210,230,248,0.55); transition: all 0.2s;
+    }
+    .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-ghost {
+      text-decoration: none; color: rgba(210,230,248,0.65);
+      font-weight: 600; font-size: 12.5px;
+      padding: 8px 18px; border: 1px solid rgba(210,230,248,0.16);
+      text-transform: uppercase; letter-spacing: 0.8px; transition: all 0.2s;
+    }
+    .btn-ghost:hover { border-color: var(--accent); color: #DCE8F8; }
+
+    /* ── SUBNAV ── */
+    .subnav { background: #070E15; border-bottom: 1px solid rgba(180,210,240,0.07); }
+    .subnav .row { display: flex; justify-content: flex-start; align-items: center; height: 44px; }
+    .subnav-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      color: var(--accent); font-size: 11px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 2px;
+      padding-right: 24px; margin-right: 24px;
+      border-right: 1px solid rgba(255,255,255,0.08);
+    }
+    .subnav-links { display: flex; gap: 20px; list-style: none; }
+    .subnav-links a {
+      text-decoration: none; color: rgba(255,255,255,0.45);
+      font-size: 12.5px; font-weight: 600; letter-spacing: 0.5px;
+      text-transform: uppercase; transition: color 0.2s;
+    }
+    .subnav-links a:hover, .subnav-links a.active { color: rgba(255,255,255,0.9); }
+
+    /* ── LAYOUT PRINCIPAL ── */
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: calc(100vh - 108px);
+    }
+
+    /* ── LADO ESQUERDO ── */
+    .contact-left {
+      background: var(--section-dark);
+      padding: 72px 64px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+    .contact-left::before {
+      content: 'CONTATO';
+      position: absolute; bottom: -24px; right: -16px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 160px; font-weight: 900;
+      color: rgba(180,210,240,0.04); line-height: 1;
+      user-select: none; pointer-events: none;
+    }
+
+    .left-top { position: relative; z-index: 1; }
+
+    .left-eyebrow {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 32px;
+    }
+    .left-eyebrow-line { width: 40px; height: 2px; background: var(--accent); }
+    .left-eyebrow span {
+      font-size: 11px; font-weight: 700; color: var(--accent);
+      text-transform: uppercase; letter-spacing: 2.5px;
+    }
+
+    .contact-left h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 72px; font-weight: 900; color: #DCE8F8;
+      line-height: 0.92; letter-spacing: -1px;
+      text-transform: uppercase; margin-bottom: 28px;
+    }
+    .contact-left h1 .accent { color: var(--accent); }
+    .contact-left h1 .outline {
+      display: block;
+      -webkit-text-stroke: 1px rgba(220,232,248,0.28);
+      color: transparent; font-size: 88px;
+    }
+
+    .contact-left-sub {
+      font-size: 16px; color: rgba(220,232,248,0.55);
+      line-height: 1.7; max-width: 380px;
+    }
+
+    .left-bottom {
+      position: relative; z-index: 1;
+      display: flex; flex-direction: column; gap: 0;
+    }
+
+    .contact-info-item {
+      display: flex; align-items: flex-start; gap: 16px;
+      padding: 22px 0;
+      border-bottom: 1px solid rgba(180,210,240,0.10);
+    }
+    .contact-info-item:first-child { border-top: 1px solid rgba(180,210,240,0.10); }
+
+    .contact-info-icon {
+      width: 40px; height: 40px; flex-shrink: 0;
+      background: rgba(26,111,212,0.12);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .contact-info-icon i { font-size: 20px; color: var(--accent); }
+
+    .contact-info-text { }
+    .contact-info-label {
+      font-size: 11px; font-weight: 700; color: var(--accent);
+      text-transform: uppercase; letter-spacing: 1.5px;
+      display: block; margin-bottom: 4px;
+    }
+    .contact-info-value {
+      font-size: 15px; color: rgba(220,232,248,0.75); font-weight: 500;
+    }
+
+    /* ── LADO DIREITO / FORMULÁRIO ── */
+    .contact-right {
+      background: var(--surface);
+      padding: 64px 56px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .form-eyebrow {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 20px;
+    }
+    .form-eyebrow-line { width: 32px; height: 2px; background: var(--accent); }
+    .form-eyebrow span {
+      font-size: 11px; font-weight: 700; color: var(--accent);
+      text-transform: uppercase; letter-spacing: 2.5px;
+    }
+
+    .form-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 44px; font-weight: 900; color: var(--text);
+      line-height: 1; text-transform: uppercase;
+      letter-spacing: -0.5px; margin-bottom: 8px;
+    }
+    .form-sub {
+      font-size: 14.5px; color: var(--text2); margin-bottom: 36px; line-height: 1.6;
+    }
+
+    /* ── FORM ── */
+    .contact-form { display: flex; flex-direction: column; gap: 0; }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-bottom: 1px;
+    }
+    .form-row.full { grid-template-columns: 1fr; }
+    .form-row:last-of-type { margin-bottom: 0; }
+
+    .form-field {
+      background: var(--card-bg);
+      padding: 0;
+      position: relative;
+    }
+
+    .form-field label {
+      display: block;
+      font-size: 10.5px; font-weight: 700; color: var(--accent);
+      text-transform: uppercase; letter-spacing: 1.5px;
+      padding: 14px 18px 0;
+      pointer-events: none;
+    }
+
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      display: block; width: 100%;
+      background: transparent;
+      border: none; outline: none;
+      font-family: 'Barlow', sans-serif;
+      font-size: 14.5px; color: var(--text);
+      padding: 6px 18px 14px;
+      transition: background 0.2s;
+      appearance: none;
+    }
+
+    .form-field select {
+      cursor: pointer;
+    }
+
+    .form-field textarea {
+      resize: none;
+      min-height: 100px;
+    }
+
+    .form-field:focus-within {
+      background: var(--tag-bg);
+    }
+    .form-field:focus-within label { color: var(--accent); }
+
+    /* select arrow */
+    .select-wrap { position: relative; }
+    .select-wrap::after {
+      content: '';
+      position: absolute; right: 18px; top: 50%; transform: translateY(-50%);
+      width: 0; height: 0;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 5px solid var(--text2);
+      pointer-events: none;
+    }
+
+    /* ── SUBMIT ── */
+    .form-submit { margin-top: 20px; display: flex; align-items: center; gap: 20px; }
+
+    .btn-submit {
+      background: var(--accent); color: #fff;
+      border: none; cursor: pointer;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 16px; font-weight: 800;
+      padding: 16px 40px; letter-spacing: 1.5px;
+      text-transform: uppercase; transition: all 0.2s;
+      display: inline-flex; align-items: center; gap: 10px;
+    }
+    .btn-submit:hover { background: var(--cta-hover); transform: translateY(-1px); }
+    .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    .form-note {
+      font-size: 12.5px; color: var(--text2); line-height: 1.5;
+    }
+
+    /* ── MENSAGEM DE STATUS ── */
+    .form-status {
+      margin-top: 16px;
+      padding: 14px 18px;
+      font-size: 13.5px; font-weight: 600;
+      display: none;
+    }
+    .form-status.success {
+      background: rgba(26,111,212,0.08);
+      border: 1px solid rgba(26,111,212,0.20);
+      color: var(--accent);
+      display: block;
+    }
+    .form-status.error {
+      background: rgba(200,40,40,0.07);
+      border: 1px solid rgba(200,40,40,0.18);
+      color: #c82828;
+      display: block;
+    }
+
+    /* ── FOOTER ── */
+    .site-footer { background: #070E15; color: rgba(210,225,245,0.5); padding: 48px 0 24px; }
+    .footer-bottom {
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: 12.5px;
+    }
+
+    /* ── ANIMAÇÕES ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .contact-left > * { animation: fadeUp 0.55s ease backwards; }
+    .contact-left > *:nth-child(1) { animation-delay: 0.05s; }
+    .contact-left > *:nth-child(2) { animation-delay: 0.18s; }
+    .contact-right { animation: fadeUp 0.55s ease 0.12s backwards; }
+
+    /* ── RESPONSIVO ── */
+    @media (max-width: 1000px) {
+      .primary-nav { display: none; }
+      .contact-layout { grid-template-columns: 1fr; }
+      .contact-left { padding: 56px 28px; min-height: auto; }
+      .contact-left h1 { font-size: 52px; }
+      .contact-left h1 .outline { font-size: 64px; }
+      .contact-right { padding: 48px 28px; }
+    }
+    @media (max-width: 600px) {
+      .form-row { grid-template-columns: 1fr; }
+      .contact-left h1 { font-size: 40px; }
+      .contact-left h1 .outline { font-size: 50px; }
+      .form-title { font-size: 34px; }
+      .form-submit { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- overlay de flash para transição de tema -->
+  <div class="theme-flash" id="themeFlash"></div>
+
+  <header>
+    <div class="topbar">
+      <div class="container row">
+        <a href="index.html" class="brand">
+          <div class="brand-mark">A</div>
+          <span class="brand-name">Ari<span>Line</span></span>
+        </a>
+        <nav class="primary-nav">
+          <a href="index.html">Produção</a>
+          <a href="planos.html">Planos</a>
+          <a href="sobre.html">Sobre</a>
+          <a href="contato.html" class="active">Contatos</a>
+        </nav>
+        <div class="nav-actions">
+          <button class="theme-toggle" id="themeBtn" title="Alternar tema">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </button>
+          <a class="btn-ghost" id="btn-auth" href="login.html">Área do Cliente</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="subnav">
+      <div class="container">
+        <div class="row">
+          <span class="subnav-label">Contato</span>
+          <ul class="subnav-links">
+            <li><a href="#" class="active">Fale Conosco</a></li>
+            <li><a href="proposta.html">Solicitar Proposta</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── LAYOUT PRINCIPAL ── -->
+  <div class="contact-layout">
+
+    <!-- ESQUERDA: contexto + info ── -->
+    <div class="contact-left">
+      <div class="left-top">
+        <div class="left-eyebrow">
+          <div class="left-eyebrow-line"></div>
+          <span>Polo Industrial · Diadema, SP</span>
+        </div>
+        <h1>
+          Sem fila.<br>
+          Sem <span class="accent">ticket.</span>
+          <span class="outline">Direto.</span>
+        </h1>
+        <p class="contact-left-sub">
+          Preencha o formulário e alguém do nosso time vai responder em até 2 horas no horário comercial —
+          sem bot, sem triagem automática.
+        </p>
+      </div>
+
+      <div class="left-bottom">
+        <div class="contact-info-item">
+          <div class="contact-info-icon"><i class="ph ph-whatsapp-logo"></i></div>
+          <div class="contact-info-text">
+            <span class="contact-info-label">WhatsApp Comercial</span>
+            <span class="contact-info-value">(11) 90000-0000</span>
+          </div>
+        </div>
+        <div class="contact-info-item">
+          <div class="contact-info-icon"><i class="ph ph-envelope-simple"></i></div>
+          <div class="contact-info-text">
+            <span class="contact-info-label">E-mail</span>
+            <span class="contact-info-value">comercial@ariline.com.br</span>
+          </div>
+        </div>
+        <div class="contact-info-item">
+          <div class="contact-info-icon"><i class="ph ph-map-pin"></i></div>
+          <div class="contact-info-text">
+            <span class="contact-info-label">Localização</span>
+            <span class="contact-info-value">Polo Industrial, Diadema — SP</span>
+          </div>
+        </div>
+        <div class="contact-info-item">
+          <div class="contact-info-icon"><i class="ph ph-clock"></i></div>
+          <div class="contact-info-text">
+            <span class="contact-info-label">Horário de Atendimento</span>
+            <span class="contact-info-value">Seg – Sex, 08h às 18h</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DIREITA: formulário ── -->
+    <div class="contact-right">
+      <div class="form-eyebrow">
+        <div class="form-eyebrow-line"></div>
+        <span>Formulário de contato</span>
+      </div>
+      <h2 class="form-title">Manda a mensagem</h2>
+      <p class="form-sub">Conta o que você precisa e a gente entra em contato.</p>
+
+      <form id="formContato" class="contact-form" novalidate>
+
+        <div class="form-row">
+          <div class="form-field">
+            <label for="contatoNome">Nome Completo *</label>
+            <input type="text" id="contatoNome" placeholder="Seu nome" required>
+          </div>
+          <div class="form-field">
+            <label for="contatoEmail">E-mail *</label>
+            <input type="email" id="contatoEmail" placeholder="seu@email.com" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-field">
+            <label for="contatoTelefone">Telefone *</label>
+            <input type="text" id="contatoTelefone" placeholder="(11) 90000-0000" required>
+          </div>
+          <div class="form-field select-wrap">
+            <label for="contatoCargo">Seu cargo *</label>
+            <select id="contatoCargo" required>
+              <option value="" disabled selected>Selecione</option>
+              <option>Operador</option>
+              <option>Supervisor</option>
+              <option>Gerente</option>
+              <option>Diretor</option>
+              <option>Proprietário</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row full">
+          <div class="form-field">
+            <label for="contatoEmpresa">Empresa *</label>
+            <input type="text" id="contatoEmpresa" placeholder="Nome da sua empresa" required>
+          </div>
+        </div>
+
+        <div class="form-row full">
+          <div class="form-field select-wrap">
+            <label for="contatoTipo">Como podemos ajudar? *</label>
+            <select id="contatoTipo" required>
+              <option value="" disabled selected>Selecione o assunto</option>
+              <option>Demonstração do sistema</option>
+              <option>Suporte técnico</option>
+              <option>Integrações</option>
+              <option>Dúvidas sobre planos</option>
+              <option>Outros</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row full">
+          <div class="form-field">
+            <label for="contatoMensagem">Mensagem *</label>
+            <textarea id="contatoMensagem" placeholder="Descreva sua situação ou dúvida..." required></textarea>
+          </div>
+        </div>
+
+        <div class="form-submit">
+          <button type="submit" class="btn-submit" id="submitBtn">
+            Enviar mensagem
+            <i class="ph ph-paper-plane-tilt"></i>
+          </button>
+          <span class="form-note">Respondemos em até 2h<br>no horário comercial.</span>
+        </div>
+
+      </form>
+
+      <div class="form-status" id="formStatus"></div>
+    </div>
+
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <span>© 2026 AriLine ERP Industrial — Todos os direitos reservados</span>
+        <span>CNPJ 00.000.000/0001-00</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ── FIREBASE ── -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+  <script>
+    // ── TEMA ──
+    const themeBtn  = document.getElementById('themeBtn');
+    const htmlTag   = document.documentElement;
+    const flashEl   = document.getElementById('themeFlash');
+
+    const moonIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`;
+    const sunIcon  = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`;
+
+    themeBtn.addEventListener('click', () => {
+      const isDark = htmlTag.getAttribute('data-theme') === 'dark';
+      const nextTheme = isDark ? 'light' : 'dark';
+
+      // 1. Gira/apaga o ícone
+      themeBtn.classList.add('animating');
+
+      // 2. Flash suave na tela
+      flashEl.style.background = isDark ? 'rgba(255,255,255,0.07)' : 'rgba(0,0,0,0.06)';
+      flashEl.classList.add('visible');
+
+      // 3. Após fade do ícone, troca tema e restaura ícone
+      setTimeout(() => {
+        htmlTag.setAttribute('data-theme', nextTheme);
+        themeBtn.innerHTML = isDark ? moonIcon : sunIcon;
+        themeBtn.classList.remove('animating');
+
+        // Remove flash
+        flashEl.classList.remove('visible');
+      }, 200);
+    });
+
+    // ── AUTH ──
+    const btnAuth = document.getElementById('btn-auth');
+    if (sessionStorage.getItem('usuarioLogado')) {
+      btnAuth.textContent = 'Sair do Sistema';
+      btnAuth.href = '#';
+      btnAuth.addEventListener('click', e => {
+        e.preventDefault();
+        if (confirm('Tem certeza que deseja sair?')) {
+          sessionStorage.clear();
+          window.location.href = 'index.html';
+        }
+      });
+    }
+
+    // ── FIREBASE ──
+    const firebaseConfig = {
+      apiKey: "AIzaSyB4y1rt9_Jynm1M0wO21r-PZPMq5QdxtYY",
+      authDomain: "projeto-integrado-ariline.firebaseapp.com",
+      projectId: "projeto-integrado-ariline",
+      storageBucket: "projeto-integrado-ariline.firebasestorage.app",
+      messagingSenderId: "990947686480",
+      appId: "1:990947686480:web:e5707c91aa62a985e9f955",
+      measurementId: "G-LBEC603E17"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+
+    // ── FORMULÁRIO ──
+    const form       = document.getElementById('formContato');
+    const submitBtn  = document.getElementById('submitBtn');
+    const statusEl   = document.getElementById('formStatus');
+
+    function showStatus(msg, type) {
+      statusEl.textContent = msg;
+      statusEl.className = 'form-status ' + type;
+    }
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const dados = {
+        nome:      document.getElementById('contatoNome').value.trim(),
+        email:     document.getElementById('contatoEmail').value.trim(),
+        telefone:  document.getElementById('contatoTelefone').value.trim(),
+        cargo:     document.getElementById('contatoCargo').value,
+        empresa:   document.getElementById('contatoEmpresa').value.trim(),
+        tipo:      document.getElementById('contatoTipo').value,
+        mensagem:  document.getElementById('contatoMensagem').value.trim(),
+        data:      new Date().toLocaleString('pt-BR')
+      };
+
+      // Validação básica
+      for (const [key, val] of Object.entries(dados)) {
+        if (key === 'data') continue;
+        if (!val || val === 'Selecione' || val === 'Selecione o assunto') {
+          showStatus('Preencha todos os campos obrigatórios.', 'error');
+          return;
+        }
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = 'Enviando… <i class="ph ph-circle-notch"></i>';
+
+      database.ref('contatos').push(dados)
+        .then(() => {
+          showStatus('Mensagem enviada. Vamos responder em até 2 horas no horário comercial.', 'success');
+          form.reset();
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = 'Enviar mensagem <i class="ph ph-paper-plane-tilt"></i>';
+
+          if (dados.tipo === 'Demonstração do sistema') {
+            setTimeout(() => { window.location.href = 'demo.html'; }, 900);
+          }
+        })
+        .catch(err => {
+          showStatus('Erro ao enviar: ' + err.message, 'error');
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = 'Enviar mensagem <i class="ph ph-paper-plane-tilt"></i>';
+        });
+    });
+
+    // ── MÁSCARA TELEFONE ──
+    document.getElementById('contatoTelefone').addEventListener('input', function() {
+      let v = this.value.replace(/\D/g, '').slice(0, 11);
+      if (v.length > 6) {
+        v = '(' + v.slice(0,2) + ') ' + v.slice(2,7) + '-' + v.slice(7);
+      } else if (v.length > 2) {
+        v = '(' + v.slice(0,2) + ') ' + v.slice(2);
+      } else if (v.length > 0) {
+        v = '(' + v;
+      }
+      this.value = v;
+    });
+  </script>
+
+</body>
+</html>
