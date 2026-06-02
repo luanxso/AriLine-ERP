@@ -1,0 +1,493 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pagamento | AriLine ERP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #F0F2F5;
+      --surface: #FFFFFF;
+      --surface2: #E8ECF1;
+      --border: rgba(30,40,55,0.11);
+      --nav-bg: #0F1923;
+      --text: #0F1923;
+      --text2: #5A6578;
+      --accent: #1A6FD4;
+      --cta-hover: #1258B0;
+      --radius: 4px;
+      --error: #E03131;
+      --success: #2B8A3E;
+      font-family: 'Barlow', system-ui, sans-serif;
+    }
+    [data-theme="dark"] {
+      --bg: #0C1117;
+      --surface: #151D27;
+      --surface2: #0E1520;
+      --border: rgba(180,200,230,0.08);
+      --nav-bg: #070E15;
+      --text: #D8E4F0;
+      --text2: #6A84A0;
+      --accent: #3B8FEA;
+      --cta-hover: #1A6FD4;
+      --error: #FA5252;
+      --success: #40C057;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      transition: background 0.4s, color 0.4s;
+      min-height: 100vh;
+    }
+
+    nav {
+      background: var(--nav-bg);
+      padding: 0 48px;
+      height: 60px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .brand-mark {
+      width: 34px; height: 34px; background: var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 20px; font-weight: 900; color: #fff; letter-spacing: -1px;
+    }
+    .brand-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 22px; font-weight: 900;
+      color: #DCE8F8; letter-spacing: 0.5px; text-transform: uppercase;
+    }
+    .brand-name span { color: var(--accent); }
+    .theme-toggle {
+      width: 36px; height: 36px;
+      border: 1px solid rgba(180,200,230,0.15);
+      background: rgba(255,255,255,0.05);
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      color: #6A84A0; transition: all 0.2s; border-radius: var(--radius);
+    }
+    .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+    .page-wrap {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 60px 24px 80px;
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 40px;
+      align-items: start;
+    }
+
+    @media (max-width: 760px) {
+      .page-wrap { grid-template-columns: 1fr; }
+      .order-summary { order: -1; }
+    }
+
+    /* FORMULÁRIO DE PAGAMENTO */
+    .payment-form-box h2 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 42px; font-weight: 900;
+      line-height: 1; text-transform: uppercase;
+      color: var(--text); margin-bottom: 6px;
+    }
+    .payment-form-box h2 span { color: var(--accent); }
+    .subtitle { font-size: 14px; color: var(--text2); margin-bottom: 36px; }
+
+    .demo-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(26,111,212,0.1);
+      border: 1px solid rgba(26,111,212,0.25);
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 20px;
+      margin-bottom: 28px;
+    }
+
+    .section-label {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--text2); margin-bottom: 16px; margin-top: 28px;
+    }
+
+    .input-group {
+      margin-bottom: 16px;
+      display: flex; flex-direction: column;
+    }
+    .input-group label {
+      font-size: 11px; font-weight: 700;
+      margin-bottom: 6px; color: var(--text);
+      text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .input-group input {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 11px 14px; outline: none;
+      font-size: 15px; color: var(--text);
+      font-family: 'Barlow', sans-serif;
+      transition: border-color 0.2s;
+      border-radius: var(--radius);
+    }
+    .input-group input:focus { border-color: var(--accent); }
+
+    .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    /* Simulação visual do cartão */
+    .card-visual {
+      background: linear-gradient(135deg, #0F1923 0%, #1A4070 100%);
+      border-radius: 12px;
+      padding: 28px;
+      margin-bottom: 28px;
+      position: relative;
+      overflow: hidden;
+      min-height: 160px;
+    }
+    .card-visual::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 160px; height: 160px;
+      border-radius: 50%;
+      background: rgba(59,143,234,0.12);
+    }
+    .card-visual::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; left: 30px;
+      width: 200px; height: 200px;
+      border-radius: 50%;
+      background: rgba(26,111,212,0.08);
+    }
+    .card-chip {
+      width: 36px; height: 28px;
+      background: linear-gradient(135deg, #D4A017, #F0C040);
+      border-radius: 4px; margin-bottom: 20px;
+    }
+    .card-number-display {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 22px; font-weight: 700;
+      color: #DCE8F8; letter-spacing: 3px;
+      margin-bottom: 12px;
+    }
+    .card-info-row {
+      display: flex; justify-content: space-between;
+    }
+    .card-info-label { font-size: 10px; color: rgba(220,232,248,0.5); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2px; }
+    .card-info-value { font-size: 14px; font-weight: 600; color: #DCE8F8; }
+
+    .btn-pay {
+      width: 100%; padding: 16px;
+      border: none; background: var(--accent);
+      cursor: pointer; font-family: 'Barlow', sans-serif;
+      font-size: 13px; font-weight: 700;
+      letter-spacing: 1px; color: white;
+      text-transform: uppercase; transition: all 0.2s;
+      margin-top: 10px; border-radius: var(--radius);
+    }
+    .btn-pay:hover { background: var(--cta-hover); transform: translateY(-1px); }
+    .btn-pay:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    .status-message {
+      margin-top: 16px; font-size: 13px;
+      color: var(--text); min-height: 20px;
+      font-weight: 500; text-align: center;
+    }
+    .status-message.error { color: var(--error); }
+    .status-message.success { color: var(--success); }
+
+    /* RESUMO DO PEDIDO */
+    .order-summary {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      position: sticky;
+      top: 24px;
+    }
+    .order-summary h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 20px; font-weight: 800;
+      text-transform: uppercase; margin-bottom: 24px;
+    }
+    .order-line {
+      display: flex; justify-content: space-between;
+      padding: 10px 0; border-bottom: 1px solid var(--border);
+      font-size: 14px;
+    }
+    .order-line:last-of-type { border-bottom: none; }
+    .order-line .label { color: var(--text2); }
+    .order-line .value { font-weight: 600; }
+    .order-total {
+      display: flex; justify-content: space-between;
+      padding: 16px 0 0;
+      margin-top: 8px;
+      border-top: 2px solid var(--accent);
+    }
+    .order-total .label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 16px; font-weight: 800;
+      text-transform: uppercase;
+    }
+    .order-total .value {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 24px; font-weight: 900; color: var(--accent);
+    }
+
+    .secure-badge {
+      display: flex; align-items: center; gap: 8px;
+      margin-top: 24px; font-size: 12px; color: var(--text2);
+    }
+    .secure-badge svg { flex-shrink: 0; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="brand">
+      <div class="brand-mark">A</div>
+      <span class="brand-name">Ari<span>Line</span></span>
+    </a>
+    <button class="theme-toggle" id="themeBtn">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </svg>
+    </button>
+  </nav>
+
+  <div class="page-wrap">
+
+    <!-- FORMULÁRIO -->
+    <div class="payment-form-box">
+      <h2>Dados de<br><span>Pagamento</span></h2>
+      <p class="subtitle">Insira as informações do cartão para finalizar a assinatura</p>
+
+      <span class="demo-badge">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Ambiente de demonstração — nenhum dado real é processado
+      </span>
+
+      <!-- Card Visual Preview -->
+      <div class="card-visual">
+        <div class="card-chip"></div>
+        <div class="card-number-display" id="cardPreview">•••• •••• •••• ••••</div>
+        <div class="card-info-row">
+          <div>
+            <div class="card-info-label">Titular</div>
+            <div class="card-info-value" id="namePreview">NOME DO TITULAR</div>
+          </div>
+          <div>
+            <div class="card-info-label">Validade</div>
+            <div class="card-info-value" id="expiryPreview">MM/AA</div>
+          </div>
+        </div>
+      </div>
+
+      <p class="section-label">Dados do Titular</p>
+      <div class="input-group">
+        <label>Nome no Cartão</label>
+        <input type="text" id="nomeCartao" placeholder="EX: JOÃO A SILVA" maxlength="26" oninput="updatePreview()">
+      </div>
+      <div class="input-group">
+        <label>CPF do Titular</label>
+        <input type="text" id="cpf" placeholder="000.000.000-00" maxlength="14" oninput="maskCPF(this)">
+      </div>
+
+      <p class="section-label">Dados do Cartão</p>
+      <div class="input-group">
+        <label>Número do Cartão</label>
+        <input type="text" id="numeroCartao" placeholder="0000 0000 0000 0000" maxlength="19" oninput="maskCard(this); updatePreview()">
+      </div>
+      <div class="row-2">
+        <div class="input-group">
+          <label>Validade</label>
+          <input type="text" id="validade" placeholder="MM/AA" maxlength="5" oninput="maskExpiry(this); updatePreview()">
+        </div>
+        <div class="input-group">
+          <label>CVV</label>
+          <input type="text" id="cvv" placeholder="•••" maxlength="3">
+        </div>
+      </div>
+
+      <button class="btn-pay" id="btnPagar" onclick="processarPagamento()">
+        Confirmar Pagamento
+      </button>
+      <p id="payStatus" class="status-message"></p>
+    </div>
+
+    <!-- RESUMO -->
+    <div class="order-summary">
+      <h3>Resumo do Pedido</h3>
+      <div class="order-line">
+        <span class="label">Plano</span>
+        <span class="value" id="resumoPlano">—</span>
+      </div>
+      <div class="order-line">
+        <span class="label">Cobrança</span>
+        <span class="value">Mensal</span>
+      </div>
+      <div class="order-line">
+        <span class="label">Usuários</span>
+        <span class="value" id="resumoUsuarios">—</span>
+      </div>
+      <div class="order-total">
+        <span class="label">Total/mês</span>
+        <span class="value" id="resumoPreco">R$ —</span>
+      </div>
+
+      <div class="secure-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Ambiente seguro de demonstração escolar
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Tema
+    const themeBtn = document.getElementById('themeBtn');
+    const htmlTag = document.documentElement;
+    const moonIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`;
+    const sunIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`;
+    if (localStorage.getItem('theme') === 'dark') { htmlTag.setAttribute('data-theme', 'dark'); themeBtn.innerHTML = sunIcon; }
+    themeBtn.addEventListener('click', () => {
+      const isDark = htmlTag.getAttribute('data-theme') === 'dark';
+      htmlTag.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      localStorage.setItem('theme', isDark ? 'light' : 'dark');
+      themeBtn.innerHTML = isDark ? moonIcon : sunIcon;
+    });
+
+    // Carrega resumo do plano selecionado
+    const plano = sessionStorage.getItem('planoSelecionado') || 'profissional';
+    const preco = sessionStorage.getItem('planoPreco') || '499';
+    const planoNomes = { basico: 'Básico', profissional: 'Profissional', enterprise: 'Enterprise' };
+    const planoUsuarios = { basico: 'Até 5 usuários', profissional: 'Até 20 usuários', enterprise: 'Ilimitados' };
+    document.getElementById('resumoPlano').textContent = planoNomes[plano] || plano;
+    document.getElementById('resumoPreco').textContent = `R$ ${preco}`;
+    document.getElementById('resumoUsuarios').textContent = planoUsuarios[plano] || '—';
+
+    // Máscaras
+    function maskCard(el) {
+      let v = el.value.replace(/\D/g, '').substring(0, 16);
+      el.value = v.replace(/(.{4})/g, '$1 ').trim();
+    }
+    function maskExpiry(el) {
+      let v = el.value.replace(/\D/g, '').substring(0, 4);
+      if (v.length > 2) v = v.slice(0, 2) + '/' + v.slice(2);
+      el.value = v;
+    }
+    function maskCPF(el) {
+      let v = el.value.replace(/\D/g, '').substring(0, 11);
+      v = v.replace(/(\d{3})(\d)/, '$1.$2');
+      v = v.replace(/(\d{3})(\d)/, '$1.$2');
+      v = v.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+      el.value = v;
+    }
+
+    // Preview do cartão
+    function updatePreview() {
+      const num = document.getElementById('numeroCartao').value || '';
+      const name = document.getElementById('nomeCartao').value || '';
+      const exp = document.getElementById('validade').value || '';
+      const numFormatted = num.padEnd(19, ' ').replace(/\S{4}/g, m => m + ' ').trim();
+      const displayNum = num ? num.padEnd(19, '•') : '•••• •••• •••• ••••';
+      document.getElementById('cardPreview').textContent = displayNum || '•••• •••• •••• ••••';
+      document.getElementById('namePreview').textContent = name.toUpperCase() || 'NOME DO TITULAR';
+      document.getElementById('expiryPreview').textContent = exp || 'MM/AA';
+    }
+  </script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getDatabase, ref, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyB4y1rt9_Jynm1M0wO21r-PZPMq5QdxtYY",
+      authDomain: "projeto-integrado-ariline.firebaseapp.com",
+      projectId: "projeto-integrado-ariline",
+      storageBucket: "projeto-integrado-ariline.firebasestorage.app",
+      messagingSenderId: "990947686480",
+      appId: "1:990947686480:web:e5707c91aa62a985e9f955"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getDatabase(app);
+
+    window.processarPagamento = async function() {
+      const nome = document.getElementById('nomeCartao').value.trim();
+      const cpf = document.getElementById('cpf').value.trim();
+      const numero = document.getElementById('numeroCartao').value.trim();
+      const validade = document.getElementById('validade').value.trim();
+      const cvv = document.getElementById('cvv').value.trim();
+      const status = document.getElementById('payStatus');
+      const btn = document.getElementById('btnPagar');
+
+      // Validação básica
+      if (!nome || !cpf || !numero || !validade || !cvv) {
+        status.textContent = 'Preencha todos os campos do cartão.';
+        status.className = 'status-message error';
+        return;
+      }
+      if (numero.replace(/\s/g, '').length < 16) {
+        status.textContent = 'Número do cartão inválido.';
+        status.className = 'status-message error';
+        return;
+      }
+
+      btn.disabled = true;
+      status.textContent = 'Processando pagamento...';
+      status.className = 'status-message';
+
+      // Simula delay de processamento
+      await new Promise(r => setTimeout(r, 1800));
+
+      const user = auth.currentUser;
+      if (!user) {
+        status.textContent = 'Sessão expirada. Faça login novamente.';
+        status.className = 'status-message error';
+        btn.disabled = false;
+        return;
+      }
+
+      const plano = sessionStorage.getItem('planoSelecionado') || 'profissional';
+      const preco = sessionStorage.getItem('planoPreco') || '499';
+
+      try {
+        // Grava no Firebase: assinante = true + plano escolhido
+        await update(ref(db, 'usuarios/' + user.uid), {
+          assinante: true,
+          plano: plano,
+          planoPreco: preco,
+          dataAssinatura: new Date().toISOString()
+        });
+
+        sessionStorage.setItem('assinante', 'true');
+
+        status.textContent = 'Pagamento aprovado! Redirecionando...';
+        status.className = 'status-message success';
+
+        setTimeout(() => {
+          window.location.href = 'download.html';
+        }, 1500);
+
+      } catch (err) {
+        console.error(err);
+        status.textContent = 'Erro ao confirmar assinatura. Tente novamente.';
+        status.className = 'status-message error';
+        btn.disabled = false;
+      }
+    };
+  </script>
+
+</body>
+</html>
