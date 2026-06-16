@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Planos — AriLine ERP Industrial</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <link rel="icon" type="image/png" href="IMG/Logo Ariline.png">
+
+    <link rel="stylesheet" href="css/planos.css">
+</head>
+<body>
+
+  <header>
+    <div class="topbar">
+      <div class="container row">
+        <a href="index.html" class="brand"><img src="IMG/Logo Ariline.png" alt="Logo AriLine" class="brand-logo"><span class="brand-name">Ari<span>Line</span></span></a>
+        <nav class="primary-nav">
+          <a href="index.html">Produção</a>
+          <a href="planos.html" class="active">Planos</a>
+          <a href="sobre.html">Sobre</a>
+          <a href="contato.html">Contatos</a>
+        </nav>
+        <div class="nav-actions">
+          <button class="theme-toggle" id="themeBtn" title="Alternar tema">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          </button>
+          <a class="btn-ghost" id="btn-auth" href="login.html">Área do Cliente</a>
+        </div>
+      </div>
+    </div>
+    <div class="subnav">
+      <div class="container">
+        <div class="row">
+          <span class="subnav-label">Planos</span>
+          <ul class="subnav-links">
+            <li><a href="#" class="active">Especificação</a></li>
+            <li><a href="#comparativo">Comparativo</a></li>
+            <li><a href="#faq">Dúvidas</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero-planos">
+    <div class="container">
+      <div class="hero-planos-inner">
+        <div class="hero-planos-text">
+          <div class="hero-eyebrow">
+            <div class="hero-eyebrow-line"></div>
+            <span>Preço justo · Sem surpresa</span>
+          </div>
+          <h1>Sem taxa de<br>implantação.<br><span class="accent">Sem letra miúda.</span></h1>
+          <p class="hero-planos-sub">Você escolhe o plano, a gente entrega o sistema funcionando — web no tablet da linha e desktop no escritório. Cancela quando quiser, sem multa.</p>
+        </div>
+        <div class="hero-planos-right">
+          <div class="hero-fact">
+            <i class="ph ph-check-circle"></i>
+            <div class="hero-fact-text">
+              <strong>App Desktop incluído em todos os planos</strong>
+              Web para operadores no tablet. Desktop para gestores no computador. Mesmo banco de dados, em tempo real.
+            </div>
+          </div>
+          <div class="hero-fact">
+            <i class="ph ph-check-circle"></i>
+            <div class="hero-fact-text">
+              <strong>Implantação incluída em todos os planos</strong>
+              Nossa equipe configura tudo. Você não paga a mais por isso.
+            </div>
+          </div>
+          <div class="hero-fact">
+            <i class="ph ph-check-circle"></i>
+            <div class="hero-fact-text">
+              <strong>Contrato mensal, sem fidelidade mínima</strong>
+              Se não funcionar para você, cancela. Simples assim.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="guarantee-strip">
+    <div class="container">
+      <div class="guarantee-inner">
+        <div class="guarantee-item"><i class="ph ph-shield-check"></i><span>30 dias de garantia</span></div>
+        <div class="guarantee-item"><i class="ph ph-globe"></i><span>Acesso Web incluído</span></div>
+        <div class="guarantee-item"><i class="ph ph-desktop"></i><span>App Desktop incluído</span></div>
+        <div class="guarantee-item"><i class="ph ph-wrench"></i><span>Implantação incluída</span></div>
+        <div class="guarantee-item"><i class="ph ph-x-circle"></i><span>Cancela sem multa</span></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="plans-section">
+    <div class="container">
+      <div class="eyebrow"><div class="eyebrow-line"></div><span>Planos disponíveis</span></div>
+      <h2 class="section-title">Três tamanhos.<br>Uma qualidade.</h2>
+      <p class="section-sub">Todos os planos incluem implantação, suporte, acesso web e app desktop. O que muda é a profundidade.</p>
+
+      <div class="plans-grid">
+
+        <!-- ESSENCIAL -->
+        <div class="plan-card">
+          <div class="plan-header">
+            <span class="plan-name">Essencial</span>
+            <div class="plan-price">
+              <div class="plan-price-meta"><span class="plan-currency">R$</span><span class="plan-period">/mês</span></div>
+              <span class="plan-amount">199</span>
+            </div>
+            <p class="plan-tagline">Para pequenas fábricas que estão saindo das planilhas e precisam de controle básico de produção agora.</p>
+            <span class="plan-desktop-tag"><i class="ph ph-desktop"></i> App Desktop incluído</span>
+          </div>
+          <div class="plan-body">
+            <ul class="plan-features">
+              <li><i class="ph ph-check"></i><span><strong>Módulo de produção completo</strong>Ordens, apontamentos e histórico</span></li>
+              <li><i class="ph ph-check"></i><span><strong>Dashboards de turno</strong>OEE e produtividade em tempo real</span></li>
+              <li><i class="ph ph-check"></i><span><strong>Web + Desktop sincronizados</strong>Tablet na linha, computador no escritório</span></li>
+              <li><i class="ph ph-check"></i><span><strong>Suporte via WhatsApp</strong>Horário comercial</span></li>
+            </ul>
+            <div class="plan-users">
+              <i class="ph ph-users"></i>
+              <div class="plan-users-text"><strong>1 gerente + 3 operadores</strong>4 usuários simultâneos</div>
+            </div>
+          </div>
+          <div class="plan-footer"><a href="contato.html" class="btn-plan">Começar com Essencial</a></div>
+        </div>
+
+        <!-- PROFISSIONAL -->
+        <div class="plan-card featured">
+          <div class="plan-badge">Mais escolhido</div>
+          <div class="plan-header">
+            <span class="plan-name">Profissional</span>
+            <div class="plan-price">
+              <div class="plan-price-meta"><span class="plan-currency">R$</span><span class="plan-period">/mês</span></div>
+              <span class="plan-amount">399</span>
+            </div>
+            <p class="plan-tagline">Para fábricas em crescimento que precisam de qualidade, manutenção e dados integrados com o ERP financeiro.</p>
+            <span class="plan-desktop-tag"><i class="ph ph-desktop"></i> App Desktop incluído</span>
+          </div>
+          <div class="plan-body">
+            <ul class="plan-features">
+              <li><i class="ph ph-check"></i><span><strong>Tudo do Essencial</strong>Mais os módulos abaixo</span></li>
+              <li><i class="ph ph-check"></i><span><strong>Módulo de qualidade</strong>Controle de refugo e rastreabilidade</span></li>
+              <li><i class="ph ph-check"></i><span><strong>Integração IoT básica</strong>Até 10 sensores ou CLPs</span></li>
+              <li><i class="ph ph-check"></i><span><strong>Relatórios exportáveis</strong>Excel, PDF e API para BI</span></li>
+              <li><i class="ph ph-check"></i><span><strong>Integração com ERP financeiro</strong>Totvs, SAP, Sankhya</span></li>
+            </ul>
+            <div class="plan-users">
+              <i class="ph ph-users"></i>
+              <div class="plan-users-text"><strong>1 gerente + 2 supervisores + 8 operadores</strong>11 usuários simultâneos</div>
+            </div>
+          </div>
+          <div class="plan-footer"><a href="contato.html" class="btn-plan-outline">Começar com Profissional</a></div>
+        </div>
+
+        <!-- ENTERPRISE -->
+        <div class="plan-card">
+          <div class="plan-header">
+            <span class="plan-name">Enterprise</span>
+            <div class="plan-price">
+              <div class="plan-price-meta"><span class="plan-currency">R$</span><span class="plan-period">/mês</span></div>
+              <span class="plan-amount">699</span>
+            </div>
+            <p class="plan-tagline">Para operações complexas, múltiplas linhas ou unidades que precisam de visão total e automação avançada.</p>
+            <span class="plan-desktop-tag"><i class="ph ph-desktop"></i> App Desktop incluído</span>
+          </div>
+          <div class="plan-body">
+            <ul class="plan-features">
+              <li><i class="ph ph-check"></i><span><strong>Tudo do Profissional</strong>Mais os módulos abaixo</span></li>
+              <li><i class="ph ph-check"></i><span><strong>Módulo de manutenção</strong>Preventiva, corretiva e histórico</span></li>
+              <li><i class="ph ph-check"></i><span><strong>IoT ilimitado</strong>Sensores, CLPs, balanças e leitores</span></li>
+              <li><i class="ph ph-check"></i><span><strong>BI e visão multiplantas</strong>Gestão de múltiplas unidades</span></li>
+              <li><i class="ph ph-check"></i><span><strong>Suporte prioritário 24h</strong>Número exclusivo de atendimento</span></li>
+            </ul>
+            <div class="plan-users">
+              <i class="ph ph-users"></i>
+              <div class="plan-users-text"><strong>Usuários ilimitados</strong>Sem custo adicional por usuário</div>
+            </div>
+          </div>
+          <div class="plan-footer"><a href="contato.html" class="btn-plan">Começar com Enterprise</a></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="compare-section" id="comparativo">
+    <div class="container">
+      <div class="eyebrow"><div class="eyebrow-line"></div><span>Comparativo</span></div>
+      <h2 class="section-title">O que está incluído<br>em cada plano</h2>
+      <p class="section-sub">Nenhum recurso escondido. O que você vê aqui é o que você recebe.</p>
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Recurso</th>
+            <th>Essencial</th>
+            <th class="featured-col">Profissional</th>
+            <th>Enterprise</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Módulo de Produção</td><td><i class="ph ph-check-circle check"></i></td><td class="featured-col"><i class="ph ph-check-circle check"></i></td><td><i class="ph ph-check-circle check"></i></td></tr>
+          <tr><td>Dashboards em tempo real</td><td><i class="ph ph-check-circle check"></i></td><td class="featured-col"><i class="ph ph-check-circle check"></i></td><td><i class="ph ph-check-circle check"></i></td></tr>
+          <tr><td>App Desktop (Web + Desktop sync)</td><td><i class="ph ph-check-circle check"></i></td><td class="featured-col"><i class="ph ph-check-circle check"></i></td><td><i class="ph ph-check-circle check"></i></td></tr>
+          <tr><td>Módulo de Qualidade</td><td><i class="ph ph-minus-circle cross"></i></td><td class="featured-col"><i class="ph ph-check-circle check"></i></td><td><i class="ph ph-check-circle check"></i></td></tr>
+          <tr><td>Integração IoT / CLPs</td><td><i class="ph ph-minus-circle cross"></i></td><td class="featured-col">Até 10 sensores</td><td>Ilimitado</td></tr>
+          <tr><td>Integração ERP Financeiro</td><td><i class="ph ph-minus-circle cross"></i></td><td class="featured-col"><i class="ph ph-check-circle check"></i></td><td><i class="ph ph-check-circle check"></i></td></tr>
+          <tr><td>Módulo de Manutenção</td><td><i class="ph ph-minus-circle cross"></i></td><td class="featured-col"><i class="ph ph-minus-circle cross"></i></td><td><i class="ph ph-check-circle check"></i></td></tr>
+          <tr><td>BI e gestão multiplantas</td><td><i class="ph ph-minus-circle cross"></i></td><td class="featured-col"><i class="ph ph-minus-circle cross"></i></td><td><i class="ph ph-check-circle check"></i></td></tr>
+          <tr><td>Usuários</td><td>4</td><td class="featured-col">11</td><td>Ilimitados</td></tr>
+          <tr><td>Suporte</td><td>WhatsApp comercial</td><td class="featured-col">WhatsApp comercial</td><td>24h prioritário</td></tr>
+          <tr><td>Implantação</td><td><i class="ph ph-check-circle check"></i></td><td class="featured-col"><i class="ph ph-check-circle check"></i></td><td><i class="ph ph-check-circle check"></i></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="faq-section" id="faq">
+    <div class="container">
+      <div class="eyebrow"><div class="eyebrow-line"></div><span>Dúvidas frequentes</span></div>
+      <h2 class="section-title">Perguntas Comuns</h2>
+      <div class="faq-grid">
+        <div class="faq-item">
+          <h3 class="faq-q">Preciso instalar algum programa?</h3>
+          <p class="faq-a">Não, se você trabalha no tablet do chão de fábrica. O sistema roda direto no navegador. Para gestores de escritório, existe também o AriLine Desktop — um app que instala no Windows ou Linux e sincroniza em tempo real com o mesmo banco de dados, sem precisar abrir navegador.</p>
+        </div>
+        <div class="faq-item">
+          <h3 class="faq-q">Web e Desktop mostram os mesmos dados?</h3>
+          <p class="faq-a">Sim. Ambas as interfaces conectam ao mesmo banco de dados em nuvem. Um apontamento feito pelo operador no tablet aparece imediatamente no desktop do supervisor. Não há sincronização manual nem conflito de dados.</p>
+        </div>
+        <div class="faq-item">
+          <h3 class="faq-q">Preciso trocar de ERP?</h3>
+          <p class="faq-a">Não. A AriLine atua focada na fábrica e se integra ao seu ERP atual (Totvs, SAP, Sankhya) para puxar ordens de produção e devolver apontamentos.</p>
+        </div>
+        <div class="faq-item">
+          <h3 class="faq-q">E se a internet cair?</h3>
+          <p class="faq-a">Nossa arquitetura permite apontamentos offline temporários nos tablets da fábrica. Assim que a rede volta, os dados sincronizam automaticamente — tanto na versão web quanto no desktop.</p>
+        </div>
+        <div class="faq-item">
+          <h3 class="faq-q">Como é o suporte?</h3>
+          <p class="faq-a">Falamos pelo WhatsApp direto com os gerentes de produção. Sem sistema de tickets lentos. O foco é não parar a fábrica.</p>
+        </div>
+        <div class="faq-item">
+          <h3 class="faq-q">O que é a implantação incluída?</h3>
+          <p class="faq-a">Nós mapeamos seu processo, importamos seus produtos, configuramos os apontamentos e treinamos sua equipe. Você só começa a pagar a mensalidade quando o sistema estiver rodando.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-final">
+    <div class="container">
+      <div class="cta-inner">
+        <div>
+          <h2>Pronto para assumir<br>o controle da fábrica?</h2>
+          <p>Agende uma demonstração de 15 minutos e veja como a AriLine resolve os problemas do seu chão de fábrica na prática.</p>
+        </div>
+        <a href="contato.html" class="btn-cta-white">Agendar Demonstração</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="brand"><img src="IMG/Logo Ariline.png" alt="Logo AriLine" class="brand-logo"><span class="brand-name">Ari<span>Line</span></span></a>
+          <div class="footer-divider"></div>
+          <p>Web no tablet, desktop no escritório. O primeiro MES feito para quem vive o chão de fábrica de verdade.</p>
+        </div>
+        <div>
+          <h4>Sistema</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Módulo de Produção</a></li>
+            <li><a href="#">Qualidade e OEE</a></li>
+            <li><a href="#">Manutenção (Beta)</a></li>
+            <li><a href="#">App Desktop</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Empresa</h4>
+          <ul class="footer-links">
+            <li><a href="sobre.html">Nossa História</a></li>
+            <li><a href="planos.html">Preços e Planos</a></li>
+            <li><a href="#">Trabalhe Conosco</a></li>
+            <li><a href="#">Blog da Indústria</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contato</h4>
+          <div class="footer-contact-item"><i class="ph ph-whatsapp-logo"></i><span>(11) 99999-9999</span></div>
+          <div class="footer-contact-item"><i class="ph ph-envelope-simple"></i><span>contato@ariline.com.br</span></div>
+          <div class="footer-contact-item"><i class="ph ph-map-pin"></i><span>Diadema, SP<br>Polo Industrial</span></div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 AriLine Sistemas Industriais. Todos os direitos reservados.</span>
+        <span>Feito com dedicação no ABC Paulista.</span>
+      </div>
+    </div>
+  </footer>
+
+    <script src="js/planos.js"></script>
+</body>
+</html>

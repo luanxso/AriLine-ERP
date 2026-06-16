@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contato — AriLine ERP Industrial</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <link rel="icon" type="image/png" href="IMG/Logo Ariline.png">
+  <link rel="stylesheet" href="css/contato.css">
+</head>
+<body>
+
+  <header>
+    <div class="topbar">
+      <div class="container row">
+        <a href="index.html" class="brand"><img src="IMG/Logo Ariline.png" alt="Logo AriLine" class="brand-logo"><span class="brand-name">Ari<span>Line</span></span></a>
+        <nav class="primary-nav">
+          <a href="index.html">Produção</a>
+          <a href="planos.html">Planos</a>
+          <a href="sobre.html">Sobre</a>
+          <a href="contato.html" class="active">Contatos</a>
+        </nav>
+        <div class="nav-actions">
+          <button class="theme-toggle" id="themeBtn" title="Alternar tema"><i class="ph ph-moon"></i></button>
+          <a class="btn-ghost" href="login.html">Área do Cliente</a>
+        </div>
+      </div>
+    </div>
+    <div class="subnav">
+      <div class="container">
+        <div class="row">
+          <span class="subnav-label">Contato</span>
+          <ul class="subnav-links">
+            <li><a href="#canais" class="active">Canais</a></li>
+            <li><a href="#mensagem">Mensagem</a></li>
+            <li><a href="#atendimento">Atendimento</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="contact-simple">
+    <section class="contact-hero">
+      <div class="container contact-hero-inner">
+        <div>
+          <div class="eyebrow"><div class="eyebrow-line"></div><span>Fale com a AriLine</span></div>
+          <h1>Contato comercial<br>e suporte</h1>
+          <p>Use os canais abaixo para falar com a equipe. Se você solicitar uma demonstração, a demonstração será enviada por e-mail assim que o time comercial revisar o pedido.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact-info" id="canais">
+      <div class="container">
+        <div class="contact-cards">
+          <article class="contact-card">
+            <i class="ph ph-whatsapp-logo"></i>
+            <span>WhatsApp</span>
+            <strong>(11) 90000-0000</strong>
+            <p>Atendimento comercial em horário útil.</p>
+          </article>
+          <article class="contact-card">
+            <i class="ph ph-envelope-simple"></i>
+            <span>E-mail</span>
+            <strong>comercial@ariline.com.br</strong>
+            <p>Envie dúvidas sobre planos, implantação e demonstração.</p>
+          </article>
+          <article class="contact-card" id="atendimento">
+            <i class="ph ph-clock"></i>
+            <span>Atendimento</span>
+            <strong>Segunda a sexta</strong>
+            <p>Das 8h às 18h, exceto feriados.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact-form-section" id="mensagem">
+      <div class="container contact-form-layout">
+        <div class="form-copy">
+          <div class="eyebrow"><div class="eyebrow-line"></div><span>Mensagem</span></div>
+          <h2>Envie sua solicitação</h2>
+          <p>Preencha seus dados e descreva o que você precisa. Para pedidos de demonstração, o retorno será feito por e-mail.</p>
+          <div class="form-note">
+            <i class="ph ph-paper-plane-tilt"></i>
+            <span>A página de demonstração online está temporariamente inativa. O envio da demo passa a ser feito por e-mail.</span>
+          </div>
+        </div>
+
+        <form id="contactForm" class="contact-form">
+          <div class="form-row">
+            <div>
+              <label for="nome">Nome</label>
+              <input id="nome" name="nome" required placeholder="Seu nome completo">
+            </div>
+            <div>
+              <label for="email">E-mail</label>
+              <input id="email" name="email" type="email" required placeholder="nome@empresa.com.br">
+            </div>
+          </div>
+          <div class="form-row">
+            <div>
+              <label for="empresa">Empresa</label>
+              <input id="empresa" name="empresa" required placeholder="Nome da empresa">
+            </div>
+            <div>
+              <label for="telefone">Telefone</label>
+              <input id="telefone" name="telefone" placeholder="(00) 00000-0000">
+            </div>
+          </div>
+          <div class="form-row">
+            <div>
+              <label for="cargo">Cargo</label>
+              <input id="cargo" name="cargo" placeholder="Seu cargo">
+            </div>
+            <div>
+              <label for="interesse">Interesse</label>
+              <select id="interesse" name="interesse">
+                <option>Demonstração por e-mail</option>
+                <option>Planos e preços</option>
+                <option>Implantação na fábrica</option>
+                <option>Suporte comercial</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label for="mensagem">Mensagem</label>
+            <textarea id="mensagem" name="mensagem" placeholder="Escreva sua dúvida ou descreva o tipo de demonstração que deseja receber."></textarea>
+          </div>
+          <button class="btn-primary" type="submit" id="submitBtn">
+            <i class="ph ph-paper-plane-tilt"></i>
+            Enviar contato
+          </button>
+          <p id="formStatus" class="status-message"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom">
+      <span>© 2026 AriLine ERP Industrial — Todos os direitos reservados</span>
+      <span>CNPJ 00.000.000/0001-00</span>
+    </div>
+  </footer>
+
+  <script src="js/contato.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="js/contato-2.js"></script>
+</body>
+</html>

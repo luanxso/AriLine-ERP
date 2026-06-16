@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>AriLine — Criar Gestores</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=JetBrains+Mono:wght@400;600&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="IMG/Logo Ariline.png">
+  <style>
+    :root {
+      --bg: #060D0B; --surf: #0C1910; --surf2: #111F14;
+      --border: rgba(80,200,120,0.10); --text: #C8EDD4; --muted: #3D6B4A;
+      --green: #1DB954; --yellow: #C99A1A; --red: #C03030; --blue: #1A6FD4;
+      --mono: 'JetBrains Mono', monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: 'Barlow', sans-serif;
+      min-height: 100vh; display: flex; flex-direction: column;
+      align-items: center; padding: 48px 24px;
+    }
+    body::before {
+      content: ''; position: fixed; inset: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(29,185,84,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(29,185,84,0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; margin-bottom: 40px; }
+    .brand-mark {
+      width: 36px; height: 36px; background: var(--blue);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 900; color: #fff;
+    }
+    .brand-name {
+      font-family: 'Barlow Condensed', sans-serif; font-size: 22px;
+      font-weight: 900; color: var(--text); text-transform: uppercase;
+    }
+    .brand-name span { color: var(--blue); }
+    .brand-logo {
+      width: 34px;
+      height: 34px;
+      object-fit: contain;
+      display: block;
+      flex-shrink: 0;
+    }
+    .badge {
+      font-size: 9px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
+      color: var(--muted); border: 1px solid rgba(80,200,120,0.15); padding: 4px 12px; margin-bottom: 16px;
+    }
+    h1 {
+      font-family: 'Barlow Condensed', sans-serif; font-size: 48px; font-weight: 900;
+      text-transform: uppercase; line-height: .95; margin-bottom: 8px; text-align: center;
+    }
+    h1 span { color: var(--green); }
+    .subtitle {
+      font-size: 14px; color: var(--muted); text-align: center;
+      max-width: 480px; line-height: 1.6; margin-bottom: 40px;
+    }
+
+    /* cards de empresa */
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; width: 100%; max-width: 1100px; margin-bottom: 28px; }
+    @media(max-width:860px){ .cards { grid-template-columns: 1fr 1fr; } }
+    @media(max-width:560px){ .cards { grid-template-columns: 1fr; } }
+
+    .emp-card { background: var(--surf); border: 1px solid var(--border); padding: 22px; position: relative; }
+    .emp-card.done { border-color: rgba(29,185,84,0.35); }
+    .emp-card.erro { border-color: rgba(192,48,48,0.35); }
+    .emp-dot { width: 8px; height: 8px; border-radius: 50%; margin-bottom: 12px; }
+    .emp-nome { font-family: 'Barlow Condensed', sans-serif; font-size: 18px; font-weight: 900; text-transform: uppercase; color: var(--text); margin-bottom: 2px; }
+    .emp-setor { font-size: 11px; color: var(--muted); margin-bottom: 14px; }
+    .emp-token { font-family: var(--mono); font-size: 11px; color: var(--blue); letter-spacing: 1px; padding: 6px 10px; background: rgba(26,111,212,0.08); border: 1px solid rgba(26,111,212,0.18); margin-bottom: 12px; }
+    .emp-creds { display: flex; flex-direction: column; gap: 5px; margin-top: 10px; }
+    .cred-row { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); }
+    .cred-row strong { color: var(--text); font-family: var(--mono); font-size: 11px; }
+    .emp-status {
+      position: absolute; top: 14px; right: 14px;
+      font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+      padding: 3px 9px;
+    }
+    .emp-status.aguardando { color: rgba(80,200,120,0.3); border: 1px solid rgba(80,200,120,0.1); }
+    .emp-status.criando   { color: var(--yellow); border: 1px solid rgba(201,154,26,0.3); }
+    .emp-status.concluido { color: var(--green);  border: 1px solid rgba(29,185,84,0.3); }
+    .emp-status.erro      { color: var(--red);    border: 1px solid rgba(192,48,48,0.3); }
+
+    /* botão */
+    .btn-seed {
+      width: 100%; max-width: 1100px; padding: 20px;
+      background: var(--green); color: #060D0B;
+      border: none; font-family: 'Barlow Condensed', sans-serif;
+      font-size: 22px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase;
+      cursor: pointer; transition: all .2s;
+      display: flex; align-items: center; justify-content: center; gap: 12px;
+    }
+    .btn-seed:hover:not(:disabled) { background: #17A347; transform: translateY(-1px); }
+    .btn-seed:disabled { background: var(--surf2); color: var(--muted); cursor: not-allowed; }
+
+    /* progress */
+    .progress-wrap { width: 100%; max-width: 1100px; margin-top: 12px; }
+    .progress-bar { height: 3px; background: rgba(80,200,120,0.08); }
+    .progress-fill { height: 3px; background: var(--green); width: 0%; transition: width .3s; }
+    .progress-label { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-top: 6px; text-align: right; }
+
+    /* log */
+    .log-wrap { width: 100%; max-width: 1100px; margin-top: 20px; background: var(--surf); border: 1px solid var(--border); }
+    .log-header { padding: 10px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
+    .log-header span { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+    .log-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+    .log-body {
+      padding: 16px; font-family: var(--mono); font-size: 12px;
+      min-height: 160px; max-height: 260px; overflow-y: auto;
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .log-line { display: flex; gap: 10px; align-items: flex-start; }
+    .log-ts  { color: var(--muted); flex-shrink: 0; }
+    .log-ok  { color: var(--green); }
+    .log-err { color: var(--red); }
+    .log-inf { color: var(--blue); }
+    .log-wrn { color: var(--yellow); }
+
+    /* done banner */
+    .done-banner {
+      display: none; width: 100%; max-width: 1100px;
+      margin-top: 16px; padding: 20px 24px;
+      background: rgba(29,185,84,0.08); border: 1px solid rgba(29,185,84,0.20);
+    }
+    .done-banner h3 { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 900; text-transform: uppercase; color: var(--green); margin-bottom: 8px; }
+    .done-banner p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .done-banner a { color: var(--blue); font-weight: 600; }
+    .creds-table { margin-top: 16px; border: 1px solid rgba(80,200,120,0.10); width: 100%; border-collapse: collapse; }
+    .creds-table th { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); padding: 8px 12px; border-bottom: 1px solid rgba(80,200,120,0.10); text-align: left; }
+    .creds-table td { font-family: var(--mono); font-size: 12px; color: var(--text); padding: 8px 12px; border-bottom: 1px solid rgba(80,200,120,0.06); }
+    .creds-table tr:last-child td { border-bottom: none; }
+  </style>
+</head>
+<body>
+
+  <div class="brand">
+    <img src="IMG/Logo Ariline.png" alt="Logo AriLine" class="brand-logo">
+    <div class="brand-name">Ari<span>Line</span></div>
+  </div>
+
+  <div class="badge">Ferramenta interna · Uso único</div>
+  <h1>Criar <span>Gestores</span></h1>
+  <p class="subtitle">
+    Cria as contas de gestor (Firebase Auth + Realtime Database) para MetalParts S. Bernardo e AlimFlex Mauá,
+    vinculando cada usuário ao token de empresa já existente no banco.
+  </p>
+
+  <div class="cards">
+
+    <!-- Plastik Diadema -->
+    <div class="emp-card" id="card-plastik">
+      <span class="emp-status aguardando" id="status-plastik">Aguardando</span>
+      <div class="emp-dot" style="background:#1A6FD4"></div>
+      <div class="emp-nome">Plastik Diadema Ltda.</div>
+      <div class="emp-setor">Plástico e Borracha · Diadema, SP</div>
+      <div class="emp-token">ARL-DIAD-7F3K9</div>
+      <div class="emp-creds">
+        <div class="cred-row">E-mail: <strong>gestor@plastikdiadema.com.br</strong></div>
+        <div class="cred-row">Senha: <strong>Plastik@2026</strong></div>
+        <div class="cred-row">Cargo: <strong>gestores</strong></div>
+      </div>
+    </div>
+
+    <!-- MetalParts -->
+    <div class="emp-card" id="card-metalparts">
+      <span class="emp-status aguardando" id="status-metalparts">Aguardando</span>
+      <div class="emp-dot" style="background:#1DB954"></div>
+      <div class="emp-nome">MetalParts S. Bernardo</div>
+      <div class="emp-setor">Metal-mecânica · S. Bernardo do Campo, SP</div>
+      <div class="emp-token">ARL-SBC-2M8QR</div>
+      <div class="emp-creds">
+        <div class="cred-row">E-mail: <strong>gestor@metalparts.com.br</strong></div>
+        <div class="cred-row">Senha: <strong>Metal@2026</strong></div>
+        <div class="cred-row">Cargo: <strong>gestores</strong></div>
+      </div>
+    </div>
+
+    <!-- AlimFlex -->
+    <div class="emp-card" id="card-alimflex">
+      <span class="emp-status aguardando" id="status-alimflex">Aguardando</span>
+      <div class="emp-dot" style="background:#C99A1A"></div>
+      <div class="emp-nome">AlimFlex Mauá</div>
+      <div class="emp-setor">Alimentos e Bebidas · Mauá, SP</div>
+      <div class="emp-token">ARL-MAUA-5P1XZ</div>
+      <div class="emp-creds">
+        <div class="cred-row">E-mail: <strong>gestor@alimflex.com.br</strong></div>
+        <div class="cred-row">Senha: <strong>Alim@2026</strong></div>
+        <div class="cred-row">Cargo: <strong>gestores</strong></div>
+      </div>
+    </div>
+
+  </div>
+
+  <button class="btn-seed" id="btnCriar" onclick="criarGestores()">
+    ▶ Criar contas no Firebase
+  </button>
+
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="progFill"></div></div>
+    <div class="progress-label" id="progLabel">Aguardando...</div>
+  </div>
+
+  <div class="log-wrap">
+    <div class="log-header">
+      <div class="log-dot"></div>
+      <span>Log de execução</span>
+    </div>
+    <div class="log-body" id="logBody">
+      <div class="log-line"><span class="log-ts">--:--:--</span><span class="log-inf">Aguardando início...</span></div>
+    </div>
+  </div>
+
+  <div class="done-banner" id="doneBanner">
+    <h3>✓ Contas criadas com sucesso</h3>
+    <p>Os dois gestores foram registrados no Firebase. Use as credenciais abaixo para fazer login em <a href="login.html">login.html</a>.</p>
+    <table class="creds-table">
+      <thead>
+        <tr>
+          <th>Empresa</th>
+          <th>E-mail</th>
+          <th>Senha</th>
+          <th>Token</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Plastik Diadema Ltda.</td>
+          <td>gestor@plastikdiadema.com.br</td>
+          <td>Plastik@2026</td>
+          <td>ARL-DIAD-7F3K9</td>
+        </tr>
+        <tr>
+          <td>MetalParts S. Bernardo</td>
+          <td>gestor@metalparts.com.br</td>
+          <td>Metal@2026</td>
+          <td>ARL-SBC-2M8QR</td>
+        </tr>
+        <tr>
+          <td>AlimFlex Mauá</td>
+          <td>gestor@alimflex.com.br</td>
+          <td>Alim@2026</td>
+          <td>ARL-MAUA-5P1XZ</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+<script type="module">
+  import { initializeApp }                    from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+  import { getAuth, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+  import { getDatabase, ref, set, get }       from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+
+  const firebaseConfig = {
+    apiKey:            'AIzaSyB4y1rt9_Jynm1M0wO21r-PZPMq5QdxtYY',
+    authDomain:        'projeto-integrado-ariline.firebaseapp.com',
+    projectId:         'projeto-integrado-ariline',
+    storageBucket:     'projeto-integrado-ariline.firebasestorage.app',
+    messagingSenderId: '990947686480',
+    appId:             '1:990947686480:web:e5707c91aa62a985e9f955',
+    databaseURL:       'https://projeto-integrado-ariline-default-rtdb.firebaseio.com',
+  };
+
+  const app  = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db   = getDatabase(app);
+
+  /* ── dados das contas a criar ── */
+  const GESTORES = [
+    {
+      cardId:   'plastik',
+      nome:     'Gestor Plastik Diadema',
+      email:    'gestor@plastikdiadema.com.br',
+      senha:    'Plastik@2026',
+      token:    'ARL-DIAD-7F3K9',
+      empresa:  'Plastik Diadema Ltda.',
+      setor:    'Plástico e Borracha',
+      cidade:   'Diadema, SP',
+    },
+    {
+      cardId:   'metalparts',
+      nome:     'Gestor MetalParts',
+      email:    'gestor@metalparts.com.br',
+      senha:    'Metal@2026',
+      token:    'ARL-SBC-2M8QR',
+      empresa:  'MetalParts S. Bernardo',
+      setor:    'Metal-mecânica',
+      cidade:   'S. Bernardo do Campo, SP',
+    },
+    {
+      cardId:   'alimflex',
+      nome:     'Gestor AlimFlex',
+      email:    'gestor@alimflex.com.br',
+      senha:    'Alim@2026',
+      token:    'ARL-MAUA-5P1XZ',
+      empresa:  'AlimFlex Mauá',
+      setor:    'Alimentos e Bebidas',
+      cidade:   'Mauá, SP',
+    },
+  ];
+
+  /* ── helpers de UI ── */
+  const logBody  = document.getElementById('logBody');
+  const progFill = document.getElementById('progFill');
+  const progLabel= document.getElementById('progLabel');
+
+  function ts(){
+    return new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  }
+  function log(msg, type='inf'){
+    const line = document.createElement('div');
+    line.className = 'log-line';
+    line.innerHTML = `<span class="log-ts">${ts()}</span><span class="log-${type}">${msg}</span>`;
+    logBody.appendChild(line);
+    logBody.scrollTop = logBody.scrollHeight;
+  }
+  function setProgress(pct, label){
+    progFill.style.width = pct + '%';
+    progLabel.textContent = label;
+  }
+  function setCardStatus(cardId, status, label){
+    const card   = document.getElementById('card-' + cardId);
+    const badge  = document.getElementById('status-' + cardId);
+    badge.className = 'emp-status ' + status;
+    badge.textContent = label;
+    if(status === 'concluido') card.classList.add('done');
+    if(status === 'erro')      card.classList.add('erro');
+  }
+
+  /* ── lógica principal ── */
+  window.criarGestores = async function(){
+    const btn = document.getElementById('btnCriar');
+    btn.disabled = true;
+    btn.textContent = 'Criando...';
+    logBody.innerHTML = '';
+
+    const total = GESTORES.length * 4; // 4 operações por gestor: auth + cargos + usuarios + assinatura
+    let done = 0;
+
+    for(const g of GESTORES){
+      log(`━━ Iniciando: ${g.empresa}`, 'inf');
+      setCardStatus(g.cardId, 'criando', 'Criando...');
+
+      /* 1. Verifica se e-mail já existe tentando criar */
+      let uid;
+      try {
+        log(`  Criando usuário Auth: ${g.email}`, 'inf');
+        const cred = await createUserWithEmailAndPassword(auth, g.email, g.senha);
+        uid = cred.user.uid;
+        done++; setProgress(Math.round(done/total*100), `${done}/${total} operações`);
+        log(`  ✓ Auth criado — UID: ${uid}`, 'ok');
+      } catch(err){
+        if(err.code === 'auth/email-already-in-use'){
+          log(`  ⚠ E-mail já cadastrado: ${g.email}`, 'wrn');
+          log(`  Tente apagar o usuário no Firebase Console e rode novamente.`, 'wrn');
+        } else {
+          log(`  ✗ Erro Auth: ${err.message}`, 'err');
+        }
+        setCardStatus(g.cardId, 'erro', 'Erro');
+        done++; setProgress(Math.round(done/total*100), `${done}/${total} operações`);
+        continue;
+      }
+
+      const agora = new Date().toISOString();
+
+      /* 2. cargos/{uid} = 'gestores' */
+      try {
+        await set(ref(db, `cargos/${uid}`), 'gestores');
+        done++; setProgress(Math.round(done/total*100), `${done}/${total} operações`);
+        log(`  ✓ cargo definido como gestores`, 'ok');
+      } catch(err){
+        log(`  ✗ Erro ao salvar cargo: ${err.message}`, 'err');
+        done++;
+      }
+
+      /* 3. usuarios/{uid} com tokenEmpresa já vinculado */
+      try {
+        await set(ref(db, `usuarios/${uid}`), {
+          nome:          g.nome,
+          email:         g.email,
+          cargo:         'gestores',
+          tokenEmpresa:  g.token,
+          status:        'ativo',
+          criadoEm:      agora,
+          empresaPendente: false,
+        });
+        done++; setProgress(Math.round(done/total*100), `${done}/${total} operações`);
+        log(`  ✓ usuário salvo com tokenEmpresa: ${g.token}`, 'ok');
+      } catch(err){
+        log(`  ✗ Erro ao salvar usuário: ${err.message}`, 'err');
+        done++;
+      }
+
+      /* 4. empresas/{token}/assinatura = ativa */
+      try {
+        /* garante que /info existe (popular-banco.html já gravou, mas por segurança) */
+        const infoSnap = await get(ref(db, `empresas/${g.token}/info`));
+        if(!infoSnap.exists()){
+          await set(ref(db, `empresas/${g.token}/info`), {
+            nome:        g.empresa,
+            setor:       g.setor,
+            cidade:      g.cidade,
+            diretorUid:  uid,
+            diretorNome: g.nome,
+            diretorEmail:g.email,
+            criadoEm:    agora,
+          });
+          log(`  ✓ /info criado (empresa não existia no banco)`, 'ok');
+        }
+
+        await set(ref(db, `empresas/${g.token}/assinatura`), {
+          ativa:       true,
+          plano:       'profissional',
+          planoPreco:  '399',
+          pagoPor:     uid,
+          pagoPorEmail:g.email,
+          pagoEm:      agora,
+        });
+        done++; setProgress(Math.round(done/total*100), `${done}/${total} operações`);
+        log(`  ✓ assinatura ativa gravada em empresas/${g.token}/assinatura`, 'ok');
+      } catch(err){
+        log(`  ✗ Erro ao ativar assinatura: ${err.message}`, 'err');
+        done++;
+      }
+
+      setCardStatus(g.cardId, 'concluido', 'Concluído ✓');
+      log(`  ✓ ${g.empresa} — COMPLETO`, 'ok');
+      log('', 'inf');
+    }
+
+    setProgress(100, 'Concluído');
+    log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'inf');
+    log('✓ Processo finalizado. Veja o resumo abaixo.', 'ok');
+
+    btn.textContent = '✓ Concluído';
+    btn.style.background = 'var(--surf2)';
+    btn.style.color = 'var(--green)';
+    document.getElementById('doneBanner').style.display = 'block';
+  };
+</script>
+
+</body>
+</html>

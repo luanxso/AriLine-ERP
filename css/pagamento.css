@@ -1,0 +1,253 @@
+:root {
+      --bg: #F0F2F5;
+      --surface: #FFFFFF;
+      --surface2: #E8ECF1;
+      --border: rgba(30,40,55,0.11);
+      --nav-bg: #0F1923;
+      --text: #0F1923;
+      --text2: #5A6578;
+      --accent: #1A6FD4;
+      --cta-hover: #1258B0;
+      --radius: 4px;
+      --error: #E03131;
+      --success: #2B8A3E;
+      font-family: 'Barlow', system-ui, sans-serif;
+    }
+    [data-theme="dark"] {
+      --bg: #0C1117;
+      --surface: #151D27;
+      --surface2: #0E1520;
+      --border: rgba(180,200,230,0.08);
+      --nav-bg: #070E15;
+      --text: #D8E4F0;
+      --text2: #6A84A0;
+      --accent: #3B8FEA;
+      --cta-hover: #1A6FD4;
+      --error: #FA5252;
+      --success: #40C057;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      transition: background 0.4s, color 0.4s;
+      min-height: 100vh;
+    }
+
+    nav {
+      background: var(--nav-bg);
+      padding: 0 48px;
+      height: 60px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .brand-mark {
+      width: 34px; height: 34px; background: var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 20px; font-weight: 900; color: #fff; letter-spacing: -1px;
+    }
+    .brand-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 22px; font-weight: 900;
+      color: #DCE8F8; letter-spacing: 0.5px; text-transform: uppercase;
+    }
+    .brand-name span { color: var(--accent); }
+    .theme-toggle {
+      width: 36px; height: 36px;
+      border: 1px solid rgba(180,200,230,0.15);
+      background: rgba(255,255,255,0.05);
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      color: #6A84A0; transition: all 0.2s; border-radius: var(--radius);
+    }
+
+        .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-logo {
+      height: 42px;
+      width: auto;
+      object-fit: contain;
+      display: block;
+    }
+
+    .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+    .page-wrap {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 60px 24px 80px;
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 40px;
+      align-items: start;
+    }
+
+    @media (max-width: 760px) {
+      .page-wrap { grid-template-columns: 1fr; }
+      .order-summary { order: -1; }
+    }
+
+    /* FORMULÁRIO DE PAGAMENTO */
+    .payment-form-box h2 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 42px; font-weight: 900;
+      line-height: 1; text-transform: uppercase;
+      color: var(--text); margin-bottom: 6px;
+    }
+    .payment-form-box h2 span { color: var(--accent); }
+    .subtitle { font-size: 14px; color: var(--text2); margin-bottom: 36px; }
+
+    .demo-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(26,111,212,0.1);
+      border: 1px solid rgba(26,111,212,0.25);
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 20px;
+      margin-bottom: 28px;
+    }
+
+    .section-label {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--text2); margin-bottom: 16px; margin-top: 28px;
+    }
+
+    .input-group {
+      margin-bottom: 16px;
+      display: flex; flex-direction: column;
+    }
+    .input-group label {
+      font-size: 11px; font-weight: 700;
+      margin-bottom: 6px; color: var(--text);
+      text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .input-group input {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 11px 14px; outline: none;
+      font-size: 15px; color: var(--text);
+      font-family: 'Barlow', sans-serif;
+      transition: border-color 0.2s;
+      border-radius: var(--radius);
+    }
+    .input-group input:focus { border-color: var(--accent); }
+
+    .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    /* Simulação visual do cartão */
+    .card-visual {
+      background: linear-gradient(135deg, #0F1923 0%, #1A4070 100%);
+      border-radius: 12px;
+      padding: 28px;
+      margin-bottom: 28px;
+      position: relative;
+      overflow: hidden;
+      min-height: 160px;
+    }
+    .card-visual::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 160px; height: 160px;
+      border-radius: 50%;
+      background: rgba(59,143,234,0.12);
+    }
+    .card-visual::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; left: 30px;
+      width: 200px; height: 200px;
+      border-radius: 50%;
+      background: rgba(26,111,212,0.08);
+    }
+    .card-chip {
+      width: 36px; height: 28px;
+      background: linear-gradient(135deg, #D4A017, #F0C040);
+      border-radius: 4px; margin-bottom: 20px;
+    }
+    .card-number-display {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 22px; font-weight: 700;
+      color: #DCE8F8; letter-spacing: 3px;
+      margin-bottom: 12px;
+    }
+    .card-info-row {
+      display: flex; justify-content: space-between;
+    }
+    .card-info-label { font-size: 10px; color: rgba(220,232,248,0.5); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2px; }
+    .card-info-value { font-size: 14px; font-weight: 600; color: #DCE8F8; }
+
+    .btn-pay {
+      width: 100%; padding: 16px;
+      border: none; background: var(--accent);
+      cursor: pointer; font-family: 'Barlow', sans-serif;
+      font-size: 13px; font-weight: 700;
+      letter-spacing: 1px; color: white;
+      text-transform: uppercase; transition: all 0.2s;
+      margin-top: 10px; border-radius: var(--radius);
+    }
+    .btn-pay:hover { background: var(--cta-hover); transform: translateY(-1px); }
+    .btn-pay:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    .status-message {
+      margin-top: 16px; font-size: 13px;
+      color: var(--text); min-height: 20px;
+      font-weight: 500; text-align: center;
+    }
+    .status-message.error { color: var(--error); }
+    .status-message.success { color: var(--success); }
+
+    /* RESUMO DO PEDIDO */
+    .order-summary {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      position: sticky;
+      top: 24px;
+    }
+    .order-summary h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 20px; font-weight: 800;
+      text-transform: uppercase; margin-bottom: 24px;
+    }
+    .order-line {
+      display: flex; justify-content: space-between;
+      padding: 10px 0; border-bottom: 1px solid var(--border);
+      font-size: 14px;
+    }
+    .order-line:last-of-type { border-bottom: none; }
+    .order-line .label { color: var(--text2); }
+    .order-line .value { font-weight: 600; }
+    .order-total {
+      display: flex; justify-content: space-between;
+      padding: 16px 0 0;
+      margin-top: 8px;
+      border-top: 2px solid var(--accent);
+    }
+    .order-total .label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 16px; font-weight: 800;
+      text-transform: uppercase;
+    }
+    .order-total .value {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 24px; font-weight: 900; color: var(--accent);
+    }
+
+    .secure-badge {
+      display: flex; align-items: center; gap: 8px;
+      margin-top: 24px; font-size: 12px; color: var(--text2);
+    }
+    .secure-badge svg { flex-shrink: 0; }

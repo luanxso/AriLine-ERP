@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Cadastro da Empresa | AriLine</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <link rel="icon" type="image/png" href="IMG/Logo Ariline.png">
+    <link rel="stylesheet" href="css/cadastro-empresa.css">
+</head>
+<body>
+  <div class="register-container">
+    <div class="left-panel"><div class="panel-overlay"><a href="index.html" class="brand"><img src="IMG/Logo Ariline.png" alt="Logo AriLine" class="brand-logo"><span class="brand-name">Ari<span>Line</span></span></a><div class="left-text"><h1>Entrada<br>Organizada.</h1><p>Diretores criam a empresa e liberam o acesso. Funcionarios sao cadastrados dentro do sistema pelo responsavel da empresa.</p></div></div></div>
+    <div class="right-panel">
+      <div class="theme-toggle-wrapper"><button class="theme-toggle" id="themeBtn" title="Alternar tema"><i class="ph ph-moon"></i></button></div>
+      <div class="form-box">
+        <h2>Cadastrar<br><span>Empresa</span></h2>
+        <p class="subtitle">Informe os dados da empresa. O token sera gerado depois do pagamento.</p>
+        
+<form id="empresa-form">
+  <div class="input-group"><label>Nome completo do diretor</label><input id="nome" required placeholder="Ex: Joao Silva"></div>
+  <div class="input-group"><label>E-mail corporativo</label><input id="email" type="email" required placeholder="diretor@empresa.com.br"></div>
+  <div class="input-group"><label>Senha de acesso</label><input id="senha" type="password" required placeholder="Minimo 6 caracteres"></div>
+  <div class="input-group"><label>Nome da empresa</label><input id="empresaNome" required placeholder="Ex: Plastik Diadema Ltda."></div>
+  <div class="input-group"><label>Segmento</label><input id="empresaSetor" required placeholder="Ex: Plastico e Borracha"></div>
+  <div class="input-group"><label>Cidade / UF</label><input id="empresaCidade" required placeholder="Ex: Diadema, SP"></div>
+  <button class="btn-submit" type="submit">Continuar para planos</button>
+  <p id="msg" class="status-message"></p>
+</form>
+<div class="footer-links"><p>Funcionario? Solicite o cadastro ao diretor da empresa.</p></div>
+
+      </div>
+    </div>
+  </div>
+    <script src="js/cadastro-empresa.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script src="js/cadastro-empresa-2.js"></script>
+
+</body>
+</html>

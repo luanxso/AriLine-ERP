@@ -1,0 +1,136 @@
+body {
+      font-family: 'Barlow', sans-serif;
+      background: #07100E;
+      color: #D4EDE6;
+      padding: 40px 32px;
+      min-height: 100vh;
+    }
+    .page-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px; font-weight: 800;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: rgba(100,200,160,0.4);
+      margin-bottom: 6px;
+    }
+    .page-h {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 44px; font-weight: 900;
+      text-transform: uppercase; color: #D4EDE6;
+      line-height: 1; margin-bottom: 4px;
+    }
+    .page-h span { color: #1A6FD4; }
+    .page-sub {
+      font-size: 14px; color: rgba(100,200,160,0.45);
+      margin-bottom: 40px;
+    }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
+
+    .card {
+      background: #0C1A16;
+      border: 1px solid rgba(100,200,160,0.10);
+      border-radius: 4px; overflow: hidden;
+    }
+    .card-top {
+      padding: 20px 22px 16px;
+      border-bottom: 1px solid rgba(100,200,160,0.07);
+      display: flex; align-items: flex-start; gap: 14px;
+    }
+    .empresa-mark {
+      width: 40px; height: 40px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 18px; font-weight: 900; color: #fff;
+    }
+    .empresa-info { flex: 1; }
+    .empresa-nome {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 19px; font-weight: 900;
+      text-transform: uppercase; color: #D4EDE6;
+      line-height: 1; margin-bottom: 3px;
+    }
+    .empresa-setor {
+      font-size: 11px; color: rgba(100,200,160,0.5);
+      font-weight: 500;
+    }
+    .empresa-local {
+      font-size: 11px; color: rgba(100,200,160,0.35);
+    }
+
+    .card-body { padding: 16px 22px 20px; }
+
+    .token-block {
+      background: rgba(26,111,212,0.08);
+      border: 1px solid rgba(26,111,212,0.20);
+      border-radius: 3px;
+      padding: 12px 14px;
+      margin-bottom: 16px;
+    }
+    .token-label {
+      font-size: 9px; font-weight: 800; letter-spacing: 2px;
+      text-transform: uppercase; color: rgba(26,111,212,0.6);
+      margin-bottom: 6px;
+    }
+    .token-value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 18px; font-weight: 600;
+      color: #3B8FEA; letter-spacing: 2px;
+    }
+    .token-copy {
+      float: right; font-size: 10px; font-weight: 700;
+      letter-spacing: 0.5px; text-transform: uppercase;
+      color: rgba(59,143,234,0.5); cursor: pointer;
+      background: none; border: none; font-family: inherit;
+      padding: 0; transition: color 0.15s;
+    }
+    .token-copy:hover { color: #3B8FEA; }
+
+    .info-rows { display: flex; flex-direction: column; gap: 0; }
+    .info-row {
+      display: flex; justify-content: space-between;
+      align-items: flex-start; padding: 7px 0;
+      border-bottom: 1px solid rgba(100,200,160,0.06);
+      font-size: 12px; gap: 12px;
+    }
+    .info-row:last-child { border-bottom: none; }
+    .info-k { color: rgba(100,200,160,0.4); flex-shrink: 0; }
+    .info-v { color: #D4EDE6; font-weight: 500; text-align: right; }
+
+    .status-tag {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 3px 9px; border-radius: 2px;
+      font-size: 10px; font-weight: 800; letter-spacing: 0.8px; text-transform: uppercase;
+    }
+    .tag-green { background: rgba(31,174,114,0.12); color: #1FAE72; border: 1px solid rgba(31,174,114,0.2); }
+    .tag-yellow { background: rgba(201,154,26,0.12); color: #C99A1A; border: 1px solid rgba(201,154,26,0.2); }
+    .tag-red    { background: rgba(192,48,48,0.12);  color: #C03030; border: 1px solid rgba(192,48,48,0.2); }
+    .tag-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+
+    .maq-grid { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+    .maq-chip {
+      display: flex; align-items: center; gap: 5px;
+      padding: 4px 9px; border: 1px solid rgba(100,200,160,0.08);
+      border-radius: 2px; font-size: 10px; font-weight: 600;
+      color: rgba(100,200,160,0.5);
+    }
+    .maq-chip-dot { width: 5px; height: 5px; border-radius: 50%; }
+
+    .section-lbl {
+      font-size: 9px; font-weight: 800; letter-spacing: 2px;
+      text-transform: uppercase; color: rgba(100,200,160,0.3);
+      margin: 14px 0 6px;
+    }
+
+    .footer-note {
+      margin-top: 40px; padding-top: 24px;
+      border-top: 1px solid rgba(100,200,160,0.07);
+      font-size: 12px; color: rgba(100,200,160,0.3);
+      text-align: center; line-height: 1.7;
+    }
+    .footer-note span { color: rgba(59,143,234,0.6); font-family: 'JetBrains Mono', monospace; }
+
+    @media (max-width: 600px) {
+      body { padding: 24px 16px; }
+      .page-h { font-size: 32px; }
+      .grid { grid-template-columns: 1fr; }
+    }
